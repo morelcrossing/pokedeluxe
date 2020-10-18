@@ -16,6 +16,8 @@ hWarpDestinationMap EQU $FF8B
 
 hOAMTile EQU $FF8B
 
+hROMBankTemp EQU $FF8B
+
 hPreviousTileset EQU $FF8B
 
 hEastWestConnectedMapWidth EQU $FF8B

@@ -1,3 +1,16 @@
+FarCopyData2::
+; Identical to FarCopyData, but uses hROMBankTemp
+; as temp space instead of wBuffer.
+	ld [hROMBankTemp],a
+	ld a,[H_LOADEDROMBANK]
+	push af
+	ld a,[hROMBankTemp]
+	call BankswitchCommon
+	call CopyData
+	pop af
+	call BankswitchCommon
+	ret
+
 FarCopyDataDouble::
 ; Expand bc bytes of 1bpp image data
 ; from a:de to 2bpp data at hl.

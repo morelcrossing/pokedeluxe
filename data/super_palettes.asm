@@ -428,19 +428,19 @@ GBCBasePalettes:
 
 	; PAL_GREENBAR
 	RGB 31, 31, 31
-	RGB 31, 31,  0
+	RGB 17, 31, 13
 	RGB  0, 31,  0
 	RGB  3,  3,  3
 
 	; PAL_YELLOWBAR
 	RGB 31, 31, 31
-	RGB 31, 31,  0
+	RGB 31, 24,  8
 	RGB 31, 18,  0
 	RGB  3,  3,  3
 
 	; PAL_REDBAR
 	RGB 31, 31, 31
-	RGB 31, 31,  0
+	RGB 31, 10, 10
 	RGB 31,  0,  0
 	RGB  3,  3,  3
 
@@ -479,3 +479,51 @@ GBCBasePalettes:
 	RGB  9,  9,  9
 	RGB 31, 21,  0
 	RGB  3,  3,  3
+	
+	; PAL_P_PIKACHU
+	RGB 31, 31, 31
+	RGB 30, 28,  2
+	RGB 26,  8,  6
+	RGB  3,  3,  3
+	
+	; PAL_P_PORYGON
+	RGB 31, 31, 31
+	RGB  7, 22, 25
+	RGB 30, 18, 17
+	RGB  3,  3,  3
+	
+	; PAL_P_MEW
+	RGB 31, 31, 31
+	RGB 29, 17, 21
+	RGB  5, 14, 21
+	RGB  3,  3,  3
+	
+	; PAL_P_SLOWBRO
+	RGB 31, 31, 31
+	RGB 29, 17, 18
+	RGB 16, 24, 22
+	RGB  3,  3,  3
+	
+	; PAL_P_METAPOD
+	RGB 31, 31, 31
+	RGB 17, 28,  5
+	RGB 14, 23,  3
+	RGB  3,  3,  3
+	
+	; PAL_P_LICKITUNG
+	RGB 31, 31, 31
+	RGB 27, 15, 18
+	RGB 27,  9, 10
+	RGB  3,  3,  3
+	
+	; PAL_SPRITES
+	RGB 31, 31, 31
+	RGB 30, 22, 17
+	RGB 25,  6,  5
+	RGB  3,  3,  3
+	
+	; PAL_MENU
+	RGB 30, 30, 30
+	RGB 17, 17, 24
+	RGB 14, 13, 16
+	RGB  5,  5,  5

@@ -780,7 +780,44 @@ SwitchPartyMon_InitVarOrSwapData:
 	ld [wPartyMenuTypeOrMessageID], a
 	ret
 .swappingDifferentMons
-	ld a, b
+	; a = target mon, b = original mon
+	push hl
+	push de
+	
+	ld [hSwapTemp], a
+	
+	; assign original value to d
+	ld c, b
+	ld b, 0
+	ld hl, wSwitchPartyOAMIndex
+	add hl, bc
+	ld a, [hl]
+	ld d, a
+	
+	push hl
+	
+	; assign target value to e
+	ld a, [hSwapTemp]
+	ld b, a
+	ld a, c
+	ld [hSwapTemp], a
+	ld c, b
+	ld b, 0
+	ld hl, wSwitchPartyOAMIndex
+	add hl, bc
+	ld a, [hl]
+	ld e, a
+	
+	ld [hl], d
+	pop hl
+	ld [hl], e
+	
+	pop de
+	pop hl
+	
+	ld a, [hSwapTemp]
+	ld b, a
+	
 	ld [wMenuItemToSwap], a
 	push hl
 	push de

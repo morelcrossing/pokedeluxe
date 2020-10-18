@@ -479,7 +479,7 @@ WriteAsymmetricMonPartySpriteOAM:
 	ld [hli], a
 	inc a
 	ld [wOAMBaseTile], a
-	xor a
+	ld a, [wPartyPaletteCounter]
 	ld [hli], a
 	inc d
 	ld a, 8
@@ -494,6 +494,10 @@ WriteAsymmetricMonPartySpriteOAM:
 	ld b, a
 	dec d
 	jr nz, .loop
+	ld a, [wPartyPaletteCounter]
+	inc a
+	ld [wPartyPaletteCounter], a
+	ld a, 8
 	ret
 
 WriteSymmetricMonPartySpriteOAM:

@@ -57,6 +57,8 @@ SpriteFacingDownAndWalking:
 SpriteFacingDownAndWalking2:
 	db $04
 ; Sprite OAM Parameters
+;	db $00,$00,$80,$00                                                        ; top left FIX FLIP
+;	db $00,$08,$81,$00                                                        ; top right
 	db $00,$08,$80,OAMFLAG_VFLIPPED                                           ; top left
 	db $00,$00,$81,OAMFLAG_VFLIPPED                                           ; top right
 	db $08,$08,$82,OAMFLAG_VFLIPPED | OAMFLAG_CANBEMASKED                     ; bottom left

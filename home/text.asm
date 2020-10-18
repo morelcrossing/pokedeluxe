@@ -17,7 +17,7 @@ TextBoxBorder::
 	; middle rows
 .next
 	push hl
-	ld a, "│"
+	ld a, $60
 	ld [hli], a
 	ld a, " "
 	call NPlaceChar
@@ -32,7 +32,7 @@ TextBoxBorder::
 	; bottom row
 	ld a, "└"
 	ld [hli], a
-	ld a, "─"
+	ld a, $61
 	call NPlaceChar
 	ld [hl], "┘"
 	ret
@@ -635,7 +635,6 @@ TextCommandSounds::
 	db $13, SFX_TRADE_MACHINE
 	db $14, PIKACHU  ; used in OakSpeech
 	db $15, PIDGEOT  ; used in SaffronCityText12
-	db $16, DEWGONG  ; unused?
 
 ; draw ellipses
 ; 0CAA

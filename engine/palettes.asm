@@ -19,6 +19,65 @@ _RunPaletteCommand:
 	push de
 	jp hl
 
+UpdateBGPPaletteCommand:
+	call GetPredefRegisters
+	ld a, b
+	cp $ff
+	jr nz, .next
+	ld a, [wDefaultPaletteCommand] ; use default command if command ID is $ff
+.next
+	cp UPDATE_PARTY_MENU_BLK_PACKET
+	jp z, UpdatePartyMenuBlkPacket
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, SetPalFunctions
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld de, SendSGBBGPPackets
+	push de
+	jp hl
+
+UpdateOBP0PaletteCommand:
+	call GetPredefRegisters
+	ld a, b
+	cp $ff
+	jr nz, .next
+	ld a, [wDefaultPaletteCommand] ; use default command if command ID is $ff
+.next
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, SetPalFunctions
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld de, SendSGBOBP0Packets
+	push de
+	jp hl
+	
+UpdateOBP1PaletteCommand:
+	call GetPredefRegisters
+	ld a, b
+	cp $ff
+	jr nz, .next
+	ld a, [wDefaultPaletteCommand] ; use default command if command ID is $ff
+.next
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, SetPalFunctions
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld de, SendSGBOBP1Packets
+	push de
+	jp hl
+
 SetPal_Black:
 	ld hl, PalPacket_Black
 	ld de, BlkPacket_Battle
@@ -100,6 +159,52 @@ SetPal_PartyMenu:
 	ld de, wPartyMenuBlkPacket
 	ret
 
+; uses PalPacket_Empty to build a packet using the palettes of the first 4 party pokemon
+SetPal_PartyPokemon1:
+	ld hl, PalPacket_Empty
+	ld de, wPalPacket
+	ld bc, $40
+	call CopyData
+	
+index = 0
+
+	REPT 4
+		ld a, [wPartySpecies + index]
+		call DeterminePaletteIDOutOfBattle
+		ld hl, wPalPacket + index + index + 1
+		ld [hl], a
+		ld hl, wPalPacket
+		ld de, BlkPacket_StatusScreen
+		
+index = index + 1
+	ENDR
+	
+	ret
+
+; uses PalPacket_Empty to build a packet using the palettes of the final 2 party pokemon
+SetPal_PartyPokemon2:
+	ld hl, PalPacket_Empty
+	ld de, wPalPacket
+	ld bc, $40
+	call CopyData
+	
+index = 4
+index2 = 0
+
+	REPT 2
+		ld a, [wPartySpecies + index]
+		call DeterminePaletteIDOutOfBattle
+		ld hl, wPalPacket + index2 + index2 + 1
+		ld [hl], a
+		ld hl, wPalPacket
+		ld de, BlkPacket_StatusScreen
+		
+index = index + 1
+index2 = index2 + 1
+	ENDR
+	
+	ret
+
 SetPal_Pokedex:
 	ld hl, PalPacket_Pokedex
 	ld de, wPalPacket
@@ -139,6 +244,10 @@ SetPal_GameFreakIntro:
 	ld de, BlkPacket_GameFreakIntro
 	ld a, SET_PAL_GENERIC
 	ld [wDefaultPaletteCommand], a
+	ret
+
+SetPal_OverworldSprites:
+	ld hl, PalPacket_OverworldSprites
 	ret
 
 ; uses PalPacket_Empty to build a packet based on the current map
@@ -282,6 +391,9 @@ SetPalFunctions:
 	dw SetPal_TrainerCard
 	dw SendUnknownPalPacket_7205d
 	dw SendUnknownPalPacket_72064
+	dw SetPal_PartyPokemon1
+	dw SetPal_PartyPokemon2
+	dw SetPal_OverworldSprites
 
 ; The length of the blk data of each badge on the Trainer Card.
 ; The Rainbow Badge has 3 entries because of its many colors.
@@ -733,6 +845,61 @@ SendSGBPackets:
 	pop hl
 	jp SendSGBPacket
 
+SendSGBBGPPackets:
+	ld a, [hGBC]
+	and a
+	jr z, .notGBC
+	push de
+	call InitGBCBGPPalettes
+	pop hl
+	call InitGBCBGPPalettes
+	ld a, [rLCDC]
+	and rLCDC_ENABLE_MASK
+	ret z
+	call Delay3
+	ret
+.notGBC
+	push de
+	call SendSGBPacket
+	pop hl
+	jp SendSGBPacket
+
+SendSGBOBP0Packets:
+	ld a, [hGBC]
+	and a
+	jr z, .notGBC
+	push de
+	call InitGBCOBP0Palettes
+	pop hl
+	ld a, [rLCDC]
+	and rLCDC_ENABLE_MASK
+	ret z
+	call Delay3
+	ret
+.notGBC
+	push de
+	call SendSGBPacket
+	pop hl
+	jp SendSGBPacket
+
+SendSGBOBP1Packets:
+	ld a, [hGBC]
+	and a
+	jr z, .notGBC
+	push de
+	call InitGBCOBP1Palettes
+	pop hl
+	ld a, [rLCDC]
+	and rLCDC_ENABLE_MASK
+	ret z
+	call Delay3
+	ret
+.notGBC
+	push de
+	call SendSGBPacket
+	pop hl
+	jp SendSGBPacket
+
 InitGBCPalettes:
 	ld a, [hl]
 	and $f8
@@ -765,11 +932,125 @@ index = 0
 		call DMGPalToGBCPal
 		ld a, index
 		call TransferCurBGPData
+		
+		ld a, CONVERT_OBP0
+		call DMGPalToGBCPal
+		ld a, index
+		call TransferCurOBPData
+
+		ld a, CONVERT_OBP1
+		call DMGPalToGBCPal
+		ld a, index + 4
+		call TransferCurOBPData
+
+index = index + 1
+	ENDR
+
+	ret
+
+InitGBCBGPPalettes:
+	ld a, [hl]
+	and $f8
+	cp $20
+	jp z, TranslatePalPacketToBGMapAttributes
+
+	inc hl
+
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		IF index > 0
+			pop hl
+		ENDC
+
+		ld a, [hli]
+		inc hl
+
+		IF index < (NUM_ACTIVE_PALS + -1)
+			push hl
+		ENDC
+
+		call GetGBCBasePalAddress
+		ld a, e
+		ld [wGBCBasePalPointers + index * 2], a
+		ld a, d
+		ld [wGBCBasePalPointers + index * 2 + 1], a
+
+		xor a ; CONVERT_BGP
+		call DMGPalToGBCPal
+		ld a, index
+		call TransferCurBGPData
+
+index = index + 1
+	ENDR
+
+	ret
+
+InitGBCOBP0Palettes:
+	ld a, [hl]
+	and $f8
+	cp $20
+	jp z, TranslatePalPacketToBGMapAttributes
+
+	inc hl
+
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		IF index > 0
+			pop hl
+		ENDC
+
+		ld a, [hli]
+		inc hl
+
+		IF index < (NUM_ACTIVE_PALS + -1)
+			push hl
+		ENDC
+
+		call GetGBCBasePalAddress
+		ld a, e
+		ld [wGBCBasePalPointers + index * 2], a
+		ld a, d
+		ld [wGBCBasePalPointers + index * 2 + 1], a
 
 		ld a, CONVERT_OBP0
 		call DMGPalToGBCPal
 		ld a, index
 		call TransferCurOBPData
+
+index = index + 1
+	ENDR
+
+	ret
+
+InitGBCOBP1Palettes:
+	ld a, [hl]
+	and $f8
+	cp $20
+	jp z, TranslatePalPacketToBGMapAttributes
+
+	inc hl
+
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		IF index > 0
+			pop hl
+		ENDC
+
+		ld a, [hli]
+		inc hl
+
+		IF index < (NUM_ACTIVE_PALS + -1)
+			push hl
+		ENDC
+
+		call GetGBCBasePalAddress
+		ld a, e
+		ld [wGBCBasePalPointers + index * 2], a
+		ld a, d
+		ld [wGBCBasePalPointers + index * 2 + 1], a
 
 		ld a, CONVERT_OBP1
 		call DMGPalToGBCPal

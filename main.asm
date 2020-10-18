@@ -2176,3 +2176,20 @@ INCLUDE "engine/bank3e.asm"
 SECTION "bank3F", ROMX
 
 INCLUDE "engine/bank3f.asm"
+
+
+SECTION "bank40", ROMX
+
+MonPartySprites:
+MonPartySprites1:
+	INCBIN "gfx/sprites/partysprite/mon_party_sprites1.2bpp"
+	
+SECTION "bank41", ROMX
+
+MonPartySprites2:
+	INCBIN "gfx/sprites/partysprite/mon_party_sprites2.2bpp"
+
+
+SECTION "bank42", ROMX
+
+INCLUDE "engine/new_functions.asm"

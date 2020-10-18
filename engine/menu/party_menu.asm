@@ -17,14 +17,35 @@
 ; f6: health returned
 ; f7: revitalized
 ; f8: leveled up
+SetPartyIndex:
+	ld a, 0
+	ld [wOverworldPaletteLoaded + 6], a
+	ld [wSwitchPartyOAMIndex], a ; cd71
+	inc a
+	ld [wSwitchPartyOAMIndex + 1], a
+	inc a
+	ld [wSwitchPartyOAMIndex + 2], a
+	inc a
+	ld [wSwitchPartyOAMIndex + 3], a
+	inc a
+	ld [wSwitchPartyOAMIndex + 4], a
+	inc a
+	ld [wSwitchPartyOAMIndex + 5], a
+	ld a, 0
+	ret
+
 DrawPartyMenu_:
 	xor a
 	ld [H_AUTOBGTRANSFERENABLED], a
+	call SetPartyIndex
 	call ClearScreen
 	call UpdateSprites
 	callba LoadMonPartySpriteGfxWithLCDDisabled ; load pokemon icon graphics
 
 RedrawPartyMenu_:
+	ld a, 0
+	ld [wPartyPaletteCounter], a
+	callba ReloadPartyPalettes
 	ld a, [wPartyMenuTypeOrMessageID]
 	cp SWAP_MONS_PARTY_MENU
 	jp z, .printMessage
@@ -196,8 +217,7 @@ RedrawPartyMenu_:
 .notAbleToEvolveText
 	db "NOT ABLE@"
 .afterDrawingMonEntries
-	ld b, SET_PAL_PARTY_MENU
-	call RunPaletteCommand
+	ld b, 0
 .printMessage
 	ld hl, wd730
 	ld a, [hl]
@@ -223,7 +243,9 @@ RedrawPartyMenu_:
 	ld a, 1
 	ld [H_AUTOBGTRANSFERENABLED], a
 	call Delay3
-	jp GBPalNormal
+	callba EnablePartyPalettes
+	ret
+
 .printItemUseMessage
 	and $0F
 	ld hl, PartyMenuItemUseMessagePointers

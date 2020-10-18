@@ -1446,6 +1446,8 @@ wOAMBaseTile:: ; cd5b
 wGymTrashCanIndex:: ; cd5b
 	ds 1
 
+wPartyPaletteCounter:: ; cd5c
+
 wSymmetricSpriteOAMAttributes:: ; cd5c
 	ds 1
 
@@ -3342,6 +3344,10 @@ wDungeonWarpDestinationMap:: ; d71c
 wWhichDungeonWarp:: ; d71d
 ; which dungeon warp within the source map was used
 	ds 1
+
+wOverworldPaletteLoaded:: ; d71e
+
+wSwitchPartyOAMIndex:: ; d71e
 
 wUnusedD71F:: ; d71e
 	ds 1

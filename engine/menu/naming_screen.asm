@@ -91,11 +91,15 @@ DisplayNamingScreen:
 	call RunPaletteCommand
 	call LoadHpBarAndStatusTilePatterns
 	call LoadEDTile
-	callba LoadMonPartySpriteGfx
+	ld a, [wcf91]
+	ld [wd11e], a
+	callba LoadMonPartySpriteForSpecies
 	coord hl, 0, 4
 	lb bc, 9, 18
 	call TextBoxBorder
 	call PrintNamingText
+	ld a, 0
+	ld [wPartyPaletteCounter], a
 	ld a, 3
 	ld [wTopMenuItemY], a
 	ld a, 1
@@ -490,10 +494,12 @@ PrintNamingText:
 	ld de, RivalsTextString
 	dec a
 	jr z, .notNickname
+	ld a, 0
+	ld [wPartyPaletteCounter], a
+	ld [hPartyMonIndex], a
 	ld a, [wcf91]
-	ld [wMonPartySpriteSpecies], a
 	push af
-	callba WriteMonPartySpriteOAMBySpecies
+	callba WriteMonPartySpriteOAMByPartyIndex
 	pop af
 	ld [wd11e], a
 	call GetMonName

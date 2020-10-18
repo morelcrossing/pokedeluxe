@@ -45,7 +45,7 @@ OverworldLoop::
 OverworldLoopLessDelay::
 	call DelayFrame
 	call IsSurfingPikachuInParty
-	call LoadGBPal
+	callba LoadOverworldPalettes
 	call HandleMidJump
 	ld a, [wWalkCounter]
 	and a
@@ -513,7 +513,7 @@ WarpFound2::
 .done
 	ld hl, wd736
 	set 0, [hl] ; have the player's sprite step out from the door (if there is one)
-	call IgnoreInputForHalfSecond
+	callba IgnoreInputForHalfSecond
 	jp EnterMap
 
 ; if no matching warp was found
@@ -651,8 +651,9 @@ CheckMapConnections::
 	ld [wPikachuSpawnState], a
 	call LoadMapHeader
 	call PlayDefaultMusicFadeOutCurrent
-	ld b, SET_PAL_OVERWORLD
-	call RunPaletteCommand
+	callba UpdateOverworldBGPPalette
+	callba UpdateOverworldOBP0Palette
+	callba UpdateOverworldOBP1Palette
 ; Since the sprite set shouldn't change, this will just update VRAM slots at
 ; $C2XE without loading any tile patterns.
 	call InitMapSprites
@@ -1994,8 +1995,7 @@ LoadMapData::
 	ld a, $01
 	ld [wUpdateSpritesEnabled], a
 	call EnableLCD
-	ld b, $09
-	call RunPaletteCommand
+	callba UpdateOverworldPalettes
 	call LoadPlayerSpriteGraphics
 	ld a, [wd732]
 	and 1 << 4 | 1 << 3 ; fly warp or dungeon warp
@@ -2056,6 +2056,7 @@ ResetMapVariables::
 	ld [wUnusedD119], a
 	ld [wSpriteSetID], a
 	ld [wWalkBikeSurfStateCopy], a
+	ld [wOverworldPaletteLoaded + 6], a
 	ret
 
 CopyMapViewToVRAM::
@@ -2119,15 +2120,6 @@ GetMapHeaderPointer::
 	pop de
 	pop af
 	jp BankswitchCommon
-
-IgnoreInputForHalfSecond:
-	ld a, 30
-	ld [wIgnoreInputCounter], a
-	ld hl, wd730
-	ld a, [hl]
-	or %00100110
-	ld [hl], a ; set ignore input bit
-	ret
 
 ResetUsingStrengthOutOfBattleBit:
 	ld hl, wd728

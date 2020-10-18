@@ -151,7 +151,7 @@ LoadMonPartySpriteGfxWithLCDDisabled:
 	inc hl
 	ld d, [hl]
 	pop hl
-	call FarCopyData
+	call FarCopyData2
 	pop hl
 	pop bc
 	ld a, $6
@@ -160,7 +160,80 @@ LoadMonPartySpriteGfxWithLCDDisabled:
 	pop af
 	dec a
 	jr nz, .loop
+	
+	ld a, 6
+	ld hl, wPartySpecies
+	ld de, vSprites + $180
+.loop3
+	push af
+	push hl
+	ld a, [hl]
+	ld [wd11e], a
+	push de
+	predef IndexToPokedex
+	pop de
+	ld a, [wd11e]
+	dec a
+	cp 151
+	jr c, .skipmissingno
+	ld a, 151
+.skipmissingno
+	ld hl, MonPartySprites
+	ld bc, $40
+	and a
+	jr z, .skiploop2
+.loop2
+	add hl, bc
+	dec a
+	jr nz, .loop2
+.skiploop2
+	ld a, BANK(MonPartySprites2)
+	push hl
+	push de
+	inc d
+	inc d
+	inc d
+	inc d
+	call FarCopyData2
+	ld a, BANK(MonPartySprites1)
+	ld bc, $40
+	pop de
+	pop hl
+	call FarCopyData2
+	pop hl
+	inc hl
+	pop af
+	dec a
+	jr nz, .loop3
 	jp EnableLCD
+	
+LoadMonPartySpriteForSpecies:
+	predef IndexToPokedex
+	ld a, [wd11e]
+	dec a
+	cp 151
+	jr c, .skipmissingno
+	ld a, 151
+.skipmissingno
+	ld hl, MonPartySprites
+	ld bc, $40
+	and a
+	jr z, .skiploop2
+.loop2
+	add hl, bc
+	dec a
+	jr nz, .loop2
+.skiploop2
+	ld de, vSprites + $580
+	ld a, BANK(MonPartySprites2)
+	push hl
+	call FarCopyData2
+	ld bc, $40
+	ld a, BANK(MonPartySprites1)
+	ld de, vSprites + $180
+	pop hl
+	call FarCopyData2
+	ret
 
 MonPartySpritePointers:
 	dw SlowbroSprite + $c0
@@ -258,90 +331,30 @@ MonPartySpritePointers:
 	db BANK(BirdSprite)
 	dw vSprites + $500
 
-	dw SeelSprite + $C0
-	db $40 / $10 ; $40 bytes
-	db BANK(SeelSprite)
-	dw vSprites + $540
-
-	dw MonPartySprites
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $580
-
-	dw MonPartySprites + $10
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $5a0
-
 	dw MonPartySprites + $20
 	db $10 / $10 ; $10 bytes
 	db BANK(MonPartySprites)
 	dw vSprites + $5c0
 
-	dw MonPartySprites + $30
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $5E0
-
-	dw MonPartySprites + $C0
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $600
-
-	dw MonPartySprites + $D0
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $620
-
-	dw MonPartySprites + $E0
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $640
-
-	dw MonPartySprites + $F0
-	db $10 / $10 ; $10 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $660
-
-	dw PikachuSprite + $C0
-	db $40 / $10 ; $40 bytes
-	db BANK(PikachuSprite)
-	dw vSprites + $680
-
-	dw MonPartySprites + $140
-	db $40 / $10 ; $40 bytes
-	db BANK(MonPartySprites)
-	dw vSprites + $780
-
 WriteMonPartySpriteOAMByPartyIndex:
 ; Write OAM blocks for the party mon in [hPartyMonIndex].
 	push hl
-	push de
 	push bc
+	ld hl, wSwitchPartyOAMIndex
 	ld a, [hPartyMonIndex]
-	cp $ff
-	jr z, .asm_7191f
-	ld hl, wPartySpecies
-	ld e, a
-	ld d, 0
-	add hl, de
+	ld b, 0
+	ld c, a
+	add hl, bc
+	
+	;ld a, [hPartyMonIndex]
 	ld a, [hl]
-	call GetPartyMonSpriteID
+	add a, a
+	add a, a
+	add a, $18
 	ld [wOAMBaseTile], a
+	pop bc
+	pop hl
 	call WriteMonPartySpriteOAM
-	pop bc
-	pop de
-	pop hl
-	ret
-
-.asm_7191f
-	ld hl, wOAMBuffer
-	ld de, wMonPartySpritesSavedOAM
-	ld bc, $60
-	call CopyData
-	pop bc
-	pop de
-	pop hl
 	ret
 
 WriteMonPartySpriteOAMBySpecies:
@@ -354,49 +367,11 @@ WriteMonPartySpriteOAMBySpecies:
 	ld [wOAMBaseTile], a
 	jr WriteMonPartySpriteOAM
 
-UnusedPartyMonSpriteFunction:
-; This function is unused and doesn't appear to do anything useful. It looks
-; like it may have been intended to load the tile patterns and OAM data for
-; the mon party sprite associated with the species in [wcf91].
-; However, its calculations are off and it loads garbage data.
-	ld a, [wcf91]
-	call GetPartyMonSpriteID
-	push af
-	ld hl, vSprites
-	call .LoadTilePatterns
-	pop af
-	add $5A
-	ld hl, vSprites + $40
-	call .LoadTilePatterns
-	xor a
-	ld [wMonPartySpriteSpecies], a
-	jr WriteMonPartySpriteOAMBySpecies
-
-.LoadTilePatterns
-	push hl
-	add a
-	ld c, a
-	ld b, 0
-	ld hl, MonPartySpritePointers
-	add hl, bc
-	add hl, bc
-	add hl, bc
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a
-	ld a, [hli]
-	ld c, a
-	ld a, [hli]
-	ld b, a
-	pop hl
-	jp CopyVideoData
-
 WriteMonPartySpriteOAM:
 ; Write the OAM blocks for the first animation frame into the OAM buffer and
 ; make a copy at wMonPartySpritesSavedOAM.
 	push af
-	ld c, $10
+	ld c, $0F
 	ld h, wOAMBuffer / $100
 	ld a, [hPartyMonIndex]
 	swap a
@@ -404,15 +379,9 @@ WriteMonPartySpriteOAM:
 	add $10
 	ld b, a
 	pop af
-	cp SPRITE_HELIX << 2
-	jr z, .helix
-	call WriteSymmetricMonPartySpriteOAM
-	jr .makeCopy
-.helix
 	call WriteAsymmetricMonPartySpriteOAM
 ; Make a copy of the OAM buffer with the first animation frame written so that
 ; we can flip back to it from the second frame by copying it back.
-.makeCopy
 	ld hl, wOAMBuffer
 	ld de, wMonPartySpritesSavedOAM
 	ld bc, $60
@@ -440,6 +409,3 @@ GetPartyMonSpriteID:
 	ret
 
 INCLUDE "data/mon_party_sprites.asm"
-
-MonPartySprites:
-	INCBIN "gfx/mon_ow_sprites.2bpp"

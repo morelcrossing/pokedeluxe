@@ -316,6 +316,18 @@ ROMX $3E
 ROMX $3F
 	org $4000
 	"bank3F"
+	
+ROMX $40
+	org $4000
+	"bank40"
+	
+ROMX $41
+	org $4000
+	"bank41"
+	
+ROMX $42
+	org $4000
+	"bank42"
 
 WRAM0
 	org $c000
