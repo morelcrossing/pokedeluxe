@@ -16,7 +16,7 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
 • All Pokémon are able to be obtained without glitches or other versions (Pokémon missing from yellow have been re-added to their original wild areas from red or blue)
 
-Credits:
+# Credits:
 
 [Eevee](https://twitter.com/eevee) - Code used that allowed for species specific party member icons.
 
