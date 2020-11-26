@@ -1,6 +1,6 @@
 # Pokémon Deluxe
 
-This is a hack of Pokémon Yellow that aims to add both visual and gameplay improvements. It's built off of the disassembly project of Pokémon Yellow [found here.](https://github.com/pret/pokeyellow).
+This is a hack of Pokémon Yellow that aims to add both visual and gameplay improvements. It's built off of the disassembly project of Pokémon Yellow [found here.](https://github.com/pret/pokeyellow)
 
 To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
