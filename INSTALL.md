@@ -8,8 +8,8 @@
 	sudo make install
 	cd ..
 
-	git clone https://github.com/pret/pokeyellow
-	cd pokeyellow
+	git clone https://github.com/morelcrossing/pokedeluxe
+	cd pokedeluxe
 
 To build **pokeyellow.gbc**:
 
@@ -25,8 +25,8 @@ Then in **Terminal**, run:
 	xcode-select --install
 	brew install rgbds
 
-	git clone https://github.com/pret/pokeyellow
-	cd pokeyellow
+	git clone https://github.com/morelcrossing/pokedeluxe
+	cd pokedeluxe
 
 To build **pokeyellow.gbc**:
 
@@ -48,8 +48,8 @@ Then download [**rgbds**](https://github.com/rednex/rgbds/releases/): the latest
 
 In the **Cygwin terminal**, enter these commands:
 
-	git clone https://github.com/pret/pokeyellow
-	cd pokeyellow
+	git clone https://github.com/morelcrossing/pokedeluxe
+	cd pokedeluxe
 
 To build **pokeyellow.gbc**:
 

@@ -6,9 +6,9 @@ Route24Mons:
 	db 14,ODDISH
 	db 14,BELLSPROUT
 	db 15,PIDGEY
-	db 13,VENONAT
+	db 13,KAKUNA
 	db 16,VENONAT
-	db 17,PIDGEY
+	db 13,WEEDLE
 	db 17,PIDGEOTTO
 	db $00
 

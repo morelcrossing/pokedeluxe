@@ -38,7 +38,7 @@ VBlank::
 	call PrepareOAMData
 
 	; VBlank-sensitive operations end.
-	call TrackPlayTime ; keep track of time played
+	callba TrackPlayTime ; keep track of time played
 
 	call Random
 	call ReadJoypad

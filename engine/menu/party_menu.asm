@@ -18,8 +18,8 @@
 ; f7: revitalized
 ; f8: leveled up
 SetPartyIndex:
+	callba ResetOverworldPaletteLoaded
 	ld a, 0
-	ld [wOverworldPaletteLoaded + 6], a
 	ld [wSwitchPartyOAMIndex], a ; cd71
 	inc a
 	ld [wSwitchPartyOAMIndex + 1], a

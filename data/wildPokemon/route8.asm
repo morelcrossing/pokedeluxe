@@ -1,7 +1,7 @@
 Route8Mons:
 	db $0F
-	db 20,PIDGEY
-	db 22,PIDGEY
+	db 20,MEOWTH
+	db 20,EKANS
 	db 20,RATTATA
 	db 15,ABRA
 	db 19,ABRA

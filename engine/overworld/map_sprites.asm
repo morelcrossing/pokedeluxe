@@ -136,7 +136,8 @@ CheckForFourTileSprite:
 	ret
 
 LoadMapSpriteTilePatterns:
-	ld a, 0
+	callba LoadFollowSprite
+	ld a, 1
 .loop
 	ld [hVRAMSlot], a
 	cp 9
@@ -228,7 +229,7 @@ ReadSpriteSheetData:
 	ld a, [hl]
 	and a
 	ret z
-
+	
 	dec a
 	ld l, a
 	ld h, 0

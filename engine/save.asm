@@ -43,7 +43,7 @@ LoadSAV0:
 	cp c
 	jp z, .checkSumsMatched
 
-; If the computed checksum didn't match the saved on, try again.
+; If the computed checksum didn't match the saved one, try again.
 	ld hl, sPlayerName
 	ld bc, sMainDataCheckSum - sPlayerName
 	call SAVCheckSum

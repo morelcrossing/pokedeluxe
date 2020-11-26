@@ -1,36 +1,3 @@
-LoadGBBGPPal:
-	ld a, [wMapPalOffset] ; tells if wCurMap is dark (requires HM5_FLASH?)
-	ld b, a
-	ld hl, FadePal4
-	ld a, l
-	sub b
-	ld l, a
-	jr nc, .ok
-	dec h
-.ok
-	ld a, [hli]
-	ld [rBGP], a
-	call UpdateGBCPal_BGP
-	ret
-
-LoadGBOBPPal:
-	ld a, [wMapPalOffset] ; tells if wCurMap is dark (requires HM5_FLASH?)
-	ld b, a
-	ld hl, FadePal4
-	ld a, l
-	sub b
-	ld l, a
-	jr nc, .ok
-	dec h
-.ok
-	ld a, [hli]
-	ld [rOBP0], a
-	ld a, [hli]
-	ld [rOBP1], a
-	call UpdateGBCPal_OBP0
-	call UpdateGBCPal_OBP1
-	ret
-
 ; Reload all party palettes as indexes may have changed
 ReloadPartyPalettes:
 	ld a, 0
@@ -77,6 +44,11 @@ RunOBP1PaletteCommand:
 	and a
 	ret z
 	predef_jump UpdateOBP1PaletteCommand
+	ret
+	
+ResetOverworldPaletteLoaded:
+	ld a, 0
+	ld [wOverworldPaletteLoaded + 6], a
 	ret
 
 LoadOverworldPalettes:
@@ -179,7 +151,7 @@ ReloadFadeBGPPalette:
 	;ld [rOBP1], a
 	call UpdateGBCPal_BGP
 	ret
-	
+
 ReloadFadeOBPPalette:
 	ld a, [wMapPalOffset] ; tells if wCurMap is dark (requires HM5_FLASH?)
 	ld b, a
@@ -207,4 +179,26 @@ IgnoreInputForHalfSecond:
 	ld a, [hl]
 	or %00100110
 	ld [hl], a ; set ignore input bit
+	ret
+
+UpdateBGPFade:
+	push af
+	ld a, [hGBC]
+	and a
+	jr z, .notGBC
+	push bc
+	push de
+	push hl
+	ld a, [rBGP]
+	ld b, a
+	ld a, [wLastBGP]
+	cp b
+	jr z, .noChangeInBGP
+	callba _UpdateGBCPal_BGP
+.noChangeInBGP
+	pop hl
+	pop de
+	pop bc
+.notGBC
+	pop af
 	ret

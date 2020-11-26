@@ -173,12 +173,11 @@ index = 0
 		call DeterminePaletteIDOutOfBattle
 		ld hl, wPalPacket + index + index + 1
 		ld [hl], a
-		ld hl, wPalPacket
-		ld de, BlkPacket_StatusScreen
 		
 index = index + 1
 	ENDR
 	
+	ld hl, wPalPacket
 	ret
 
 ; uses PalPacket_Empty to build a packet using the palettes of the final 2 party pokemon
@@ -196,13 +195,12 @@ index2 = 0
 		call DeterminePaletteIDOutOfBattle
 		ld hl, wPalPacket + index2 + index2 + 1
 		ld [hl], a
-		ld hl, wPalPacket
-		ld de, BlkPacket_StatusScreen
 		
 index = index + 1
 index2 = index2 + 1
 	ENDR
 	
+	ld hl, wPalPacket
 	ret
 
 SetPal_Pokedex:
@@ -248,6 +246,14 @@ SetPal_GameFreakIntro:
 
 SetPal_OverworldSprites:
 	ld hl, PalPacket_OverworldSprites
+	ld de, wPalPacket
+	ld bc, $40
+	call CopyData
+	ld a, [wPartySpecies]
+	call DeterminePaletteIDOutOfBattle
+	ld hl, wPalPacket + 3
+	ld [hl], a
+	ld hl, wPalPacket
 	ret
 
 ; uses PalPacket_Empty to build a packet based on the current map

@@ -1,7 +1,7 @@
 Route11Mons:
 	db $0F
 	db 16,PIDGEY
-	db 15,RATTATA
+	db 15,EKANS
 	db 18,PIDGEY
 	db 15,DROWZEE
 	db 17,RATTATA

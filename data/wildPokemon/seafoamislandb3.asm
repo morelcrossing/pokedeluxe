@@ -1,7 +1,7 @@
 IslandMonsB3:
 	db $0A
 	db 27,GOLBAT
-	db 36,ZUBAT
+	db 36,JYNX
 	db 29,KRABBY
 	db 27,ZUBAT
 	db 30,KINGLER

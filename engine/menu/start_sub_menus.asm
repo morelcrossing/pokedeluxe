@@ -2,6 +2,7 @@ StartMenu_Pokedex:
 	predef ShowPokedexMenu
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call Delay3
+	callba LoadOverworldPalettes
 	call LoadGBPal
 	call UpdateSprites
 	jp RedisplayStartMenu
@@ -26,6 +27,7 @@ StartMenu_Pokemon:
 .exitMenu
 	call GBPalWhiteOutWithDelay3
 	call RestoreScreenTilesAndReloadTilePatterns
+	callba LoadOverworldPalettes
 	call LoadGBPal
 	jp RedisplayStartMenu
 .chosePokemon
@@ -314,7 +316,7 @@ ErasePartyMenuCursors:
 
 ItemMenuLoop:
 	call LoadScreenTilesFromBuffer2DisableBGTransfer ; restore saved screen
-	call RunDefaultPaletteCommand
+	callba UpdateOverworldPalettes
 
 StartMenu_Item:
 	ld a, [wLinkState]
@@ -516,6 +518,7 @@ StartMenu_TrainerInfo:
 	call GBPalWhiteOut
 	call ClearScreen
 	call UpdateSprites
+	callba ResetOverworldPaletteLoaded
 	ld a, [hTilesetType]
 	push af
 	xor a
@@ -532,6 +535,7 @@ StartMenu_TrainerInfo:
 	call RunDefaultPaletteCommand
 	call ReloadMapData
 	callba DrawStartMenu ; XXX what difference does this make?
+	callba LoadOverworldPalettes
 	call LoadGBPal
 	pop af
 	ld [hTilesetType], a

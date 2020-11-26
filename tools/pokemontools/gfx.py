@@ -477,7 +477,7 @@ def convert_2bpp_to_png(image, **kwargs):
         # look for possible combos of width/height that would form a rectangle
         matches = []
         # Height need not be divisible by 8, but width must.
-        # See pokered gfx/minimize_pic.1bpp.
+        # See pokedeluxe gfx/minimize_pic.1bpp.
         for w in range(8, px_length(image) / 2 + 1, 8):
             h = px_length(image) / w
             if w * h == px_length(image):

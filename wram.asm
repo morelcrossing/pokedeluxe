@@ -1716,6 +1716,8 @@ wItemList:: ; cf7a
 wListPointer:: ; cf8a
 	ds 2
 
+wTempOAMSpriteAttribute:: ; cf8c
+
 wUnusedCF8D:: ; cf8c
 ; 2 bytes
 ; used to store pointers, but never read

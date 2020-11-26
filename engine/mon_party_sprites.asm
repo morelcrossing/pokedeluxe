@@ -132,35 +132,7 @@ LoadMonPartySpriteGfxWithLCDDisabled:
 	ld hl, MonPartySpritePointers
 	ld a, $1e
 	ld bc, $0
-.loop
-	push af
-	push bc
-	push hl
-	add hl, bc
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a
-	push de
-	ld a, [hli]
-	ld c, a
-	swap c
-	ld b, $0
-	ld a, [hli]
-	ld e, [hl]
-	inc hl
-	ld d, [hl]
-	pop hl
-	call FarCopyData2
-	pop hl
-	pop bc
-	ld a, $6
-	add c
-	ld c, a
-	pop af
-	dec a
-	jr nz, .loop
-	
+.loop	
 	ld a, 6
 	ld hl, wPartySpecies
 	ld de, vSprites + $180

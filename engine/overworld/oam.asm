@@ -123,6 +123,12 @@ PrepareOAMData:
 	jr z, .spriteusesOBP0
 	or %100 ; palettes 4-7 are OBP1
 .spriteusesOBP0
+	push af
+	ld a, [hSpriteOffset2]
+	cp $f0
+	jr z, .FollowPalette
+	pop af
+.finishLoop
 	ld [de], a
 	inc hl
 	inc e
@@ -163,6 +169,10 @@ PrepareOAMData:
 	cp l
 	jr nz, .clearLoop
 	ret
+.FollowPalette
+	pop af
+	inc a
+	jp .finishLoop
 
 GetSpriteScreenXY:
 	inc e

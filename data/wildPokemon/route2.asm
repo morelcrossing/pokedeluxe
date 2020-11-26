@@ -8,7 +8,7 @@ Route2Mons:
 	db 5,PIDGEY
 	db 6,NIDORAN_M
 	db 6,NIDORAN_F
-	db 7,PIDGEY
-	db 7,PIDGEY
+	db 4,WEEDLE
+	db 5,WEEDLE
 	db $00
 

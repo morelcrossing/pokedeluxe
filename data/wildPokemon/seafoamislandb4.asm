@@ -1,7 +1,7 @@
 IslandMonsB4:
 	db $0A
 	db 36,GOLBAT
-	db 36,ZUBAT
+	db 36,JYNX
 	db 30,KRABBY
 	db 32,KINGLER
 	db 28,SEEL

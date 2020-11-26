@@ -133,6 +133,7 @@ LoadTownMap_Nest:
 	call PlaceString
 	call WaitForTextScrollButtonPress
 	call ExitTownMap
+	callba ResetOverworldPaletteLoaded
 	pop hl
 	pop af
 	ld [hl], a
@@ -289,6 +290,7 @@ LoadTownMap:
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call UpdateSprites
+	callba ResetOverworldPaletteLoaded
 	coord hl, 0, 0
 	lb bc, $12, $12
 	call TextBoxBorder
@@ -348,7 +350,8 @@ ExitTownMap:
 	call LoadPlayerSpriteGraphics
 	call LoadFontTilePatterns
 	call UpdateSprites
-	jp RunDefaultPaletteCommand
+	callba LoadOverworldPalettes
+	ret
 
 DrawPlayerOrBirdSprite:
 ; a = map number

@@ -3,7 +3,7 @@ IslandMons1:
 	db 18,ZUBAT
 	db 25,KRABBY
 	db 27,KRABBY
-	db 27,ZUBAT
+	db 27,JYNX
 	db 36,ZUBAT
 	db 28,SLOWPOKE
 	db 30,SLOWPOKE
