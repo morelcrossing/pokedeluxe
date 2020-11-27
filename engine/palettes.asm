@@ -1014,7 +1014,7 @@ index = 0
 			push hl
 		ENDC
 
-		call GetGBCBasePalAddress
+		call GetGBCSpritePalAddress
 		ld a, e
 		ld [wGBCBasePalPointers + index * 2], a
 		ld a, d
@@ -1052,7 +1052,7 @@ index = 0
 			push hl
 		ENDC
 
-		call GetGBCBasePalAddress
+		call GetGBCSpritePalAddress
 		ld a, e
 		ld [wGBCBasePalPointers + index * 2], a
 		ld a, d
@@ -1079,6 +1079,25 @@ GetGBCBasePalAddress::
 	add hl, hl
 	add hl, hl
 	ld de, GBCBasePalettes
+	add hl, de
+	ld a, l
+	ld e, a
+	ld a, h
+	ld d, a
+	pop hl
+	ret
+
+GetGBCSpritePalAddress::
+; Input: a = palette ID
+; Output: de = palette address
+	push hl
+	ld l, a
+	xor a
+	ld h, a
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	ld de, GBCSpritePalettes
 	add hl, de
 	ld a, l
 	ld e, a
@@ -1399,5 +1418,7 @@ INCLUDE "data/sgb_packets.asm"
 INCLUDE "data/mon_palettes.asm"
 
 INCLUDE "data/super_palettes.asm"
+
+INCLUDE "data/sprite_palettes.asm"
 
 INCLUDE "data/sgb_border.asm"

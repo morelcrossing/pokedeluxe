@@ -1858,7 +1858,6 @@ INCLUDE "engine/battle/battle_transitions.asm"
 INCLUDE "engine/town_map.asm"
 INCLUDE "engine/mon_party_sprites.asm"
 INCLUDE "engine/in_game_trades.asm"
-INCLUDE "engine/palettes.asm"
 INCLUDE "engine/save.asm"
 
 
@@ -2359,3 +2358,7 @@ INCLUDE "data/follow_sprite_sets.asm"
 INCLUDE "engine/gamefreak.asm"
 INCLUDE "engine/overworld/player_animations.asm"
 INCLUDE "home/play_time.asm"
+
+SECTION "bank47", ROMX
+
+INCLUDE "engine/palettes.asm"

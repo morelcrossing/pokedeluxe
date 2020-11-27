@@ -1,4 +1,4 @@
-GBCBasePalettes:
+GBCSpritePalettes:
 	; PAL_ROUTE
 	RGB 31, 31, 31
 	RGB 16, 31,  4
@@ -259,8 +259,8 @@ GBCBasePalettes:
 
 	; PAL_P_CHARMANDER ; 4
 	RGB 31, 31, 31
+	RGB 31, 31, 31
 	RGB 31, 16, 0
-	RGB 17, 6, 4
 	RGB  3,  3,  3
 
 	; PAL_P_CHARMELEON ; 5
