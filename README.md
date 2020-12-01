@@ -17,3 +17,5 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
 [Eevee](https://twitter.com/eevee) - Code used that allowed for species specific party member icons.
 
 [Emimonserrate](https://twitter.com/emimonserrate) - Sprites used for species party icons.
+
+[Danny-E](https://github.com/dannye) - Referenced code with issues getting unscaled back sprites
