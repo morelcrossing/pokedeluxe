@@ -13,9 +13,13 @@ TextBoxBorder::
 
 	ld de, SCREEN_WIDTH
 	add hl, de
-
+	
+	ld a, [wIsInBattle]
+	cp a, 0
+	jr nz, .inBattle
+	
+.inOverworld
 	; middle rows
-.next
 	push hl
 	ld a, $60
 	ld [hli], a
@@ -27,12 +31,34 @@ TextBoxBorder::
 	ld de, SCREEN_WIDTH
 	add hl, de
 	dec b
-	jr nz, .next
+	jr nz, .inOverworld
 
 	; bottom row
 	ld a, "└"
 	ld [hli], a
 	ld a, $61
+	call NPlaceChar
+	ld [hl], "┘"
+	ret
+.inBattle
+	; middle rows
+	push hl
+	ld a, $EA
+	ld [hli], a
+	ld a, " "
+	call NPlaceChar
+	ld [hl], "│"
+	pop hl
+
+	ld de, SCREEN_WIDTH
+	add hl, de
+	dec b
+	jr nz, .inBattle
+
+	; bottom row
+	ld a, "└"
+	ld [hli], a
+	ld a, $EB
 	call NPlaceChar
 	ld [hl], "┘"
 	ret

@@ -760,7 +760,6 @@ UncompressMonSprite::
 	ld a, [hl]
 	ld [wSpriteInputPtr + 1], a
 ; define (by index number) the bank that a pokemon's image is in
-; index = Mew, bank 1
 ; index = Kabutops fossil, bank $B
 ; index < $1F, bank 9
 ; $1F ≤ index < $4A, bank $A
@@ -769,28 +768,32 @@ UncompressMonSprite::
 ; $99 ≤ index, bank $D
 	ld a, [wcf91] ; XXX name for this ram location
 	ld b, a
-	;cp MEW
-	;ld a, BANK(MewPicFront)
-	;jr z, .GotBank
-	;ld a, b
 	cp FOSSIL_KABUTOPS
 	ld a, BANK(FossilKabutopsPic)
 	jr z, .GotBank
 	ld a, b
-	cp TANGELA + 1
-	ld a, BANK(TangelaPicFront)
+	cp GYARADOS + 1
+	ld a, BANK(GyaradosPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp MOLTRES + 1
-	ld a, BANK(MoltresPicFront)
+	cp DROWZEE + 1
+	ld a, BANK(DrowzeePicFront)
 	jr c, .GotBank
 	ld a, b
-	cp BEEDRILL + 2
-	ld a, BANK(BeedrillPicFront)
+	cp NINETALES + 1
+	ld a, BANK(NinetalesPicFront)
 	jr c, .GotBank
 	ld a, b
-	cp STARMIE + 1
-	ld a, BANK(StarmiePicFront)
+	cp KAKUNA + 1
+	ld a, BANK(KakunaPicFront)
+	jr c, .GotBank
+	ld a, b
+	cp MAGIKARP + 1
+	ld a, BANK(MagikarpPicFront)
+	jr c, .GotBank
+	ld a, b
+	cp RATTATA + 1
+	ld a, BANK(RattataPicFront)
 	jr c, .GotBank
 	ld a, BANK(VictreebelPicFront)
 .GotBank
@@ -3268,12 +3271,12 @@ LoadFontTilePatterns::
 	ld de, vFont
 	ld bc, FontGraphicsEnd - FontGraphics
 	ld a, BANK(FontGraphics)
-	jp FarCopyDataDouble ; if LCD is off, transfer all at once
+	jp FarCopyData ; if LCD is off, transfer all at once
 .on
 	ld de, FontGraphics
 	ld hl, vFont
-	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / $8
-	jp CopyVideoDataDouble ; if LCD is on, transfer during V-blank
+	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / $10
+	jp CopyVideoData ; if LCD is on, transfer during V-blank
 
 LoadTextBoxTilePatterns::
 	ld a, [rLCDC]

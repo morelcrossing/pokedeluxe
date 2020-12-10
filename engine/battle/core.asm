@@ -175,6 +175,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	dec c
 	dec c
 	jr nz, .slideSilhouettesLoop
+	call HideSprites
 	ld a, $1
 	ld [H_AUTOBGTRANSFERENABLED], a
 	ld a, $31
@@ -189,7 +190,6 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	call Delay3
 	ld b, SET_PAL_BATTLE
 	call RunPaletteCommand
-	call HideSprites
 	jpab PrintBeginningBattleText
 
 ; when a battle is starting, silhouettes of the player's pic and the enemy's pic are slid onto the screen
@@ -6584,7 +6584,10 @@ LoadPlayerBackPic:
 .next
 	ld a, BANK(RedPicBack)
 	call UncompressSpriteFromDE
-	predef ScaleSpriteByTwo
+	ld de, vBackPic
+	ld a, $66
+	ld c, a
+	call LoadUncompressedSpriteData
 	ld hl, wOAMBuffer
 	xor a
 	ld [hOAMTile], a ; initial tile number
@@ -6605,8 +6608,6 @@ LoadPlayerBackPic:
 	ld [hli], a ; OAM tile number
 	inc a ; increment tile number
 	ld [hOAMTile], a
-	ld a, $2
-	ld [hl], a
 	inc hl
 	dec c
 	jr nz, .innerLoop
@@ -6618,8 +6619,6 @@ LoadPlayerBackPic:
 	ld e, a
 	dec b
 	jr nz, .loop
-	ld de, vBackPic
-	call InterlaceMergeSpriteBuffers
 	ld a, $0
 	call SwitchSRAMBankAndLatchClockData
 	ld hl, vSprites
