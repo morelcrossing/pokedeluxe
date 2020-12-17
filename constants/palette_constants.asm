@@ -22,6 +22,7 @@ SET_PAL_TRAINER_CARD         EQU $0D
 SET_PAL_PARTY_POKEMON1       EQU $10
 SET_PAL_PARTY_POKEMON2       EQU $11
 SET_PAL_SPRITES              EQU $12
+SET_PAL_PARTY_MENU2          EQU $13
 UPDATE_PARTY_MENU_BLK_PACKET EQU $FC
 
 ; super game boy palettes
@@ -219,4 +220,9 @@ const_value = 0
 	const PAL_P_MEWTWO     ; 150
 	const PAL_P_MEW        ; 151
 	const PAL_SPRITES     ; $2F
-	const PAL_MENU        ; $30
+	const PAL_TEXTBOX        ; $30
+	const PAL_TEXT        ; $30
+	const PAL_PARTY_GREENBAR    ; $1F
+	const PAL_PARTY_ORANGEBAR   ; $20
+	const PAL_PARTY_REDBAR      ; $21
+	const PAL_PARTY_TEXT        ; $30

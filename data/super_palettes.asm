@@ -1385,15 +1385,45 @@ GBCBasePalettes:
 	RGB 29, 17, 21
 	RGB  5, 14, 21
 	RGB  3,  3,  3
-	
+
 	; PAL_SPRITES
 	RGB 31, 31, 31
 	RGB 29, 24, 21
 	RGB 25,  6,  5
 	RGB  3,  3,  3
-	
-	; PAL_MENU
+
+	; PAL_TEXTBOX
 	RGB 30, 30, 30
 	RGB 17, 17, 24
 	RGB 14, 13, 16
 	RGB  5,  5,  5
+
+	; PAL_TEXT
+	RGB 30, 30, 30
+	RGB 25, 25, 24
+	RGB 14, 13, 16
+	RGB 12, 12, 12
+
+	; PAL_PARTY_GREENBAR
+	RGB 6,  19, 21
+	RGB 31, 31, 31
+	RGB  1, 31,  1
+	RGB  3,  3,  3
+
+	; PAL_PARTY_ORANGEBAR
+	RGB 6,  19, 21
+	RGB 31, 31, 31
+	RGB 31, 20,  4
+	RGB  3,  3,  3
+
+	; PAL_PARTY_REDBAR
+	RGB 6,  19, 21
+	RGB 31, 31, 31
+	RGB 31,  1,  1
+	RGB  3,  3,  3
+
+	; PAL_PARTY_TEXT
+	RGB 6,  19, 21
+	RGB 14, 14, 14
+	RGB 11, 24, 25
+	RGB 30, 30, 30

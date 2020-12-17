@@ -40,6 +40,27 @@ UpdateBGPPaletteCommand:
 	push de
 	jp hl
 
+UpdateBGP2PaletteCommand:
+	call GetPredefRegisters
+	ld a, b
+	cp $ff
+	jr nz, .next
+	ld a, [wDefaultPaletteCommand] ; use default command if command ID is $ff
+.next
+	cp UPDATE_PARTY_MENU_BLK_PACKET
+	jp z, UpdatePartyMenuBlkPacket
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, SetPalFunctions
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld de, SendSGBBGP2Packets
+	push de
+	jp hl
+
 UpdateOBP0PaletteCommand:
 	call GetPredefRegisters
 	ld a, b
@@ -156,6 +177,11 @@ SetPal_StatusScreen:
 
 SetPal_PartyMenu:
 	ld hl, PalPacket_PartyMenu
+	ld de, wPartyMenuBlkPacket
+	ret
+
+SetPal_PartyMenu2:
+	ld hl, PalPacket_PartyMenu2
 	ld de, wPartyMenuBlkPacket
 	ret
 
@@ -400,6 +426,7 @@ SetPalFunctions:
 	dw SetPal_PartyPokemon1
 	dw SetPal_PartyPokemon2
 	dw SetPal_OverworldSprites
+	dw SetPal_PartyMenu2
 
 ; The length of the blk data of each badge on the Trainer Card.
 ; The Rainbow Badge has 3 entries because of its many colors.
@@ -870,6 +897,25 @@ SendSGBBGPPackets:
 	pop hl
 	jp SendSGBPacket
 
+SendSGBBGP2Packets:
+	ld a, [hGBC]
+	and a
+	jr z, .notGBC
+	push de
+	call InitGBCBGP2Palettes
+	pop hl
+	call InitGBCBGP2Palettes
+	ld a, [rLCDC]
+	and rLCDC_ENABLE_MASK
+	ret z
+	call Delay3
+	ret
+.notGBC
+	push de
+	call SendSGBPacket
+	pop hl
+	jp SendSGBPacket
+
 SendSGBOBP0Packets:
 	ld a, [hGBC]
 	and a
@@ -985,6 +1031,44 @@ index = 0
 		xor a ; CONVERT_BGP
 		call DMGPalToGBCPal
 		ld a, index
+		call TransferCurBGPData
+
+index = index + 1
+	ENDR
+
+	ret
+
+InitGBCBGP2Palettes:
+	ld a, [hl]
+	and $f8
+	cp $20
+	jp z, TranslatePalPacketToBGMapAttributes
+
+	inc hl
+
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		IF index > 0
+			pop hl
+		ENDC
+
+		ld a, [hli]
+		inc hl
+
+		IF index < (NUM_ACTIVE_PALS + -1)
+			push hl
+		ENDC
+
+		call GetGBCBasePalAddress
+		ld a, e
+		ld [wGBCBasePalPointers + index * 2], a
+		ld a, d
+		ld [wGBCBasePalPointers + index * 2 + 1], a
+
+		xor a ; CONVERT_BGP
+		call DMGPalToGBCPal
+		ld a, index + 4
 		call TransferCurBGPData
 
 index = index + 1
@@ -1216,7 +1300,6 @@ TransferBGPPals::
 	call .DoTransfer
 	ei
 	ret
-
 .DoTransfer:
 	xor a
 	or $80 ; auto-increment
@@ -1224,6 +1307,34 @@ TransferBGPPals::
 	ld de, rBGPD
 	ld hl, wBGPPalsBuffer
 	ld c, 4 * PAL_SIZE
+.loop
+	ld a, [hli]
+	ld [de], a
+	dec c
+	jr nz, .loop
+	ret
+
+TransferBGP2Pals::
+; Transfer the buffered BGP2 palettes.
+	ld a, [rLCDC]
+	and rLCDC_ENABLE_MASK
+	jr z, .lcdDisabled
+	di
+.waitLoop
+	ld a, [rLY]
+	cp 144
+	jr c, .waitLoop
+.lcdDisabled
+	call .DoTransfer
+	ei
+	ret
+.DoTransfer:
+	xor a
+	or $80 ; auto-increment
+	ld [rBGPI], a
+	ld de, rBGPD
+	ld hl, wBGPPalsBuffer
+	ld c, 4 * PAL_SIZE + 32
 .loop
 	ld a, [hli]
 	ld [de], a
@@ -1303,6 +1414,25 @@ index = index + 1
 	ENDR
 
 	call TransferBGPPals
+	ret
+
+_UpdateGBCPal_BGP2::
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		ld a, [wGBCBasePalPointers + index * 2]
+		ld e, a
+		ld a, [wGBCBasePalPointers + index * 2 + 1]
+		ld d, a
+		xor a ; CONVERT_BGP
+		call DMGPalToGBCPal
+		ld a, index + 4
+		call BufferBGPPal
+
+index = index + 1
+	ENDR
+
+	call TransferBGP2Pals
 	ret
 
 _UpdateGBCPal_OBP::

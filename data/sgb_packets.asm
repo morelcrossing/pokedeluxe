@@ -97,14 +97,20 @@ BlkPacket_NidorinoIntro:
 	ds 12
 
 BlkPacket_PartyMenu:
-	ATTR_BLK 7
+	ATTR_BLK 13
 	ATTR_BLK_DATA %110, 0,0,1, 01,00, 02,12 ; mon sprites: pal 0, everything else: pal 1
-	ATTR_BLK_DATA %010, 0,0,0, 05,01, 11,01 ; HP bar 0: pal set dynamically
-	ATTR_BLK_DATA %010, 0,0,0, 05,03, 11,03 ; HP bar 1: pal set dynamically
-	ATTR_BLK_DATA %010, 0,0,0, 05,05, 11,05 ; HP bar 2: pal set dynamically
-	ATTR_BLK_DATA %010, 0,0,0, 05,07, 11,07 ; HP bar 3: pal set dynamically
-	ATTR_BLK_DATA %010, 0,0,0, 05,09, 11,09 ; HP bar 4: pal set dynamically
-	ATTR_BLK_DATA %010, 0,0,0, 05,11, 11,11 ; HP bar 5: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,01, 12,01 ; HP bar 0: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,03, 12,03 ; HP bar 1: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,05, 12,05 ; HP bar 2: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,07, 12,07 ; HP bar 3: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,09, 12,09 ; HP bar 4: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,11, 12,11 ; HP bar 5: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,01, 12,01 ; HP bar 0: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,03, 12,03 ; HP bar 1: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,05, 12,05 ; HP bar 2: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,07, 12,07 ; HP bar 3: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,09, 12,09 ; HP bar 4: pal set dynamically
+	ATTR_BLK_DATA %010, 0,0,0, 07,11, 12,11 ; HP bar 5: pal set dynamically
 	ds 4
 
 BlkPacket_TrainerCard:
@@ -134,7 +140,7 @@ UnknownPacket_72751:
 	ds 8
 
 PalPacket_Empty:            PAL_SET 0, 0, 0, 0
-PalPacket_PartyMenu:        PAL_SET PAL_MENU, PAL_GREENBAR, PAL_YELLOWBAR, PAL_REDBAR
+PalPacket_PartyMenu:        PAL_SET PAL_PARTY_TEXT, PAL_PARTY_GREENBAR, PAL_PARTY_ORANGEBAR, PAL_PARTY_REDBAR
 PalPacket_Black:            PAL_SET PAL_BLACK, PAL_BLACK, PAL_BLACK, PAL_BLACK
 PalPacket_TownMap:          PAL_SET PAL_TOWNMAP, 0, 0, 0
 PalPacket_Pokedex:          PAL_SET PAL_BROWNMON, 0, 0, 0
@@ -147,6 +153,7 @@ PalPacket_GameFreakIntro:   PAL_SET PAL_GAMEFREAK, PAL_REDMON, PAL_VIRIDIAN, PAL
 UnknownPalPacket_72811:     PAL_SET PAL_25, PAL_25, PAL_25, PAL_25
 UnknownPalPacket_72821:     PAL_SET PAL_25, PAL_27, PAL_25, PAL_25
 PalPacket_OverworldSprites: PAL_SET PAL_SPRITES, 0, 0, 0
+PalPacket_PartyMenu2:       PAL_SET PAL_TEXTBOX, PAL_TEXTBOX, PAL_TEXTBOX, PAL_TEXT
 
 PalTrnPacket:  PAL_TRN
 MltReq1Packet: MLT_REQ 1

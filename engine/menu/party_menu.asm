@@ -43,9 +43,11 @@ DrawPartyMenu_:
 	callba LoadMonPartySpriteGfxWithLCDDisabled ; load pokemon icon graphics
 
 RedrawPartyMenu_:
-	ld a, 0
-	ld [wPartyPaletteCounter], a
-	callba ReloadPartyPalettes
+	callba ReloadPartyMonPalettes
+	;ld a, [wPartyBGPLoaded]
+	;cp 0
+	;jp z, .reloadBGP
+.starting
 	ld a, [wPartyMenuTypeOrMessageID]
 	cp SWAP_MONS_PARTY_MENU
 	jp z, .printMessage
@@ -128,6 +130,9 @@ RedrawPartyMenu_:
 	call SetPartyMenuHPBarColor ; color the HP bar (on SGB)
 	pop hl
 	jr .printLevel
+.reloadBGP
+	callba ReloadPartyBGP
+	jp .starting
 .teachMoveMenu
 	push hl
 	predef CanLearnTM ; check if the pokemon can learn the move

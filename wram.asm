@@ -3348,13 +3348,16 @@ wWhichDungeonWarp:: ; d71d
 	ds 1
 
 wOverworldPaletteLoaded:: ; d71e
-
-wSwitchPartyOAMIndex:: ; d71e
-
-wUnusedD71F:: ; d71e
 	ds 1
 
-	ds 8
+wSwitchPartyOAMIndex:: ; d71f
+	ds 6
+
+wPartyBGPLoaded:: ; d725
+	ds 1
+
+wUnusedD71F:: ; d726
+	ds 1
 
 wd728:: ; d727
 ; bit 0: using Strength outside of battle

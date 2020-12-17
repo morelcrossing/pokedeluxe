@@ -393,6 +393,7 @@ DisplayPartyMenu::
 	push af
 	xor a
 	ld [hTilesetType], a
+	ld [wPartyBGPLoaded], a
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
 	call PartyMenuInit
@@ -452,7 +453,8 @@ HandlePartyMenuInput::
 	ld [wMenuWrappingEnabled], a
 	ld a, $40
 	ld [wPartyMenuAnimMonEnabled], a
-	call HandleMenuInputPokemonSelection
+	callba HandlePartyMenuInputPokemonSelection
+	ld a, [hJoy5]
 	push af ; save hJoy5 OR wMenuWrapping enabled, if no inputs were selected within a certain period of time
 	bit 1, a ; was B button pressed?
 	ld a, $0
@@ -468,7 +470,9 @@ HandlePartyMenuInput::
 	jr nz, .asm_128f
 .asm_1258
 	pop af
-	call PlaceUnfilledArrowMenuCursor
+	push af
+	callba PlaceUnfilledPartyMenuCursor
+	pop af
 	ld b, a
 	ld hl, wd730
 	res 6, [hl] ; turn on letter printing delay
@@ -503,6 +507,8 @@ HandlePartyMenuInput::
 	pop af
 	ld [hTilesetType], a
 .noPokemonChosen
+	xor a
+	ld [wPartyBGPLoaded], a
 	call BankswitchBack
 	scf
 	ret
@@ -2204,6 +2210,7 @@ UpdateGBCPal_BGP::
 	cp b
 	jr z, .noChangeInBGP
 	callba _UpdateGBCPal_BGP
+	callba _UpdateGBCPal_BGP2
 .noChangeInBGP
 	pop hl
 	pop de

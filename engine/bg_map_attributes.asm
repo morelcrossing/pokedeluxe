@@ -187,7 +187,7 @@ ZeroOutCurrentBadgeAttributes:
 HandlePartyHPBarAttributes:
 ; hp bars require 3 (green, orange, red) colours, when there are only 2 "free" colours per palette
 ; therefore, we must transfer individual bg attributes where the locations of the hp bars are in vram
-	ld hl, vBGMap1 + $25 ; location of start of the HP bar in vram
+	ld hl, vBGMap1 + $26 ; location of start of the HP bar in vram
 	ld de, wPartyHPBarAttributes
 	ld c, PARTY_LENGTH
 .loop

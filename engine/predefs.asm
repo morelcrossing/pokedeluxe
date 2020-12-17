@@ -160,5 +160,6 @@ PredefPointers::
 	add_predef DisplayElevatorFloorMenu
 	add_predef OaksAideScript
 	add_predef UpdateBGPPaletteCommand
+	add_predef UpdateBGP2PaletteCommand
 	add_predef UpdateOBP0PaletteCommand
 	add_predef UpdateOBP1PaletteCommand

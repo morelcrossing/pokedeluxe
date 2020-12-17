@@ -2056,7 +2056,7 @@ ResetMapVariables::
 	ld [wUnusedD119], a
 	ld [wSpriteSetID], a
 	ld [wWalkBikeSurfStateCopy], a
-	ld [wOverworldPaletteLoaded + 6], a
+	ld [wOverworldPaletteLoaded], a
 	ret
 
 CopyMapViewToVRAM::
