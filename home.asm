@@ -226,6 +226,10 @@ DrawHPBar::
 	;push bc
 
 	; Left
+	ld a, [wHPBarType]
+	cp $2
+	jr z, .partyHPBar
+.barStart
 	ld a, $71 ; "HP:"
 	ld [hli], a
 	ld a, $62
@@ -283,6 +287,18 @@ DrawHPBar::
 	pop de
 	pop hl
 	ret
+.partyHPBar
+	dec hl
+	dec hl
+	dec hl
+	dec hl
+	ld a, $DA
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld a, $DB
+	ld [hli], a
+	jr .barStart
 
 
 ; loads pokemon data from one of multiple sources to wLoadedMon

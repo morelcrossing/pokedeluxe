@@ -383,6 +383,7 @@ PlacePartyMenuCursor:
 	ld [hl], a
 	push hl
 	add hl, bc
+	ld a, $DA
 	ld [hl], a
 	pop hl
 .skipClearingArrow
