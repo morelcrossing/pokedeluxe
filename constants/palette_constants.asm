@@ -23,6 +23,8 @@ SET_PAL_PARTY_POKEMON1       EQU $10
 SET_PAL_PARTY_POKEMON2       EQU $11
 SET_PAL_SPRITES              EQU $12
 SET_PAL_PARTY_MENU2          EQU $13
+SET_PAL_OVERWORLD1           EQU $14
+SET_PAL_OVERWORLD2           EQU $15
 UPDATE_PARTY_MENU_BLK_PACKET EQU $FC
 
 ; super game boy palettes
@@ -226,3 +228,9 @@ const_value = 0
 	const PAL_PARTY_ORANGEBAR   ; $20
 	const PAL_PARTY_REDBAR      ; $21
 	const PAL_PARTY_TEXT        ; $30
+	const PAL_OVERWORLD_1        ; $30
+	const PAL_OVERWORLD_2        ; $30
+	const PAL_OVERWORLD_3        ; $30
+	const PAL_OVERWORLD_4        ; $30
+	const PAL_OVERWORLD_5        ; $30
+	const PAL_OVERWORLD_6        ; $30

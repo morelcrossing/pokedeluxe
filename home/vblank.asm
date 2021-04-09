@@ -27,7 +27,14 @@ VBlank::
 
 	call AutoBgMapTransfer
 	call VBlankCopyBgMap
+	ld a, [wShowOverworld]
+	cp $01
+	jr z, .overworldDraw
 	call RedrawRowOrColumn
+	jr .okFinish
+.overworldDraw
+	callba RedrawOverworldRowOrColumn
+.okFinish
 	call VBlankCopy
 	call VBlankCopyDouble
 	call UpdateMovingBgTiles

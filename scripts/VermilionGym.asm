@@ -55,7 +55,7 @@ VermilionGym_ScriptPointers:
 	dw VermilionGymLTSurgePostBattle
 
 VermilionGymLTSurgePostBattle:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff ; did we lose?
 	jp z, VermilionGymResetScripts
 	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN

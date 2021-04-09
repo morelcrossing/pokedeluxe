@@ -15,17 +15,34 @@ DisplayTextIDInit:
 ; start menu with pokedex
 	coord hl, 10, 0
 	lb bc, 14, 8
-	jr nz, .drawTextBoxBorder
+	jr nz, .drawTextBoxStartPokedex
 ; start menu without pokedex
 	coord hl, 10, 0
 	lb bc, 12, 8
-	jr .drawTextBoxBorder
+	jr .drawTextBoxStartNoPokedex
 ; if text ID is not 0 (i.e. not the start menu) then do a standard dialogue text box
 .notStartMenu
 	coord hl, 0, 12
 	lb bc, 4, 18
-.drawTextBoxBorder
 	call TextBoxBorder
+	palCoord hl, 0, 12
+	lb bc, 4, 18
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
+	jr .skipDrawingTextBoxBorder
+.drawTextBoxStartPokedex
+	call TextBoxBorder
+	palCoord hl, 10, 0
+	lb bc, 14, 8
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
+	jr .skipDrawingTextBoxBorder
+.drawTextBoxStartNoPokedex
+	call TextBoxBorder
+	palCoord hl, 10, 0
+	lb bc, 12, 8
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 .skipDrawingTextBoxBorder
 	ld hl, wFontLoaded
 	set 0, [hl]
@@ -66,7 +83,8 @@ DisplayTextIDInit:
 	dec c
 	jr nz, .spriteStandStillLoop
 	ld b, $9c ; window background address
-	call CopyScreenTileBufferToVRAM ; transfer background in WRAM to VRAM
+	;callba CopyScreenPalBufferToVRAM
+	call CopyScreenTileBufferToVRAM
 	xor a
 	ld [hWY], a ; put the window on the screen
 	call LoadFontTilePatterns

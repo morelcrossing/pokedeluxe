@@ -1,5 +1,7 @@
 StartMenu_Pokedex:
 	predef ShowPokedexMenu
+	ld a, $01
+	ld [wShowOverworld], a
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call Delay3
 	callba LoadOverworldPalettes
@@ -26,6 +28,8 @@ StartMenu_Pokemon:
 	jr nc, .chosePokemon
 .exitMenu
 	call GBPalWhiteOutWithDelay3
+	ld a, $01
+	ld [wShowOverworld], a
 	call RestoreScreenTilesAndReloadTilePatterns
 	callba LoadOverworldPalettes
 	call LoadGBPal
@@ -518,6 +522,8 @@ StartMenu_TrainerInfo:
 	call GBPalWhiteOut
 	call ClearScreen
 	call UpdateSprites
+	ld a, $00
+	ld [wShowOverworld], a
 	callba ResetOverworldPaletteLoaded
 	ld a, [hTilesetType]
 	push af
@@ -530,6 +536,8 @@ StartMenu_TrainerInfo:
 	call GBPalNormal
 	call WaitForTextScrollButtonPress ; wait for button press
 	call GBPalWhiteOut
+	ld a, $01
+	ld [wShowOverworld], a
 	call LoadFontTilePatterns
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call RunDefaultPaletteCommand

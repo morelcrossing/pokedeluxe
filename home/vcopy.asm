@@ -162,6 +162,14 @@ AutoBgMapTransfer::
 .doTransfer
 	ld [H_AUTOBGTRANSFERPORTION], a ; store next portion
 	ld b, 6
+	;ld a, [wShowOverworld]
+	;cp $01
+	;jr z, .overworldTransfer
+	jr TransferBgRows
+;.overworldTransfer
+;	ld a,BANK(TransferBgRowsNew)
+;	ld [MBC1RomBank],a
+;	jp TransferBgRowsNew
 
 TransferBgRows::
 ; unrolled loop and using pop for speed
@@ -215,8 +223,14 @@ VBlankCopyBgMap::
 	ld b, a
 	xor a
 	ld [H_VBCOPYBGSRC], a ; disable transfer so it doesn't continue next V-blank
+	ld a, [wShowOverworld]
+	cp $01
+	jr z, .overworldCopy
 	jr TransferBgRows
-
+.overworldCopy
+	ld a,BANK(TransferBgRowsNew)
+	ld [MBC1RomBank],a
+	jp TransferBgRowsNew
 
 VBlankCopyDouble::
 ; Copy [H_VBCOPYDOUBLESIZE] 1bpp tiles
@@ -344,7 +358,6 @@ VBlankCopy::
 
 	ret
 
-
 UpdateMovingBgTiles::
 ; Animate water and flower
 ; tiles in the overworld.
@@ -353,9 +366,9 @@ UpdateMovingBgTiles::
 	and a
 	ret z ; no animations if indoors (or if a menu set this to 0)
 
-	ld a,[rLY]
-	cp $90 ; check if not in vblank period??? (maybe if vblank is too long)
-	ret c
+	;ld a,[rLY]
+	;cp $90  check if not in vblank period??? (maybe if vblank is too long)
+	;ret c
 
 	ld a, [hMovingBGTilesCounter1]
 	inc a
@@ -378,6 +391,11 @@ UpdateMovingBgTiles::
 	and 4
 	jr nz, .left
 .right
+	ld d, a
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .right
+	ld a, d
 	ld a, [hl]
 	rrca
 	ld [hli], a
@@ -385,6 +403,11 @@ UpdateMovingBgTiles::
 	jr nz, .right
 	jr .done
 .left
+	ld d, a
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .left
+	ld a, d
 	ld a, [hl]
 	rlca
 	ld [hli], a
@@ -415,6 +438,9 @@ UpdateMovingBgTiles::
 	ld de, vTileset + $3 * $10
 	ld c, $10
 .loop
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .loop
 	ld a, [hli]
 	ld [de], a
 	inc de

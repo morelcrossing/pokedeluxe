@@ -26,14 +26,20 @@ DisplayTextBoxID_:
 	push de
 	jp hl ; jump to the function
 .coordTableMatch
+	push hl
 	call GetTextBoxIDCoords
-	call GetAddressOfScreenCoords
+	call GetBaseTextCoord
 	call TextBoxBorder
+	pop hl
+	call GetTextBoxIDCoords
+	call GetBasePalCoord
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	ret
 .textAndCoordTableMatch
 	call GetTextBoxIDCoords
 	push hl
-	call GetAddressOfScreenCoords
+	call GetBaseTextCoord
 	call TextBoxBorder
 	pop hl
 	call GetTextBoxIDText
@@ -99,9 +105,21 @@ GetTextBoxIDText:
 	ld e, a ; column of upper left corner of text
 	ld a, [hl]
 	ld d, a ; row of upper left corner of text
-	call GetAddressOfScreenCoords
+	call GetBaseTextCoord
 	pop de ; restore text address
 	ret
+
+GetBaseTextCoord:
+	push bc
+	coord hl, 0, 0
+	ld bc, 20
+	jr GetAddressOfScreenCoords
+
+GetBasePalCoord:
+	push bc
+	palCoord hl, 0, 0
+	ld bc, $20
+	jr GetAddressOfScreenCoords
 
 ; function to point hl to the screen coordinates
 ; INPUT:
@@ -110,16 +128,12 @@ GetTextBoxIDText:
 ; OUTPUT:
 ; hl = address of upper left corner of text box
 GetAddressOfScreenCoords:
-	push bc
-	coord hl, 0, 0
-	ld bc, 20
-.loop ; loop to add d rows to the base address
 	ld a, d
 	and a
 	jr z, .addedRows
 	add hl, bc
 	dec d
-	jr .loop
+	jr GetAddressOfScreenCoords ; loop to add d rows to the base address
 .addedRows
 	pop bc
 	add hl, de
@@ -552,6 +566,10 @@ DisplayFieldMoveMonMenu:
 	coord hl, 11, 11
 	lb bc, 5, 7
 	call TextBoxBorder
+	palCoord hl, 11, 11
+	lb bc, 5, 7
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	call UpdateSprites
 	ld a, 12
 	ld [hFieldMoveMonMenuTopMenuItemX], a

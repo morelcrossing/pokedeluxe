@@ -2,6 +2,8 @@ ShowPokedexMenu:
 	call GBPalWhiteOut
 	call ClearScreen
 	call UpdateSprites
+	ld a, $00
+	ld [wShowOverworld], a
 	callba ResetOverworldPaletteLoaded
 	ld a, [wListScrollOffset]
 	push af

@@ -337,7 +337,7 @@ INCLUDE "data/trainer_moves.asm"
 INCLUDE "data/trainer_parties.asm"
 
 TrainerAI:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr z, .done ; if not a trainer, we're done here
 	ld a, [wLinkState]

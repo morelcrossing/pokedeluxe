@@ -147,7 +147,7 @@ SilphCo11Script_621ff:
 	ret
 
 SilphCo11Script3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, SilphCo11Script_62185
 	ld a, [wcf0d]
@@ -397,7 +397,7 @@ SilphCo11Script11:
 SilphCo11Script12:
 	ld a, $ff
 	ld [wJoyIgnore], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, SilphCo11Script_62185
 	ld a, $2

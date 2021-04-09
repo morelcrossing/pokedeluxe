@@ -51,9 +51,10 @@ EndOfBattle:
 	xor a
 	ld [wLowHealthAlarm], a ;disable low health alarm
 	ld [wChannelSoundIDs + Ch5], a
-	ld [wIsInBattle], a
+	ld [wBattleState], a
 	ld [wBattleType], a
 	ld [wMoveMissed], a
+	ld [wWasFishing], a
 	ld [wCurOpponent], a
 	ld [wForcePlayerToChooseMon], a
 	ld [wNumRunAttempts], a

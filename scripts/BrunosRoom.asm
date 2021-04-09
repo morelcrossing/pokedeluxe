@@ -107,7 +107,7 @@ BrunoScript3:
 
 BrunoScript2:
 	call EndTrainerBattle
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ResetBrunoScript
 	ld a, $1

@@ -53,7 +53,7 @@ DontAbandonLearning:
 	pop de
 	pop hl
 	ld [hl], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	jp z, PrintLearnedMove
 	ld a, [wWhichPokemon]

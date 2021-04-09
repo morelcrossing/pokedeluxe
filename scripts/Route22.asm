@@ -144,7 +144,7 @@ Route22Text_511bc:
 	db "@"
 
 Route22Script2:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, Route22Script_50ece
 	ld a, [wRivalStarter]
@@ -299,7 +299,7 @@ Route22Text_511d0:
 	db "@"
 
 Route22Script5:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, Route22Script_50ece
 	ld a, $2

@@ -21,10 +21,12 @@ MainMenu:
 	ld [hli], a
 	ld [hl], a
 	ld [wDefaultMap], a
+	ld [wBattleState], a
 	ld hl, wd72e
 	res 6, [hl]
 	call ClearScreen
-	call RunDefaultPaletteCommand
+	;call RunDefaultPaletteCommand
+	callba ReloadPartyBGP
 	call LoadTextBoxTilePatterns
 	call LoadFontTilePatterns
 	ld hl, wd730
@@ -36,6 +38,10 @@ MainMenu:
 	coord hl, 0, 0
 	lb bc, 6, 13
 	call TextBoxBorder
+	palCoord hl, 0, 0
+	lb bc, 6, 13
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	coord hl, 2, 2
 	ld de, ContinueText
 	call PlaceString
@@ -44,6 +50,10 @@ MainMenu:
 	coord hl, 0, 0
 	lb bc, 4, 13
 	call TextBoxBorder
+	palCoord hl, 0, 0
+	lb bc, 4, 13
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	coord hl, 2, 2
 	ld de, NewGameText
 	call PlaceString
@@ -184,6 +194,10 @@ DisplayContinueGameInfo:
 	coord hl, 4, 7
 	lb bc, 8, 14
 	call TextBoxBorder
+	palCoord hl, 4, 7
+	lb bc, 8, 14
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	coord hl, 5, 9
 	ld de, SaveScreenInfoText
 	call PlaceString
@@ -207,6 +221,10 @@ PrintSaveScreenText:
 	coord hl, 4, 0
 	lb bc, 8, 14
 	call TextBoxBorder
+	palCoord hl, 4, 0
+	lb bc, 8, 14
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	call LoadTextBoxTilePatterns
 	call UpdateSprites
 	coord hl, 5, 2

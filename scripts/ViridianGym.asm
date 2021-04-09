@@ -131,7 +131,7 @@ ViridianGymScript4:
 	jpba LoadSpinnerArrowTiles
 
 ViridianGymScript3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ViridianGymScript_748d6
 	ld a, $f0

@@ -2,7 +2,7 @@ AskName:
 	call SaveScreenTilesToBuffer1
 	call GetPredefRegisters
 	push hl
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	coord hl, 0, 0
 	lb bc, 4, 11
@@ -29,7 +29,7 @@ AskName:
 	ld a, NAME_MON_SCREEN
 	ld [wNamingScreenType], a
 	call DisplayNamingScreen
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	jr nz, .inBattle
 	call ReloadMapSpriteTilePatterns
@@ -171,7 +171,7 @@ DisplayNamingScreen:
 	ld [wAnimCounter], a
 	ld hl, wd730
 	res 6, [hl]
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	jp z, LoadTextBoxTilePatterns
 	jpab LoadHudTilePatterns

@@ -282,6 +282,16 @@ SetPal_OverworldSprites:
 	ld hl, wPalPacket
 	ret
 
+SetPal_Overworld1:
+	ld hl, PalPacket_Overworld1
+	ld de, BlkPacket_Nothing
+	ret
+
+SetPal_Overworld2:
+	ld hl, PalPacket_Overworld2
+	ld de, BlkPacket_Nothing
+	ret
+
 ; uses PalPacket_Empty to build a packet based on the current map
 SetPal_Overworld:
 	ld hl, PalPacket_Empty
@@ -427,6 +437,8 @@ SetPalFunctions:
 	dw SetPal_PartyPokemon2
 	dw SetPal_OverworldSprites
 	dw SetPal_PartyMenu2
+	dw SetPal_Overworld1
+	dw SetPal_Overworld2
 
 ; The length of the blk data of each badge on the Trainer Card.
 ; The Rainbow Badge has 3 entries because of its many colors.
@@ -904,7 +916,7 @@ SendSGBBGP2Packets:
 	push de
 	call InitGBCBGP2Palettes
 	pop hl
-	call InitGBCBGP2Palettes
+	;call InitGBCBGP2Palettes
 	ld a, [rLCDC]
 	and rLCDC_ENABLE_MASK
 	ret z

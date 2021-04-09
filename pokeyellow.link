@@ -357,6 +357,10 @@ ROMX $49
 	org $4000
 	"bank49"
 
+ROMX $4A
+	org $4000
+	"bank4A"
+
 WRAM0
 	org $c000
 	"WRAM Bank 0"

@@ -92,7 +92,6 @@ _AddPartyMon:
 	ld hl, wPokedexOwned
 	call FlagAction
 	ld a, c ; whether the mon was already flagged as owned
-	ld [wUnusedD153], a ; not read
 	ld a, [wd11e]
 	dec a
 	ld c, a
@@ -106,7 +105,7 @@ _AddPartyMon:
 	pop hl
 	push hl
 
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a ; is this a wild mon caught in battle?
 	jr nz, .copyEnemyMonData
 
@@ -233,7 +232,7 @@ _AddPartyMon:
 	ld a, [wCurEnemyLVL]
 	ld [de], a
 	inc de
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr nz, .calcFreshStats
 	ld hl, wEnemyMonMaxHP

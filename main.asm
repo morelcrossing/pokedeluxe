@@ -1700,7 +1700,7 @@ INCLUDE "engine/hidden_object_functions18.asm"
 SECTION "bank19", ROMX
 
 Overworld_GFX:     INCBIN "gfx/tilesets/overworld.2bpp"
-	ds 32
+
 Overworld_Block:   INCBIN "gfx/blocksets/overworld.bst"
 
 RedsHouse1_GFX:
@@ -1912,8 +1912,6 @@ INCLUDE "engine/overworld/hidden_items.asm"
 SECTION "bank1E", ROMX
 
 INCLUDE "engine/battle/animations.asm"
-
-INCLUDE "engine/overworld/cut2.asm"
 
 INCLUDE "engine/overworld/ssanne.asm"
 
@@ -2275,6 +2273,7 @@ INCLUDE "data/follow_sprite_sets.asm"
 INCLUDE "engine/gamefreak.asm"
 INCLUDE "engine/overworld/player_animations.asm"
 INCLUDE "home/play_time.asm"
+INCLUDE "engine/overworld/cut2.asm"
 
 SECTION "bank47", ROMX
 
@@ -2367,3 +2366,7 @@ WeepinbellPicFront::   INCBIN "pic/ymon/weepinbell.pic"
 WeepinbellPicBack::    INCBIN "pic/monback/weepinbellb.pic"
 VictreebelPicFront::   INCBIN "pic/ymon/victreebel.pic"
 VictreebelPicBack::    INCBIN "pic/monback/victreebelb.pic"
+
+SECTION "bank4A", ROMX
+
+INCLUDE "engine/tileset_colour.asm"

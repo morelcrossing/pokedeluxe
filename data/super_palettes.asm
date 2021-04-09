@@ -678,7 +678,7 @@ GBCBasePalettes:
 	RGB 16, 1, 14
 	RGB  3,  3,  3
 
-	; PAL_P_NIDOKING   ; 34 THIS WAS THE LAST ONE DONE
+	; PAL_P_NIDOKING   ; 34
 	RGB 31, 31, 31
 	RGB 23, 10, 28
 	RGB 12, 4, 14
@@ -1427,3 +1427,39 @@ GBCBasePalettes:
 	RGB 14, 14, 14
 	RGB 11, 24, 25
 	RGB 30, 30, 30
+	
+	; PAL_OVERWORLD_1
+	RGB 21, 30, 15
+	RGB 17, 28,  4
+	RGB  7, 21,  3
+	RGB  6,  7,  2
+	
+	; PAL_OVERWORLD_2
+	RGB 21, 30, 15
+	RGB 31, 31, 31
+	RGB 13, 21, 21
+	RGB  6,  8,  8
+	
+	; PAL_OVERWORLD_3
+	RGB 22, 29, 26
+	RGB 19, 16,  7
+	RGB 13, 11,  5
+	RGB  6,  7,  2
+	
+	; PAL_OVERWORLD_4
+	RGB 22, 29, 26
+	RGB 27, 24, 27
+	RGB 22, 13,  7
+	RGB  6,  7,  2
+	
+	; PAL_OVERWORLD_5
+	RGB 21, 30, 15
+	RGB 27, 24, 27
+	RGB 25,  8,  6
+	RGB  6,  7,  2
+	
+	; PAL_OVERWORLD_6
+	RGB 21, 30, 15
+	RGB 27, 24, 27
+	RGB  1, 18, 30
+	RGB  6,  7,  2

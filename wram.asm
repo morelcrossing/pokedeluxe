@@ -2382,7 +2382,7 @@ wMoveNum:: ; d0df
 wMovesString:: ; d0e0
 	ds 56
 
-wUnusedD119:: ; d118
+wTextboxHeight:: ; d118
 	ds 1
 
 wWalkBikeSurfStateCopy:: ; d119
@@ -2567,10 +2567,14 @@ wPseudoItemID:: ; d151
 ; that case, this would be ESCAPE_ROPE.
 	ds 1
 
-wUnusedD153:: ; d152
+wTextboxXOffset:: ; d152
 	ds 1
 
-	ds 2
+wTextboxYOffset:: ; d153
+	ds 1
+	
+wTextboxWidth:: ; d154
+	ds 1
 
 wEvoStoneItemID:: ; d155
 	ds 1
@@ -2690,7 +2694,7 @@ wXBlockCoord:: ; d363
 wLastMap:: ; d364
 	ds 1
 
-wUnusedD366:: ; d365
+wWasFishing:: ; d365
 	ds 1
 
 wCurMapTileset:: ; d366
@@ -3034,7 +3038,7 @@ wNumHoFTeams:: ; d5a1
 ; number of HOF teams
 	ds 1
 
-wUnusedD5A3:: ; d5a2
+wShowOverworld:: ; d5a2
 	ds 1
 
 wPlayerCoins:: ; d5a3
@@ -3331,7 +3335,11 @@ wDestinationMap:: ; d719
 ; destination map (for certain types of special warps, not ordinary walking)
 	ds 1
 
-wUnusedD71B:: ; d71a
+wBattleState:: ; d71a
+; lost battle, this is -1
+; no battle, this is 0
+; wild battle, this is 1
+; trainer battle, this is 2
 	ds 1
 
 wTileInFrontOfBoulderAndBoulderCollisionResult:: ; d71b

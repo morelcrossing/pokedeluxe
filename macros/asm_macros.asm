@@ -61,6 +61,19 @@ coord: MACRO
 	ENDC
 ENDM
 
+;\1 = r
+;\2 = X
+;\3 = Y
+;\4 = which tilemap (optional)
+palCoord: MACRO
+	validateCoords \2, \3
+	IF _NARG >= 4
+		ld \1, \4 + 32 * \3 + \2
+	ELSE
+		ld \1, vBGMap1 + 32 * \3 + \2
+	ENDC
+ENDM
+
 ;\1 = X
 ;\2 = Y
 ;\3 = which tilemap (optional)

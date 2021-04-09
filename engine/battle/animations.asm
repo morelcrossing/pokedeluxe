@@ -790,7 +790,7 @@ DoBallTossSpecialEffects:
 	ld a, SFX_BALL_TOSS
 	call PlaySound
 .skipPlayingSound
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp 02 ; is it a trainer battle?
 	jr z, .isTrainerBattle
 	ld a, [wd11e]
@@ -3157,7 +3157,7 @@ BattleAnimCopyTileMapToVRAM:
 	jp Delay3
 
 TossBallAnimation:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp 2
 	jr z, .BlockBall ; if in trainer battle, play different animation
 	ld a, [wPokeBallAnimData]

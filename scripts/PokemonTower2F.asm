@@ -57,7 +57,7 @@ CoordsData_6055e:
 	db $0F ; isn't this supposed to end in $ff?
 
 PokemonTower2Script1:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, PokemonTower2Script_604fe
 	ld a, $f0

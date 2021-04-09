@@ -41,7 +41,7 @@ RocketHideoutB4F_ScriptPointers:
 	dw RocketHideout4Script13
 
 RocketHideout4Script3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, RocketHideout4Script_45510
 	ld a, $fc
@@ -218,7 +218,7 @@ RocketHideout4Script10:
 RocketHideout4Script11:
 	ld a, $ff
 	ld [wJoyIgnore], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, RocketHideout4Script_45510
 	ld a, $2

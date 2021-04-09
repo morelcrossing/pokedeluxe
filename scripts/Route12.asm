@@ -42,7 +42,7 @@ Route12Script0:
 	ret
 
 Route12Script3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jr z, Route12Script_59606
 	call UpdateSprites

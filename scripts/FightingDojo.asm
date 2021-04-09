@@ -53,7 +53,7 @@ FightingDojoScript1:
 	ret
 
 FightingDojoScript3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, FightingDojoScript_5cd70
 	ld a, [wcf0d]

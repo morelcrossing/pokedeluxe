@@ -80,7 +80,7 @@ GaryScript2:
 	ret
 
 GaryScript3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ResetGaryScript
 	call UpdateSprites

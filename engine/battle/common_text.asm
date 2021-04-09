@@ -1,5 +1,5 @@
 PrintBeginningBattleText:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr nz, .trainerBattle
 	ld a, [wCurMap]
@@ -23,7 +23,7 @@ PrintBeginningBattleText:
 	call PlayCry
 .continue
 	ld hl, WildMonAppearedText
-	ld a, [wMoveMissed]
+	ld a, [wWasFishing]
 	and a
 	jr z, .notFishing
 	ld hl, HookedMonAttackedText

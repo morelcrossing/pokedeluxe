@@ -107,7 +107,7 @@ AgathaScript3:
 
 AgathaScript2:
 	call EndTrainerBattle
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ResetAgathaScript
 	ld a, $1

@@ -51,7 +51,7 @@ CeladonGameCornerScript0:
 	ret
 
 CeladonGameCornerScript1:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, CeladonGameCornerScript_48c07
 	ld a, $f0

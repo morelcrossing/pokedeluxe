@@ -14,7 +14,7 @@ TextBoxBorder::
 	ld de, SCREEN_WIDTH
 	add hl, de
 	
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp a, 0
 	jr nz, .inBattle
 	
@@ -43,7 +43,8 @@ TextBoxBorder::
 .inBattle
 	; middle rows
 	push hl
-	ld a, $EA
+	;ld a, $EA
+	ld a, $60
 	ld [hli], a
 	ld a, " "
 	call NPlaceChar
@@ -58,9 +59,21 @@ TextBoxBorder::
 	; bottom row
 	ld a, "└"
 	ld [hli], a
-	ld a, $EB
+	;ld a, $EB
+	ld a, $61
 	call NPlaceChar
 	ld [hl], "┘"
+	ret
+
+SaveTextboxPal::
+	ld a, h
+	ld [wTextboxXOffset], a
+	ld a, l
+	ld [wTextboxYOffset], a
+	ld a, b
+	ld [wTextboxWidth], a
+	ld a, c
+	ld [wTextboxHeight], a
 	ret
 
 NPlaceChar::

@@ -163,3 +163,4 @@ PredefPointers::
 	add_predef UpdateBGP2PaletteCommand
 	add_predef UpdateOBP0PaletteCommand
 	add_predef UpdateOBP1PaletteCommand
+	add_predef ApplyTextboxPalette

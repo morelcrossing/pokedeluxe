@@ -3,10 +3,10 @@ BorderPalettes:
 
 	ds $100
 
-	RGB 24,  6,  6
-	RGB 31, 25,  9
-	RGB 25, 10, 10
-	RGB  0,  0,  0
+	RGB 31, 31, 31
+	RGB 19, 6,  30
+	RGB 11, 2, 17
+	RGB  5,  3,  7
 
 	RGB 31, 31, 25
 	RGB 31, 31, 25
@@ -23,10 +23,10 @@ BorderPalettes:
 	RGB 31, 31, 25
 	RGB 31, 31, 25
 
-	RGB 18, 24, 18
-	RGB 25, 10, 10
-	RGB 15, 25, 15
-	RGB  0,  0,  0
+	RGB 22, 21, 24
+	RGB 17, 9, 18
+	RGB 4,  5, 12
+	RGB  5,  3,  7
 
 	RGB 31, 31, 25
 	RGB 31, 31, 25
@@ -43,10 +43,10 @@ BorderPalettes:
 	RGB 31, 31, 25
 	RGB 31, 31, 25
 
-	RGB 18,  6, 31
-	RGB 31, 25,  9
-	RGB 15, 25, 15
-	RGB  0,  0,  0
+	RGB 30,  21, 29
+	RGB 1, 11,  23
+	RGB 4,  5, 12
+	RGB  5,  3,  7
 
 	RGB 31, 31, 25
 	RGB 31, 31, 25
@@ -63,7 +63,7 @@ BorderPalettes:
 	RGB 31, 31, 25
 	RGB 31, 31, 25
 
-	RGB 12, 31,  6
+	RGB 4,  5, 12
 	RGB 31, 31, 25
 	RGB 31, 31, 25
 	RGB 31, 31, 25

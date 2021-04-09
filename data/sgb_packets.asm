@@ -56,6 +56,11 @@ BlkPacket_WholeScreen:
 	ATTR_BLK_DATA %011, 0,0,0, 00,00, 19,17
 	ds 8
 
+BlkPacket_Nothing:
+	ATTR_BLK 1
+	ATTR_BLK_DATA %011, 0,0,0, 00,00, 00,00
+	ds 8
+
 BlkPacket_Battle:
 	ATTR_BLK 5
 	ATTR_BLK_DATA %111, 2,2,0, 00,12, 19,17 ; message box: pal 2
@@ -154,6 +159,8 @@ UnknownPalPacket_72811:     PAL_SET PAL_25, PAL_25, PAL_25, PAL_25
 UnknownPalPacket_72821:     PAL_SET PAL_25, PAL_27, PAL_25, PAL_25
 PalPacket_OverworldSprites: PAL_SET PAL_SPRITES, 0, 0, 0
 PalPacket_PartyMenu2:       PAL_SET PAL_TEXTBOX, PAL_TEXTBOX, PAL_TEXTBOX, PAL_TEXT
+PalPacket_Overworld1:       PAL_SET PAL_OVERWORLD_1, PAL_OVERWORLD_2, PAL_OVERWORLD_3, PAL_OVERWORLD_4
+PalPacket_Overworld2:       PAL_SET PAL_OVERWORLD_5, PAL_OVERWORLD_6, PAL_TEXTBOX, PAL_TEXT
 
 PalTrnPacket:  PAL_TRN
 MltReq1Packet: MLT_REQ 1

@@ -37,7 +37,7 @@ FuchsiaGym_ScriptPointers:
 	dw FuchsiaGymScript3
 
 FuchsiaGymScript3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, FuchsiaGymScript_75477
 	ld a, $f0

@@ -1,7 +1,7 @@
 PrintWaitingText:
 	coord hl, 3, 10
 	lb bc, 1, 11
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	jr z, .asm_4b9a
 	call TextBoxBorder

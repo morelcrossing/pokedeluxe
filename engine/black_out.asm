@@ -5,7 +5,7 @@ ResetStatusAndHalveMoneyOnBlackout::
 	xor a ; gamefreak copypasting functions (double xor a)
 	ld [wBattleResult], a
 	ld [wWalkBikeSurfState], a
-	ld [wIsInBattle], a
+	ld [wBattleState], a
 	ld [wMapPalOffset], a
 	ld [wNPCMovementScriptFunctionNum], a
 	ld [hJoyHeld], a

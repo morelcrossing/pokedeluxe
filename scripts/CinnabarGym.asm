@@ -128,7 +128,7 @@ CinnabarGymScript1:
 
 CinnabarGymScript2:
 	call CinnabarGymScript_753e9
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, CinnabarGymScript_75792
 	ld a, [wTrainerHeaderFlagBit]
@@ -194,7 +194,7 @@ CinnabarGymScript_75041:
 
 CinnabarGymScript3:
 	call CinnabarGymScript_753e9
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, CinnabarGymScript_75792
 	ld a, $f0

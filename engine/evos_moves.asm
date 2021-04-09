@@ -94,7 +94,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	jp c, Evolution_PartyMonLoop ; if so, go the next mon
 	jr .doEvolution
 .checkItemEvo
-	ld a, [wIsInBattle] ; are we in battle?
+	ld a, [wBattleState] ; are we in battle?
 	and a
 	ld a, [hli]
 	jp nz, .nextEvoEntry1 ; don't evolve if we're in a battle as wcf91 could be holding the last mon sent out
@@ -215,7 +215,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	call LearnMoveFromLevelUp
 	pop hl
 	predef SetPartyMonTypes
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	call z, Evolution_ReloadTilesetTilePatterns
 	predef IndexToPokedex
@@ -254,7 +254,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld a, [wLinkState]
 	cp LINK_STATE_TRADING
 	ret z
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	ret nz
 	ld a, [wEvolutionOccurred]

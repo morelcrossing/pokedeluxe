@@ -101,7 +101,7 @@ MtMoon3Script_49d28:
 	ret
 
 MtMoon3Script3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, MtMoon3Script_49cd7
 	call UpdateSprites
@@ -342,7 +342,7 @@ MtMoon3Script12:
 MtMoon3Script13:
 	ld a, $ff
 	ld [wJoyIgnore], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, MtMoon3Script_49cd7
 	ld a, $2

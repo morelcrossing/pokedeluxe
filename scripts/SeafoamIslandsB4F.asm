@@ -19,7 +19,7 @@ SeafoamIslandsB4F_ScriptPointers:
 	dw SeafoamIslands5Script4
 
 SeafoamIslands5Script4:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jr z, SeafoamIslands5Script_467a5
 	call EndTrainerBattle

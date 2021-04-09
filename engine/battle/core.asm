@@ -242,7 +242,7 @@ StartBattle:
 .foundFirstAliveEnemyMon
 	ld a, d
 	ld [wSerialExchangeNybbleReceiveData], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a ; is it a trainer battle?
 	call nz, EnemySendOutFirstMon ; if it is a trainer battle, send out enemy mon
 	ld c, 40
@@ -807,7 +807,7 @@ HandleEnemyMonFainted:
 	ld a, [hli]
 	or [hl] ; is battle mon HP zero?
 	call nz, DrawPlayerHUDAndHPBar ; if battle mon HP is not zero, draw player HD and HP bar
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	ret z ; return if it's a wild battle
 	call AnyEnemyPokemonAliveCheck
@@ -830,7 +830,7 @@ HandleEnemyMonFainted:
 
 FaintEnemyPokemon:
 	call ReadPlayerMonCurHPAndStatus
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr z, .wild
 	ld a, [wEnemyMonPartyPos]
@@ -872,7 +872,7 @@ FaintEnemyPokemon:
 	coord hl, 0, 0
 	lb bc, 4, 11
 	call ClearScreenArea
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr z, .wild_win
 	xor a
@@ -1082,7 +1082,7 @@ HandlePlayerMonFainted:
 	jr nz, .doUseNextMonDialogue ; if not, jump
 ; the enemy mon has 0 HP
 	call FaintEnemyPokemon
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	ret z            ; if wild encounter, battle is over
 	call AnyEnemyPokemonAliveCheck
@@ -1181,7 +1181,7 @@ PlayerMonFaintedText:
 DoUseNextMonDialogue:
 	call PrintEmptyString
 	call SaveScreenTilesToBuffer1
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	dec a
 	ret nz ; return if it's a trainer battle
@@ -1632,7 +1632,7 @@ TryRunningFromBattle:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jp z, .canEscape
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr nz, .trainerBattle ; jump if it's a trainer battle
 	ld a, [wNumRunAttempts]
@@ -2513,7 +2513,7 @@ PartyMenuOrRockOrRun:
 	call GBPalWhiteOut
 	call LoadHudTilePatterns
 	call LoadScreenTilesFromBuffer2
-	call RunDefaultPaletteCommand
+	call RunDefaultPaletteCommand ; RUN ALL 4 PALETTE COMMANDS
 	call GBPalNormal
 	jp DisplayBattleMenu
 .partyMonDeselected
@@ -3199,7 +3199,7 @@ SelectEnemyMove:
 	ld a, STRUGGLE ; struggle if the only move is disabled
 	jr nz, .done
 .atLeastTwoMovesAvailable
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr z, .chooseRandomMove ; wild encounter
 	callab AIEnemyTrainerChooseMoves
@@ -3524,7 +3524,7 @@ GetOutText:
 	db "@"
 
 IsGhostBattle:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	ret nz
 	ld a, [wCurMap]
@@ -6376,7 +6376,7 @@ LoadEnemyMonData:
 	ld a, [hli]
 	ld b, [hl]
 	jr nz, .storeDVs
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $2 ; is it a trainer battle?
 ; fixed DVs for trainer mon
 	ld a, $98
@@ -6399,7 +6399,7 @@ LoadEnemyMonData:
 	push hl
 	call CalcStats
 	pop hl
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $2 ; is it a trainer battle?
 	jr z, .copyHPAndStatusFromPartyData
 	ld a, [wEnemyBattleStatus3]
@@ -6442,7 +6442,7 @@ LoadEnemyMonData:
 	ld a, [hli]            ; copy catch rate
 	ld [de], a
 	inc de
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $2 ; is it a trainer battle?
 	jr nz, .copyStandardMoves
 ; if it's a trainer battle, copy moves from enemy party data
@@ -7951,7 +7951,7 @@ SwitchAndTeleportEffect:
 	ld a, [H_WHOSETURN]
 	and a
 	jr nz, .handleEnemy
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr nz, .notWildBattle1
 	ld a, [wCurEnemyLVL]
@@ -7993,7 +7993,7 @@ SwitchAndTeleportEffect:
 	jp nz, PrintText
 	jp PrintButItFailedText_
 .handleEnemy
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	jr nz, .notWildBattle2
 	ld a, [wBattleMonLevel]

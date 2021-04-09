@@ -254,7 +254,7 @@ OverworldLoopLessDelay::
 	and a
 	jp nz, WarpFound2
 .notSafariZone
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	jp nz, CheckWarpsNoCollision
 	predef ApplyOutOfBattlePoisonDamage ; also increment daycare mon exp
@@ -315,7 +315,7 @@ StepCountCheck::
 
 AllPokemonFainted::
 	ld a, $ff
-	ld [wIsInBattle], a
+	ld [wBattleState], a
 	call RunMapScript
 	jp HandleBlackOut
 
@@ -463,8 +463,6 @@ WarpFound2::
 ; this is for handling "outside" maps that can't have the 0xFF destination map
 	ld a, [wCurMap]
 	ld [wLastMap], a
-	ld a, [wCurMapWidth]
-	ld [wUnusedD366], a ; not read
 	ld a, [hWarpDestinationMap]
 	ld [wCurMap], a
 	cp ROCK_TUNNEL_1F
@@ -764,7 +762,7 @@ HandleFlyWarpOrDungeonWarp::
 	call Delay3
 	xor a
 	ld [wBattleResult], a
-	ld [wIsInBattle], a
+	ld [wBattleState], a
 	ld [wMapPalOffset], a
 	ld hl, wd732
 	set 2, [hl] ; fly warp or dungeon warp
@@ -1827,7 +1825,6 @@ Func_0db5:: ; XXX
 	callba LoadUnusedBluesHouseMissableObjectData
 asm_0dbd
 	ld a, [wCurMapTileset]
-	ld [wUnusedD119], a
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
 	ld a, [wCurMapTileset]
@@ -1986,16 +1983,19 @@ LoadMapData::
 	ld a, [H_LOADEDROMBANK]
 	push af
 	call DisableLCD
+	ld a, $01
+	ld [wShowOverworld], a
 	call ResetMapVariables
 	call LoadTextBoxTilePatterns
 	call LoadMapHeader
 	call InitMapSprites ; load tile pattern data for sprites
 	call LoadScreenRelatedData
-	call CopyMapViewToVRAM
+	callba LoadCurrentTilesetPalette
+	callba UpdateOverworldPalettes
+	callba CopyMapViewBGMap0
 	ld a, $01
 	ld [wUpdateSpritesEnabled], a
 	call EnableLCD
-	callba UpdateOverworldPalettes
 	call LoadPlayerSpriteGraphics
 	ld a, [wd732]
 	and 1 << 4 | 1 << 3 ; fly warp or dungeon warp
@@ -2024,9 +2024,8 @@ ReloadMapAfterSurfingMinigame::
 	ld a, [wCurMap]
 	call SwitchToMapRomBank
 	call LoadScreenRelatedData
-	call CopyMapViewToVRAM
-	ld de, vBGMap1
-	call CopyMapViewToVRAM2
+	callba CopyMapViewBGMap0
+	callba CopyMapViewBGMap1
 	call EnableLCD
 	call ReloadMapSpriteTilePatterns
 	pop af
@@ -2053,34 +2052,10 @@ ResetMapVariables::
 	ld [hSCY], a
 	ld [hSCX], a
 	ld [wWalkCounter], a
-	ld [wUnusedD119], a
 	ld [wSpriteSetID], a
+	ld [wWasFishing], a
 	ld [wWalkBikeSurfStateCopy], a
 	ld [wOverworldPaletteLoaded], a
-	ret
-
-CopyMapViewToVRAM::
-; copy current map view to VRAM
-	ld de, vBGMap0
-CopyMapViewToVRAM2:
-	ld hl, wTileMap
-	ld b, 18
-.vramCopyLoop
-	ld c, 20
-.vramCopyInnerLoop
-	ld a, [hli]
-	ld [de], a
-	inc e
-	dec c
-	jr nz, .vramCopyInnerLoop
-	ld a, 32 - 20 ; total vram map width in tiles - screen width in tiles
-	add e
-	ld e, a
-	jr nc, .noCarry
-	inc d
-.noCarry
-	dec b
-	jr nz, .vramCopyLoop
 	ret
 
 ; function to switch to the ROM bank that a map is stored in
@@ -2156,7 +2131,7 @@ InitSprites::
 	push hl
 	push de
 	push bc
-	call ZeroSpriteStateData
+	callba ZeroSpriteStateData
 	call DisableRegularSprites
 	ld hl, wMapSpriteData
 	ld bc, $20
@@ -2202,21 +2177,6 @@ InitSprites::
 	inc c
 	dec b
 	jr nz, .loadSpriteLoop
-	ret
-
-ZeroSpriteStateData::
-; zero C110-C1EF and C210-C2EF
-; C1F0-C1FF and C2F0-C2FF is used for Pikachu
-	ld hl, wSpriteStateData1 + $10
-	ld de, wSpriteStateData2 + $10
-	xor a
-	ld b, 14 * $10
-.loop
-	ld [hli], a
-	ld [de], a
-	inc e
-	dec b
-	jr nz, .loop
 	ret
 
 DisableRegularSprites::

@@ -86,7 +86,7 @@ LanceTriggerMovementCoords:
 
 LanceScript2:
 	call EndTrainerBattle
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ResetLanceScript
 	ld a, $1

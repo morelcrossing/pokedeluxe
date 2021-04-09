@@ -191,7 +191,7 @@ SilphCo7Script3:
 	ret
 
 SilphCo7Script4:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, SilphCo7Text_51c0c
 	ld a, $f0

@@ -43,7 +43,7 @@ Route16Script0:
 	ret
 
 Route16Script3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, Route16Script_59946
 	call UpdateSprites

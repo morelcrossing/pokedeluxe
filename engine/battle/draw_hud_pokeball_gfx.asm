@@ -1,7 +1,7 @@
 DrawAllPokeballs:
 	call LoadPartyPokeballGfx
 	call SetupOwnPartyPokeballs
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a
 	ret z ; return if wild pokémon
 	jp SetupEnemyPartyPokeballs

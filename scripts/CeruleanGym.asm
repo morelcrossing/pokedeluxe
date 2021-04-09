@@ -36,7 +36,7 @@ CeruleanGym_ScriptPointers:
 	dw CeruleanGymScript3
 
 CeruleanGymScript3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, CeruleanGymScript_5c6ed
 	ld a, $f0

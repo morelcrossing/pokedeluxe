@@ -47,7 +47,7 @@ asm_f601d:
 	ld a, $ff
 	ld [wEnemyMonPartyPos], a
 	ld a, $2
-	ld [wIsInBattle], a
+	ld [wBattleState], a
 
 	; Is this a major story battle?
 	ld a,[wLoneAttackNo]
@@ -58,7 +58,7 @@ asm_f601d:
 
 InitWildBattle:
 	ld a, $1
-	ld [wIsInBattle], a
+	ld [wBattleState], a
 	callab LoadEnemyMonData
 	callab DoBattleTransitionAndInitBattleVariables
 	ld a, [wCurOpponent]
@@ -131,7 +131,7 @@ InitBattle_Common:
 	ld bc, $40a
 	call ClearScreenArea
 	call ClearSprites
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a ; is it a wild battle?
 	ld hl, DrawEnemyHUDAndHPBar
 	ld b,BANK(DrawEnemyHUDAndHPBar)
@@ -196,7 +196,7 @@ AnimateSendingOutMon:
 	ld a, [$ffe1]
 	ld [H_DOWNARROWBLINKCNT1], a
 	ld b, $4c
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	and a
 	jr z, .asm_f61ef
 	add b

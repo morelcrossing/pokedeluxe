@@ -105,7 +105,7 @@ SSAnne2Script1:
 	ret
 
 SSAnne2Script2:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, SSAnne2Script_613ab
 	call SSAnne2Script_61416

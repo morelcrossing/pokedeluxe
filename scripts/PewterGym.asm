@@ -37,7 +37,7 @@ PewterGym_ScriptPointers:
 	dw PewterGymScript3
 
 PewterGymScript3:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, PewterGymScript_5c3bf
 	ld a, $f0

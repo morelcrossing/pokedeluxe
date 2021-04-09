@@ -20,7 +20,7 @@ CeruleanCity_ScriptPointers:
 	dw CeruleanCityScript4
 
 CeruleanCityScript4:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, CeruleanCityScript_1948c
 	ld a, $f0
@@ -144,7 +144,7 @@ CeruleanCityScript1:
 	ret
 
 CeruleanCityScript2:
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, CeruleanCityScript_1948c
 	call CeruleanCityScript_1955d

@@ -408,6 +408,10 @@ InitOptionsMenu:
 	coord hl, 0, 0
 	lb bc, SCREEN_HEIGHT - 2, SCREEN_WIDTH - 2
 	call TextBoxBorder
+	palCoord hl, 0, 0
+	lb bc, SCREEN_HEIGHT - 2, SCREEN_WIDTH - 2
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
 	coord hl, 2, 2
 	ld de, AllOptionsText
 	call PlaceString

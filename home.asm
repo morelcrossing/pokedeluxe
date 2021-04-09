@@ -412,6 +412,8 @@ DisplayPartyMenu::
 	ld [wPartyBGPLoaded], a
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
+	ld a, $00
+	ld [wShowOverworld], a
 	call PartyMenuInit
 	call DrawPartyMenu
 	jp HandlePartyMenuInput
@@ -1237,6 +1239,7 @@ CloseTextDisplay::
 	ld [hWY], a ; move the window off the screen
 	call DelayFrame
 	call LoadGBPal
+	;callba UpdateOverworldBGPPalette
 	xor a
 	ld [H_AUTOBGTRANSFERENABLED], a ; disable continuous WRAM to VRAM transfer each V-blank
 ; loop to make sprites face the directions they originally faced before the dialogue
@@ -2532,7 +2535,7 @@ EndTrainerBattle::
 	res 7, [hl]
 	ld hl, wFlags_0xcd60
 	res 0, [hl]                  ; player is no longer engaged by any trainer
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ResetButtonPressedAndMapScript
 	ld a, $2
@@ -3053,16 +3056,16 @@ DecodeRLEList::
 	inc a                        ; include sentinel in counting
 	ret
 
-; sets movement byte 1 for sprite [H_SPRITEINDEX] to $FE and byte 2 to [hSpriteMovementByte2]
-SetSpriteMovementBytesToFE::
-	push hl
-	call GetSpriteMovementByte1Pointer
-	ld [hl], $fe
-	call GetSpriteMovementByte2Pointer
-	ld a, [hSpriteMovementByte2]
-	ld [hl], a
-	pop hl
-	ret
+; sets movement byte 1 for sprite [H_SPRITEINDEX] to $FE and byte 2 to [hSpriteMovementByte2] COMMENTING OUT AS IT DOESNT APPEAR TO BE USED
+;SetSpriteMovementBytesToFE::
+;	push hl
+;	call GetSpriteMovementByte1Pointer
+;	ld [hl], $fe
+;	call GetSpriteMovementByte2Pointer
+;	ld a, [hSpriteMovementByte2]
+;	ld [hl], a
+;	pop hl
+;	ret
 
 ; sets both movement bytes for sprite [H_SPRITEINDEX] to $FF
 SetSpriteMovementBytesToFF::
@@ -3120,31 +3123,13 @@ GetTrainerInformation::
 	inc de
 	ld a, [hli]
 	ld [de], a
-	call IsFightingJessieJames
+	callba IsFightingJessieJames
 	jp BankswitchBack
 .linkBattle
 	ld hl, wTrainerPicPointer
 	ld de, RedPicFront
 	ld [hl], e
 	inc hl
-	ld [hl], d
-	ret
-
-IsFightingJessieJames::
-	ld a, [wTrainerClass]
-	cp ROCKET
-	ret nz
-	ld a, [wTrainerNo]
-	cp $2a
-	ret c
-	ld de, JessieJamesPic
-	cp $2e
-	jr c, .dummy
-	ld de, JessieJamesPic ; possibly meant to add another pic
-.dummy
-	ld hl, wTrainerPicPointer
-	ld a, e
-	ld [hli], a
 	ld [hl], d
 	ret
 

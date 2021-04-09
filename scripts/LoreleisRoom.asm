@@ -108,7 +108,7 @@ LoreleiScript3:
 
 LoreleiScript2:
 	call EndTrainerBattle
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, ResetLoreleiScript
 	ld a, $1

@@ -9,9 +9,6 @@ InitPlayerData2:
 	ld a, [hRandomAdd]
 	ld [wPlayerID + 1], a
 
-	ld a, $ff
-	ld [wUnusedD71B], a
-
 	ld a, 90 ; initialize happiness to 90
 	ld [wPikachuHappiness], a
 	ld a, $80

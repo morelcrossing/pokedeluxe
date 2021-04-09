@@ -163,7 +163,7 @@ PokemonTower7Script7:
 PokemonTower7Script8:
 	ld a, $ff
 	ld [wJoyIgnore], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	cp $ff
 	jp z, PokemonTower7Script_60d01
 	ld a, $2

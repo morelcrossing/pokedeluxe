@@ -1,3 +1,10 @@
+LoadFilemenuPalette:
+	ld b, SET_PAL_PARTY_MENU
+	call RunBGPPaletteCommand
+	ld b, SET_PAL_PARTY_MENU2
+	call RunBGP2PaletteCommand
+	ret
+
 ; Reload all party OBP palettes as indexes may have changed
 ReloadPartyMonPalettes:
 	ld a, 0
@@ -72,8 +79,9 @@ ResetOverworldPaletteLoaded:
 	ret
 
 LoadOverworldPalettes:
-	call LoadOverworldBGPPalette
 	call ReloadFadeBGPPalette
+	call LoadOverworldBGPPalette
+	call LoadOverworldBGP2Palette
 	call LoadOverworldOBP0Palette
 	call LoadOverworldOBP1Palette
 	call ReloadFadeOBPPalette
@@ -86,6 +94,7 @@ UpdateOverworldPalettes:
 	and a
 	ret z
 	call UpdateOverworldBGPPalette
+	call UpdateOverworldBGP2Palette
 	call UpdateOverworldOBP0Palette
 	call UpdateOverworldOBP1Palette
 	ret
@@ -98,6 +107,16 @@ LoadOverworldBGPPalette:
 	and a
 	ret nz
 	call UpdateOverworldBGPPalette
+	ret
+
+LoadOverworldBGP2Palette:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld a, [wOverworldPaletteLoaded]
+	and a
+	ret nz
+	call UpdateOverworldBGP2Palette
 	ret
 
 LoadOverworldOBP0Palette:
@@ -121,8 +140,13 @@ LoadOverworldOBP1Palette:
 	ret
 	
 UpdateOverworldBGPPalette:
-	ld b, SET_PAL_OVERWORLD
+	ld b, SET_PAL_OVERWORLD1
 	predef_jump UpdateBGPPaletteCommand
+	ret
+
+UpdateOverworldBGP2Palette:
+	ld b, SET_PAL_OVERWORLD2
+	predef_jump UpdateBGP2PaletteCommand
 	ret
 
 UpdateOverworldOBP0Palette:
@@ -201,28 +225,6 @@ IgnoreInputForHalfSecond:
 	ld a, [hl]
 	or %00100110
 	ld [hl], a ; set ignore input bit
-	ret
-
-UpdateBGPFade:
-	push af
-	ld a, [hGBC]
-	and a
-	jr z, .notGBC
-	push bc
-	push de
-	push hl
-	ld a, [rBGP]
-	ld b, a
-	ld a, [wLastBGP]
-	cp b
-	jr z, .noChangeInBGP
-	callba _UpdateGBCPal_BGP
-.noChangeInBGP
-	pop hl
-	pop de
-	pop bc
-.notGBC
-	pop af
 	ret
 
 HandlePartyMenuInputPokemonSelection:
@@ -441,4 +443,83 @@ PlaceUnfilledPartyMenuCursor:
 	ld bc, SCREEN_WIDTH
 	add hl, bc
 	ld [hl], a
+	ret
+	
+ApplyTextboxPalette:
+	di
+	ld a, $1
+	ld [rVBK], a
+	ld a, [wTextboxXOffset]
+	ld h, a
+	ld a, [wTextboxYOffset]
+	ld l, a
+	ld a, [wTextboxWidth]
+	ld b, a
+	ld a, [wTextboxHeight]
+	ld c, a
+	inc b
+	inc b
+	inc c
+	inc c
+.loop ; for each row of the textbox
+	push hl
+	ld e, c
+	call SetTilePalette
+	pop hl
+	ld de, $20
+	add hl, de
+	dec b
+	jr nz, .loop
+.done
+	call Func_3082
+	ld a, [rIF]
+	res VBLANK, a
+	ld [rIF], a
+	xor a
+	ld [rVBK], a
+	ei
+	ret
+
+SetTilePalette:
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, SetTilePalette
+.applyTile
+	ld a, $06
+	ld [hli], a
+	dec e
+	jr nz, SetTilePalette
+	ret
+
+ZeroSpriteStateData::
+; zero C110-C1EF and C210-C2EF
+; C1F0-C1FF and C2F0-C2FF is used for Pikachu
+	ld hl, wSpriteStateData1 + $10
+	ld de, wSpriteStateData2 + $10
+	xor a
+	ld b, 14 * $10
+.loop
+	ld [hli], a
+	ld [de], a
+	inc e
+	dec b
+	jr nz, .loop
+	ret
+
+IsFightingJessieJames::
+	ld a, [wTrainerClass]
+	cp ROCKET
+	ret nz
+	ld a, [wTrainerNo]
+	cp $2a
+	ret c
+	ld de, JessieJamesPic
+	cp $2e
+	jr c, .dummy
+	ld de, JessieJamesPic ; possibly meant to add another pic
+.dummy
+	ld hl, wTrainerPicPointer
+	ld a, e
+	ld [hli], a
+	ld [hl], d
 	ret

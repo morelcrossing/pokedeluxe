@@ -83,7 +83,7 @@ GainExperience:
 	ld a, 1
 .next
 	ld [wGainBoostedExp], a
-	ld a, [wIsInBattle]
+	ld a, [wBattleState]
 	dec a ; is it a trainer battle?
 	call nz, BoostExp ; if so, boost exp
 	inc hl
