@@ -234,3 +234,5 @@ const_value = 0
 	const PAL_OVERWORLD_4        ; $30
 	const PAL_OVERWORLD_5        ; $30
 	const PAL_OVERWORLD_6        ; $30
+	const PAL_BATTLETEXT1        ; $30
+	const PAL_BATTLETEXT2        ; $30

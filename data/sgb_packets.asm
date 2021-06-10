@@ -63,7 +63,7 @@ BlkPacket_Nothing:
 
 BlkPacket_Battle:
 	ATTR_BLK 5
-	ATTR_BLK_DATA %111, 2,2,0, 00,12, 19,17 ; message box: pal 2
+	ATTR_BLK_DATA %011, 3,3,0, 00,12, 19,17 ; message box: pal 2
 	ATTR_BLK_DATA %011, 1,1,0, 01,00, 10,03 ; enemy HP bar: pal 1
 	ATTR_BLK_DATA %011, 0,0,0, 10,07, 19,10 ; player HP bar: pal 0
 	ATTR_BLK_DATA %011, 2,2,0, 00,04, 08,11 ; player mon: pal 2
@@ -158,7 +158,7 @@ PalPacket_GameFreakIntro:   PAL_SET PAL_GAMEFREAK, PAL_REDMON, PAL_VIRIDIAN, PAL
 UnknownPalPacket_72811:     PAL_SET PAL_25, PAL_25, PAL_25, PAL_25
 UnknownPalPacket_72821:     PAL_SET PAL_25, PAL_27, PAL_25, PAL_25
 PalPacket_OverworldSprites: PAL_SET PAL_SPRITES, 0, 0, 0
-PalPacket_PartyMenu2:       PAL_SET PAL_TEXTBOX, PAL_TEXTBOX, PAL_TEXTBOX, PAL_TEXT
+PalPacket_PartyMenu2:       PAL_SET PAL_BATTLETEXT1, PAL_BATTLETEXT2, PAL_TEXTBOX, PAL_TEXT
 PalPacket_Overworld1:       PAL_SET PAL_OVERWORLD_1, PAL_OVERWORLD_2, PAL_OVERWORLD_3, PAL_OVERWORLD_4
 PalPacket_Overworld2:       PAL_SET PAL_OVERWORLD_5, PAL_OVERWORLD_6, PAL_TEXTBOX, PAL_TEXT
 

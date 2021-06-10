@@ -70,6 +70,7 @@ StartMenu_Pokemon:
 	call HandleMenuInput
 	push af
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
+	;callba ReloadPartyBGP
 	pop af
 	bit 1, a ; was the B button pressed?
 	jp nz, .loop

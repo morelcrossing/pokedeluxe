@@ -190,6 +190,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	call Delay3
 	ld b, SET_PAL_BATTLE
 	call RunPaletteCommand
+	callba UpdateBattleBGP2Palette
 	jpab PrintBeginningBattleText
 
 ; when a battle is starting, silhouettes of the player's pic and the enemy's pic are slid onto the screen
@@ -2167,6 +2168,7 @@ DisplayBattleMenu:
 	and a
 	jr nz, .nonstandardbattle
 	call DrawHUDsAndHPBars
+	call RunDefaultPaletteCommand
 	call PrintEmptyString
 	call SaveScreenTilesToBuffer1
 .nonstandardbattle
@@ -2515,6 +2517,7 @@ PartyMenuOrRockOrRun:
 	call LoadScreenTilesFromBuffer2
 	call RunDefaultPaletteCommand ; RUN ALL 4 PALETTE COMMANDS
 	call GBPalNormal
+	callba UpdateBattleBGP2Palette
 	jp DisplayBattleMenu
 .partyMonDeselected
 	coord hl, 11, 11
@@ -2606,6 +2609,7 @@ PartyMenuOrRockOrRun:
 	call LoadScreenTilesFromBuffer1
 	call RunDefaultPaletteCommand
 	call GBPalNormal
+	callba UpdateBattleBGP2Palette
 ; fall through to SwitchPlayerMon
 
 SwitchPlayerMon:
@@ -3077,6 +3081,12 @@ PrintMenuItem:
 	coord hl, 0, 8
 	lb bc, 3, 9
 	call TextBoxBorder
+	
+	palCoord hl, 0, 8 ; apply palette to move info textbox
+	lb bc, 3, 9
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
+	
 	ld a, [wPlayerDisabledMove]
 	and a
 	jr z, .notDisabled
@@ -3930,6 +3940,7 @@ HandleSelfConfusionDamage:
 	jp ApplyDamageToPlayerPokemon
 
 PrintMonName1Text:
+	call RunDefaultPaletteCommand
 	ld hl, MonName1Text
 	jp PrintText
 
@@ -6892,8 +6903,13 @@ LoadHudTilePatterns:
 	call FarCopyDataDouble
 	ld hl, BattleHudTiles2
 	ld de, vChars2 + $730
-	ld bc, BattleHudTiles3End - BattleHudTiles2
+	ld bc, BattleHudTiles2End - BattleHudTiles2
 	ld a, BANK(BattleHudTiles2)
+	call FarCopyData
+	ld hl, BattleHudTiles3
+	ld de, vChars2 + $760
+	ld bc, BattleHudTiles3End - BattleHudTiles3
+	ld a, BANK(BattleHudTiles3)
 	jp FarCopyDataDouble
 .lcdEnabled
 	ld de, BattleHudTiles1
@@ -6902,7 +6918,11 @@ LoadHudTilePatterns:
 	call CopyVideoDataDouble
 	ld de, BattleHudTiles2
 	ld hl, vChars2 + $730
-	lb bc, BANK(BattleHudTiles2), (BattleHudTiles3End - BattleHudTiles2) / $8
+	lb bc, BANK(BattleHudTiles2), (BattleHudTiles2End - BattleHudTiles2) / $8
+	call CopyVideoData
+	ld de, BattleHudTiles3
+	ld hl, vChars2 + $760
+	lb bc, BANK(BattleHudTiles3), (BattleHudTiles3End - BattleHudTiles3) / $8
 	jp CopyVideoDataDouble
 
 PrintEmptyString:

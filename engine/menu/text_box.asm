@@ -579,6 +579,7 @@ DisplayFieldMoveMonMenu:
 
 .fieldMovesExist
 	push af
+	push af
 
 ; Calculate the text box position and dimensions based on the leftmost X coord
 ; of the field move names before adjusting for the number of field moves.
@@ -608,8 +609,52 @@ DisplayFieldMoveMonMenu:
 	ld de, -SCREEN_WIDTH
 	add hl, de
 	inc b
-
+	
+	;push hl
+	;push bc
+	
+	;call SaveTextboxPal
 	call TextBoxBorder
+
+.fieldMovesPalette
+
+; Calculate the text box position and dimensions based on the leftmost X coord
+; of the field move names before adjusting for the number of field moves.
+	palCoord hl, 0, 11
+	ld a, [wFieldMovesLeftmostXCoord]
+	dec a
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld b, 5
+	ld a, 18
+	sub e
+	ld c, a
+	pop af
+
+; For each field move, move the top of the text box up 2 rows while the leaving
+; the bottom of the text box at the bottom of the screen.
+	ld de, -32 * 2
+.fieldMovesPaletteLoop
+	add hl, de
+	inc b
+	inc b
+	dec a
+	jr nz, .fieldMovesPaletteLoop
+
+; Make space for an extra blank row above the top field move.
+	ld de, -32
+	add hl, de
+	inc b
+	
+	;pop bc
+	;pop hl
+	
+	;131 past
+	
+	call SaveTextboxPal
+	callba ApplyTextboxPalette
+	
 	call UpdateSprites
 
 ; Calculate the position of the first field move name to print.

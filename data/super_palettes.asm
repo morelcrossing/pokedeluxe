@@ -194,13 +194,13 @@ SuperPalettes:
 	; PAL_YELLOWBAR
 	RGB 31, 31, 30
 	RGB 31, 31, 19
-	RGB 28, 23,  9
+	RGB 31, 20,  4
 	RGB  6,  6,  6
 
 	; PAL_REDBAR
 	RGB 31, 31, 30
 	RGB 31, 31, 19
-	RGB 26,  9,  6
+	RGB 31,  1,  1
 	RGB  6,  6,  6
 
 	; PAL_BADGE
@@ -338,8 +338,8 @@ GBCBasePalettes:
 
 	; PAL_MEWMON
 	RGB 31, 31, 31
-	RGB 25,  6,  5
-	RGB 20, 14,  6
+	RGB 30, 28,  2
+	RGB 26,  8,  6
 	RGB  3,  3,  3
 
 	; PAL_BLUEMON
@@ -428,19 +428,19 @@ GBCBasePalettes:
 
 	; PAL_GREENBAR
 	RGB 31, 31, 31
-	RGB 17, 31, 13
-	RGB  0, 31,  0
+	RGB 31, 31, 31
+	RGB  1, 31,  1
 	RGB  3,  3,  3
 
 	; PAL_YELLOWBAR
 	RGB 31, 31, 31
-	RGB 31, 24,  8
+	RGB 31, 31, 31
 	RGB 31, 18,  0
 	RGB  3,  3,  3
 
 	; PAL_REDBAR
 	RGB 31, 31, 31
-	RGB 31, 10, 10
+	RGB 31, 31, 31
 	RGB 31,  0,  0
 	RGB  3,  3,  3
 
@@ -1463,3 +1463,15 @@ GBCBasePalettes:
 	RGB 27, 24, 27
 	RGB  1, 18, 30
 	RGB  6,  7,  2
+	
+	; PAL_BATTLETEXT1
+	RGB 31, 31, 31
+	RGB 31, 31, 31
+	RGB 31, 20,  4
+	RGB  3,  3,  3
+	
+	; PAL_BATTLETEXT2
+	RGB 31, 31, 31
+	RGB 25, 25, 24
+	RGB 14, 13, 16
+	RGB  9,  9,  9

@@ -92,7 +92,7 @@ StatusScreen:
 	ld de, BattleHudTiles2
 	ld hl, vChars2 + $780
 	lb bc, BANK(BattleHudTiles2), $01
-	call CopyVideoDataDouble ; │
+	call CopyVideoData ; │
 	ld de, BattleHudTiles3
 	ld hl, vChars2 + $760
 	lb bc, BANK(BattleHudTiles3), $02

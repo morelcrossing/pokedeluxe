@@ -111,7 +111,8 @@ HpBarAndStatusGraphics:         INCBIN "gfx/hp_bar_and_status.2bpp"
 HpBarAndStatusGraphicsEnd:
 BattleHudTiles1:                INCBIN "gfx/battle_hud1.1bpp"
 BattleHudTiles1End:
-BattleHudTiles2:                INCBIN "gfx/battle_hud2.1bpp"
+BattleHudTiles2:                INCBIN "gfx/battle_hud2.2bpp"
+BattleHudTiles2End:
 BattleHudTiles3:                INCBIN "gfx/battle_hud3.1bpp"
 BattleHudTiles3End:
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright.2bpp"

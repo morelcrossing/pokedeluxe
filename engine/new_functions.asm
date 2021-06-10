@@ -159,6 +159,11 @@ UpdateOverworldOBP1Palette:
 	predef_jump UpdateOBP1PaletteCommand
 	ret
 
+UpdateBattleBGP2Palette:
+	ld b, SET_PAL_PARTY_MENU2
+	predef_jump UpdateBGP2PaletteCommand
+	ret
+
 BGPSetPalNormal:
 ; Reset BGP for the party.
 	ld a, 1

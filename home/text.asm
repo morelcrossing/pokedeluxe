@@ -44,7 +44,7 @@ TextBoxBorder::
 	; middle rows
 	push hl
 	;ld a, $EA
-	ld a, $60
+	ld a, $72
 	ld [hli], a
 	ld a, " "
 	call NPlaceChar
@@ -60,7 +60,7 @@ TextBoxBorder::
 	ld a, "└"
 	ld [hli], a
 	;ld a, $EB
-	ld a, $61
+	ld a, $75
 	call NPlaceChar
 	ld [hl], "┘"
 	ret
