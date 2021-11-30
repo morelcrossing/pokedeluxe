@@ -799,8 +799,8 @@ GBCSpritePalettes:
 
 	; PAL_P_GENGAR     ; 94
 	RGB 31, 31, 31
-	RGB 28, 9, 10
-	RGB 12, 5, 18
+	RGB 30, 17, 18
+	RGB 17, 12, 23
 	RGB  3,  3,  3
 
 	; PAL_P_ONIX       ; 95
@@ -1140,6 +1140,12 @@ GBCSpritePalettes:
 	RGB  3,  3,  3
 
 	; PAL_P_MEW        ; 151
+	RGB 31, 31, 31
+	RGB 29, 17, 21
+	RGB  5, 14, 21
+	RGB  3,  3,  3
+	
+	; PAL_P_CHIKORITA  ; 151
 	RGB 31, 31, 31
 	RGB 29, 17, 21
 	RGB  5, 14, 21

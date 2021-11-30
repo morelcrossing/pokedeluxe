@@ -1385,6 +1385,12 @@ GBCBasePalettes:
 	RGB 29, 17, 21
 	RGB  5, 14, 21
 	RGB  3,  3,  3
+	
+	; PAL_P_CHIKORITA  ; 152
+	RGB 31, 31, 31
+	RGB 29, 17, 21
+	RGB  5, 14, 21
+	RGB  3,  3,  3
 
 	; PAL_SPRITES
 	RGB 31, 31, 31

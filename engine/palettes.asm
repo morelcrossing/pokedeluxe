@@ -882,6 +882,12 @@ SendSGBPackets:
 	ld a, [rLCDC]
 	and rLCDC_ENABLE_MASK
 	ret z
+	ld a, [wShowOverworld]
+	cp $02
+	jr nz, .skipOverworld
+	ld a, $00
+	ld [wShowOverworld], a
+.skipOverworld
 	call Delay3
 	ret
 .notGBC
@@ -901,6 +907,12 @@ SendSGBBGPPackets:
 	ld a, [rLCDC]
 	and rLCDC_ENABLE_MASK
 	ret z
+	ld a, [wShowOverworld]
+	cp $02
+	jr nz, .skipOverworld
+	ld a, $00
+	ld [wShowOverworld], a
+.skipOverworld
 	call Delay3
 	ret
 .notGBC

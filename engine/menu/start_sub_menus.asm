@@ -106,6 +106,7 @@ StartMenu_Pokemon:
 	ld [wMonDataLocation], a
 	predef StatusScreen
 	predef StatusScreen2
+	predef StatusScreen3
 	call ReloadMapData
 	jp StartMenu_Pokemon
 .choseOutOfBattleMove
@@ -533,6 +534,8 @@ StartMenu_TrainerInfo:
 	call DrawTrainerInfo
 	predef DrawBadges ; draw badges
 	ld b, SET_PAL_TRAINER_CARD
+	ld a, $02
+	ld [wShowOverworld], a
 	call RunPaletteCommand
 	call GBPalNormal
 	call WaitForTextScrollButtonPress ; wait for button press

@@ -807,3 +807,8 @@ FollowSpriteSheetPointerTable:
 	dw FollowMew
 	db $c0 ; byte count
 	db BANK(FollowMew)
+	
+	; SPRITE_F_CHIKORITA
+	dw FollowChikorita
+	db $c0 ; byte count
+	db BANK(FollowChikorita)

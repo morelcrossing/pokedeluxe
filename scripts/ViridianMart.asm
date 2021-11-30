@@ -1,3 +1,7 @@
+; Viridian
+ViridianCashierText::
+	TX_MART POKE_BALL,POTION,ANTIDOTE,PARLYZ_HEAL,BURN_HEAL
+
 ViridianMart_Script:
 	call ViridianMartScript_1d47d
 	call EnableAutoTextBoxDrawing

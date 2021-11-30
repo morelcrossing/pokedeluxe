@@ -146,9 +146,9 @@ LoadMonPartySpriteGfxWithLCDDisabled:
 	pop de
 	ld a, [wd11e]
 	dec a
-	cp 151
+	cp 152
 	jr c, .skipmissingno
-	ld a, 151
+	ld a, 152
 .skipmissingno
 	ld hl, MonPartySprites
 	ld bc, $40
@@ -183,9 +183,9 @@ LoadMonPartySpriteForSpecies:
 	predef IndexToPokedex
 	ld a, [wd11e]
 	dec a
-	cp 151
+	cp 152
 	jr c, .skipmissingno
-	ld a, 151
+	ld a, 152
 .skipmissingno
 	ld hl, MonPartySprites
 	ld bc, $40

@@ -162,18 +162,48 @@ AutoBgMapTransfer::
 .doTransfer
 	ld [H_AUTOBGTRANSFERPORTION], a ; store next portion
 	ld b, 6
-	;ld a, [wShowOverworld]
-	;cp $01
-	;jr z, .overworldTransfer
-	jr TransferBgRows
-;.overworldTransfer
-;	ld a,BANK(TransferBgRowsNew)
-;	ld [MBC1RomBank],a
-;	jp TransferBgRowsNew
+	ld a, [wShowOverworld]
+	cp $01
+	jr z, TransferBgRowsOverworld
+	jp TransferBgRows
+
+TransferBgRowsOverworld::
+; unrolled loop and using pop for speed
+	rept 20 / 2 - 1
+	pop de
+	call BgTileVblankWait
+	ld a, $01
+	ld [rVBK], a
+	call LoadTilePalette
+	xor a
+	ld [rVBK], a
+	push de
+	add sp, 2
+	endr
+
+	pop de
+	call BgTileVblankWait
+	ld a, $01
+	ld [rVBK], a
+	call LoadTilePalette
+	xor a
+	ld [rVBK], a
+	push de
+	add sp, 2
+
+	dec l
+	ld a, 32 - (20 - 1)
+	add l
+	ld l, a
+	jr nc, .ok
+	inc h
+.ok
+	dec b
+	jp nz, TransferBgRowsOverworld
+	jp LoadStackPointer
 
 TransferBgRows::
 ; unrolled loop and using pop for speed
-
 	rept 20 / 2 - 1
 	pop de
 	ld [hl], e
@@ -195,12 +225,65 @@ TransferBgRows::
 .ok
 	dec b
 	jr nz, TransferBgRows
+	jp LoadStackPointer
 
+LoadStackPointer:
 	ld a, [H_SPTEMP]
 	ld l, a
 	ld a, [H_SPTEMP + 1]
 	ld h, a
 	ld sp, hl
+	ret
+
+BgTileVblankWait:
+.vblankTile1
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankTile1
+	ld [hl], e
+	inc l
+.vblankTile2
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankTile2
+	ld [hl], d
+	dec l
+	ret
+
+LoadTilePalette:
+	ld c, d
+	ld d, $d9
+.waitPalVBlank1
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .waitPalVBlank1
+	ld a, e
+	cp $60
+	jr nc, .notMapTile1
+	ld a, [de]
+	ldi [hl], a
+	jr .waitPalVBlank2
+.notMapTile1
+	ld a, $06
+	ldi [hl], a
+.waitPalVBlank2
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .waitPalVBlank2
+	ld a, e
+	ld e, c
+	ld c, a
+	ld a, e
+	cp $60
+	jr nc, .notMapTile2
+	ld a, [de]
+	jr .finishTiles
+.notMapTile2
+	ld a, $06
+.finishTiles
+	ldi [hl], a
+	ld d, e
+	ld e, c
 	ret
 
 ; Copies [H_VBCOPYBGNUMROWS] rows from H_VBCOPYBGSRC to H_VBCOPYBGDEST.
@@ -225,12 +308,8 @@ VBlankCopyBgMap::
 	ld [H_VBCOPYBGSRC], a ; disable transfer so it doesn't continue next V-blank
 	ld a, [wShowOverworld]
 	cp $01
-	jr z, .overworldCopy
-	jr TransferBgRows
-.overworldCopy
-	ld a,BANK(TransferBgRowsNew)
-	ld [MBC1RomBank],a
-	jp TransferBgRowsNew
+	jp z, TransferBgRowsOverworld
+	jp TransferBgRows
 
 VBlankCopyDouble::
 ; Copy [H_VBCOPYDOUBLESIZE] 1bpp tiles

@@ -190,6 +190,7 @@ const_value = 1
 	const BELLSPROUT   ; $BC
 	const WEEPINBELL   ; $BD
 	const VICTREEBEL   ; $BE
+	const CHIKORITA    ; $BF
 
 NUM_POKEMON_INDEXES EQU const_value + -1
 

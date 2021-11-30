@@ -18,6 +18,8 @@ ShowPokedexMenu:
 	callab LoadPokedexTilePatterns
 .loop
 	ld b, SET_PAL_GENERIC
+	ld a, $02
+	ld [wShowOverworld], a
 	call RunPaletteCommand
 .doPokemonListMenu
 	ld hl, wTopMenuItemY
@@ -45,6 +47,8 @@ ShowPokedexMenu:
 	pop af
 	ld [wListScrollOffset], a
 	call GBPalWhiteOutWithDelay3
+	ld a, $02
+	ld [wShowOverworld], a
 	call RunDefaultPaletteCommand
 	jp ReloadMapData
 

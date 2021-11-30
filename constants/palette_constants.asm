@@ -221,6 +221,7 @@ const_value = 0
 	const PAL_P_DRAGONITE  ; 149
 	const PAL_P_MEWTWO     ; 150
 	const PAL_P_MEW        ; 151
+	const PAL_P_CHIKORITA        ; 152
 	const PAL_SPRITES     ; $2F
 	const PAL_TEXTBOX        ; $30
 	const PAL_TEXT        ; $30

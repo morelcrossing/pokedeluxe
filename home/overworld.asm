@@ -26,7 +26,7 @@ EnterMap::
 	ld hl, wd72e
 	res 4, [hl]
 .didNotEnterUsingFlyWarpOrDungeonWarp
-	call IsSurfingPikachuInParty
+	;call IsSurfingPikachuInParty
 	callba CheckForceBikeOrSurf ; handle currents in SF islands and forced bike riding in cycling road
 	ld hl, wd732
 	bit 4, [hl]
@@ -44,7 +44,7 @@ OverworldLoop::
 	call DelayFrame
 OverworldLoopLessDelay::
 	call DelayFrame
-	call IsSurfingPikachuInParty
+	;call IsSurfingPikachuInParty
 	callba LoadOverworldPalettes
 	call HandleMidJump
 	ld a, [wWalkCounter]
@@ -246,7 +246,7 @@ OverworldLoopLessDelay::
 	and a
 	jp nz, CheckMapConnections ; it seems like this check will never succeed (the other place where CheckMapConnections is run works)
 ; walking animation finished
-	call StepCountCheck
+	callba StepCountCheck
 	CheckEvent EVENT_IN_SAFARI_ZONE ; in the safari zone?
 	jr z, .notSafariZone
 	callba SafariZoneCheckSteps
@@ -294,24 +294,6 @@ OverworldLoopLessDelay::
 	ld c, 10
 	call DelayFrames
 	jp EnterMap
-
-StepCountCheck::
-	ld a, [wd730]
-	bit 7, a
-	jr nz, .doneStepCounting ; if button presses are being simulated, don't count steps
-; step counting
-	ld hl, wStepCounter
-	dec [hl]
-	ld a, [wd72c]
-	bit 0, a
-	jr z, .doneStepCounting
-	ld hl, wNumberOfNoRandomBattleStepsLeft
-	dec [hl]
-	jr nz, .doneStepCounting
-	ld hl, wd72c
-	res 0, [hl] ; indicate that the player has stepped thrice since the last battle
-.doneStepCounting
-	ret
 
 AllPokemonFainted::
 	ld a, $ff

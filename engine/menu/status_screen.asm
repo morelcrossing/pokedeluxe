@@ -168,23 +168,24 @@ StatusScreen:
 	call PrintStatsBox
 	call Delay3
 	call GBPalNormal
+	callba UpdateBattleBGP2Palette
 	coord hl, 1, 0
 	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
-	ld a, [wMonDataLocation]
-	cp ENEMY_PARTY_DATA
-	jr z, .playRegularCry
-	cp BOX_DATA
-	jr z, .checkBoxData
-	callab IsThisPartymonStarterPikachu_Party
-	jr nc, .playRegularCry
-	jr .playPikachuSoundClip
-.checkBoxData
-	callab IsThisPartymonStarterPikachu_Box
-	jr nc, .playRegularCry
-.playPikachuSoundClip
-	ld e, 16
-	callab PlayPikachuSoundClip
-	jr .continue
+;	ld a, [wMonDataLocation]
+;	cp ENEMY_PARTY_DATA
+;	jr z, .playRegularCry
+;	cp BOX_DATA
+;	jr z, .checkBoxData
+	; callab IsThisPartymonStarterPikachu_Party
+;	jr .playRegularCry
+	; jr .playPikachuSoundClip
+; .checkBoxData
+; 	callab IsThisPartymonStarterPikachu_Box
+;	jr nc, .playRegularCry
+;.playPikachuSoundClip
+;	ld e, 16
+;	callab PlayPikachuSoundClip
+;	jr .continue
 .playRegularCry
 	ld a, [wcf91]
 	call PlayCry ; play Pokémon cry
@@ -437,6 +438,60 @@ StatusScreen2:
 	call GetMonName
 	coord hl, 9, 1
 	call PlaceString
+	ld a, $1
+	ld [H_AUTOBGTRANSFERENABLED], a
+	call Delay3
+	call WaitForTextScrollButtonPress ; wait for button
+	pop af
+	ld [hTilesetType], a
+	ret
+
+StatusScreen3:
+	ld a, [hTilesetType]
+	push af
+	xor a
+	ld [hTilesetType], a
+	ld [H_AUTOBGTRANSFERENABLED], a
+	ld bc, NUM_MOVES + 1
+	ld hl, wMoves
+	call FillMemory
+	ld hl, wLoadedMonMoves
+	ld de, wMoves
+	ld bc, NUM_MOVES
+	call CopyData
+	callab FormatMovesString
+	;coord hl, 9, 2
+	;lb bc, 5, 10
+	;call ClearScreenArea ; Clear under name
+	;coord hl, 19, 3
+	;ld [hl], $78
+	coord hl, 0, 8
+	lb bc, 8, 18
+	call TextBoxBorder ; Draw move container
+	
+	
+	
+	coord hl, 1, 9 ; Start printing stats from here
+	ld bc, $0019 ; Number offset
+.PrintStats
+	push bc
+	push hl
+	ld de, StatsText
+	call PlaceString
+	pop hl
+	pop bc
+	add hl, bc
+	ld de, wLoadedMonAttack
+	lb bc, 2, 3
+	call PrintStat
+	ld de, wLoadedMonDefense
+	call PrintStat
+	ld de, wLoadedMonSpeed
+	call PrintStat
+	ld de, wLoadedMonSpecial
+	call PrintStat
+
+
 	ld a, $1
 	ld [H_AUTOBGTRANSFERENABLED], a
 	call Delay3

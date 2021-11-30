@@ -48,8 +48,12 @@ LoadBGMapAttributes::
 	and %10 ; are we in HBlank or VBlank?
 	jr nz, .waitForAccessibleVRAMLoop1 ; loop until we're in a safe period to transfer to VRAM
 .lcdOff
+	ld a, [wShowOverworld]
+	cp $00
+	jr nz, .skipOverworld
 	ld a, c ; number of BG attributes to transfer, plus 1 times 16
 	ld [rHDMA5], a ; initiate transfer
+.skipOverworld
 	call Func_3082 ; update audio so it doesn't "lag"
 	pop hl
 	ld a, [hli]

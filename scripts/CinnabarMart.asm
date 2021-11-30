@@ -1,3 +1,7 @@
+; Cinnabar
+CinnabarCashierText::
+	TX_MART ULTRA_BALL,GREAT_BALL,HYPER_POTION,MAX_REPEL,ESCAPE_ROPE,FULL_HEAL,REVIVE
+
 CinnabarMart_Script:
 	jp EnableAutoTextBoxDrawing
 

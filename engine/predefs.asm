@@ -164,3 +164,4 @@ PredefPointers::
 	add_predef UpdateOBP0PaletteCommand
 	add_predef UpdateOBP1PaletteCommand
 	add_predef ApplyTextboxPalette
+	add_predef StatusScreen3

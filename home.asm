@@ -412,8 +412,8 @@ DisplayPartyMenu::
 	ld [wPartyBGPLoaded], a
 	call GBPalWhiteOutWithDelay3
 	call ClearSprites
-	ld a, $00
-	ld [wShowOverworld], a
+	;ld a, $00
+	;ld [wShowOverworld], a
 	call PartyMenuInit
 	call DrawPartyMenu
 	jp HandlePartyMenuInput
@@ -819,7 +819,11 @@ UncompressMonSprite::
 	cp RATTATA + 1
 	ld a, BANK(RattataPicFront)
 	jr c, .GotBank
+	ld a, b
+	cp VICTREEBEL + 1
 	ld a, BANK(VictreebelPicFront)
+	jr c, .GotBank
+	ld a, BANK(ChikoritaPicFront)
 .GotBank
 	jp UncompressSpriteData
 
@@ -1012,7 +1016,7 @@ UpdateSprites::
 	call BankswitchCommon
 	ret
 
-INCLUDE "data/mart_inventories.asm"
+; INCLUDE "data/mart_inventories.asm"
 
 TextScriptEndingChar::
 	db "@"
@@ -1051,9 +1055,9 @@ INCLUDE "home/pic.asm"
 
 ResetPlayerSpriteData::
 	ld hl, wSpriteStateData1
-	call ResetPlayerSpriteData_ClearSpriteData
+	callba ResetPlayerSpriteData_ClearSpriteData
 	ld hl, wSpriteStateData2
-	call ResetPlayerSpriteData_ClearSpriteData
+	callba ResetPlayerSpriteData_ClearSpriteData
 	ld a, $1
 	ld [wSpriteStateData1], a
 	ld [wSpriteStateData2 + $0e], a
@@ -1062,13 +1066,6 @@ ResetPlayerSpriteData::
 	inc hl
 	inc hl
 	ld [hl], $40     ; set X screen pos
-	ret
-
-; overwrites sprite data with zeroes
-ResetPlayerSpriteData_ClearSpriteData::
-	ld bc, $10
-	xor a
-	call FillMemory
 	ret
 
 FadeOutAudio::
@@ -2127,30 +2124,6 @@ PrinterSerial::
 	homecall PrinterSerial_
 	ret
 
-SerialFunction::
-	ld a, [wPrinterConnectionOpen]
-	bit 0, a
-	ret z
-	ld a, [wPrinterOpcode]
-	and a
-	ret nz
-	ld hl, wOverworldMap + 650
-	inc [hl]
-	ld a, [hl]
-	cp $6
-	ret c
-	xor a
-	ld [hl], a
-	ld a, $0c
-	ld [wPrinterOpcode], a
-	ld a, $88
-	ld [rSB], a
-	ld a, $1
-	ld [rSC], a
-	ld a, START_TRANSFER_INTERNAL_CLOCK
-	ld [rSC], a
-	ret
-
 ; causes the text box to close without waiting for a button press after displaying text
 DisableWaitingAfterTextDisplay::
 	ld a, $01
@@ -2848,59 +2821,59 @@ IsItemInBag::
 	and a
 	ret
 
-IsSurfingPikachuInParty::
+;IsSurfingPikachuInParty::
 ; set bit 6 of wd472 if true
 ; also calls Func_3467, which is a bankswitch to IsStarterPikachuInOurParty
-	ld a, [wd472]
-	and $3f
-	ld [wd472], a
-	ld hl, wPartyMon1
-	ld c, PARTY_LENGTH
-	ld b, SURF
-.loop
-	ld a, [hl]
-	cp PIKACHU
-	jr nz, .notPikachu
-	push hl
-	ld de, $8
-	add hl, de
-	ld a, [hli]
-	cp b ; does pikachu have surf as one of its moves
-	jr z, .hasSurf
-	ld a, [hli]
-	cp b
-	jr z, .hasSurf
-	ld a, [hli]
-	cp b
-	jr z, .hasSurf
-	ld a, [hli]
-	cp b
-	jr nz, .noSurf
-.hasSurf
-	ld a, [wd472]
-	set 6, a
-	ld [wd472], a
-.noSurf
-	pop hl
-.notPikachu
-	ld de, wPartyMon2 - wPartyMon1
-	add hl, de
-	dec c
-	jr nz, .loop
-	call Func_3467
-	ret
+;	ld a, [wd472]
+;	and $3f
+;	ld [wd472], a
+;	ld hl, wPartyMon1
+;	ld c, PARTY_LENGTH
+;	ld b, SURF
+;.loop
+;	ld a, [hl]
+;	cp PIKACHU
+;	jr nz, .notPikachu
+;	push hl
+;	ld de, $8
+;	add hl, de
+;	ld a, [hli]
+;	cp b ; does pikachu have surf as one of its moves
+;	jr z, .hasSurf
+;	ld a, [hli]
+;	cp b
+;	jr z, .hasSurf
+;	ld a, [hli]
+;	cp b
+;	jr z, .hasSurf
+;	ld a, [hli]
+;	cp b
+;	jr nz, .noSurf
+;.hasSurf
+;	ld a, [wd472]
+;	set 6, a
+;	ld [wd472], a
+;.noSurf
+;	pop hl
+;.notPikachu
+;	ld de, wPartyMon2 - wPartyMon1
+;	add hl, de
+;	dec c
+;	jr nz, .loop
+;	call Func_3467
+;	ret
 
-Func_3467::
-	push hl
-	push bc
-	callab IsStarterPikachuInOurParty
-	pop bc
-	pop hl
-	ret nc
-	ld a, [wd472]
-	set 7, a
-	ld [wd472], a
-	ret
+;Func_3467::
+;	push hl
+;	push bc
+;	callab IsStarterPikachuInOurParty
+;	pop bc
+;	pop hl
+;	ret nc
+;	ld a, [wd472]
+;	set 7, a
+;	ld [wd472], a
+;	ret
 
 DisplayPokedex::
 	ld [wd11e], a
@@ -3334,6 +3307,7 @@ SaveScreenTilesToBuffer2::
 
 LoadScreenTilesFromBuffer2::
 	call LoadScreenTilesFromBuffer2DisableBGTransfer
+	;callba LoadScreenPalettesFromBuffer2
 	ld a, 1
 	ld [H_AUTOBGTRANSFERENABLED], a
 	ret
@@ -4620,7 +4594,6 @@ RestoreScreenTilesAndReloadTilePatterns::
 	call RunDefaultPaletteCommand
 	jr Delay3
 
-
 GBPalWhiteOutWithDelay3::
 	call GBPalWhiteOut
 
@@ -4819,7 +4792,7 @@ CheckForHiddenObjectOrBookshelfOrCardKeyDoor::
 PrintPredefTextID::
 	ld [hSpriteIndexOrTextID], a
 	ld hl, TextPredefs
-	call SetMapTextPointer
+	callba SetMapTextPointer
 	ld hl, wTextPredefFlag
 	set 0, [hl]
 	call DisplayTextID
@@ -4830,17 +4803,6 @@ RestoreMapTextPointer::
 	ld [hli], a
 	ld a, [$ffec + 1]
 	ld [hl], a
-	ret
-
-SetMapTextPointer::
-	ld a, [wMapTextPtr]
-	ld [$ffec], a
-	ld a, [wMapTextPtr + 1]
-	ld [$ffec + 1], a
-	ld a, l
-	ld [wMapTextPtr], a
-	ld a, h
-	ld [wMapTextPtr + 1], a
 	ret
 
 TextPredefs::

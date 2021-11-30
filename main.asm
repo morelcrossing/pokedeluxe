@@ -103,7 +103,7 @@ INCLUDE "engine/hidden_object_functions3.asm"
 
 SECTION "Graphics (BANK 4)", ROMX
 
-PokemonLogoJapanGraphics:       INCBIN "gfx/pokemon_logo_japan.2bpp"
+; PokemonLogoJapanGraphics:       INCBIN "gfx/pokemon_logo_japan.2bpp"
 FontGraphics:                   INCBIN "gfx/font.2bpp"
 FontGraphicsEnd:
 ABTiles:                        INCBIN "gfx/AB.2bpp"
@@ -130,16 +130,15 @@ PlayerCharacterTitleGraphics:   INCBIN "gfx/player_title.2bpp"
 INCLUDE "engine/menu/status_screen.asm"
 INCLUDE "engine/menu/party_menu.asm"
 
-RedPicFront: INCBIN "pic/ytrainer/red.pic"
-ShrinkPic1:  INCBIN "pic/trainer/shrink1.pic"
-ShrinkPic2:  INCBIN "pic/trainer/shrink2.pic"
-
 INCLUDE "engine/menu/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
 
 
 SECTION "NPC Sprites 1", ROMX ; BANK $04
 
+RedPicFront: INCBIN "pic/ytrainer/red.pic"
+ShrinkPic1:  INCBIN "pic/trainer/shrink1.pic"
+ShrinkPic2:  INCBIN "pic/trainer/shrink2.pic"
 OakAideSprite:         INCBIN "gfx/sprites/oak_aide.2bpp"
 RockerSprite:          INCBIN "gfx/sprites/rocker.2bpp"
 SwimmerSprite:         INCBIN "gfx/sprites/swimmer.2bpp"
@@ -2267,6 +2266,7 @@ FollowWeezing: INCBIN "gfx/sprites/followsprite/f_weezing.2bpp"
 FollowWigglytuff: INCBIN "gfx/sprites/followsprite/f_wigglytuff.2bpp"
 FollowZapdos: INCBIN "gfx/sprites/followsprite/f_zapdos.2bpp"
 FollowZubat: INCBIN "gfx/sprites/followsprite/f_zubat.2bpp"
+FollowChikorita: INCBIN "gfx/sprites/followsprite/f_chikorita.2bpp"
 
 SECTION "bank46", ROMX
 
@@ -2371,3 +2371,8 @@ VictreebelPicBack::    INCBIN "pic/monback/victreebelb.pic"
 SECTION "bank4A", ROMX
 
 INCLUDE "engine/tileset_colour.asm"
+
+SECTION "bank4B", ROMX
+
+ChikoritaPicFront::   INCBIN "pic/ymon/chikorita.pic"
+ChikoritaPicBack::    INCBIN "pic/monback/chikoritab.pic"

@@ -373,7 +373,7 @@ ChangeBox::
 	call RestoreMapTextPointer
 	call SaveSAVtoSRAM
 	ld hl, wChangeBoxSavedMapTextPointer
-	call SetMapTextPointer
+	callba SetMapTextPointer
 	ret
 
 WhenYouChangeBoxText:

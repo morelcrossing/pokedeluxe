@@ -1506,3 +1506,13 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_ChikoritaDexEntry::
+	text "According to a"
+	next "witness, its body"
+	next "was surrounded by"
+
+	page "a strange aura"
+	next "that gave it a"
+	next "mystical look"
+	dex

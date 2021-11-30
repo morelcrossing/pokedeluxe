@@ -40,6 +40,8 @@ EnablePartyPalettes:
 .loadBGP
 	call BGPSetPalNormal
 	ld b, SET_PAL_PARTY_MENU
+	ld a, $02
+	ld [wShowOverworld], a
 	call RunBGPPaletteCommand
 	ld b, SET_PAL_PARTY_MENU2
 	call RunBGP2PaletteCommand
@@ -527,4 +529,64 @@ IsFightingJessieJames::
 	ld a, e
 	ld [hli], a
 	ld [hl], d
+	ret
+
+SetMapTextPointer::
+	ld a, [wMapTextPtr]
+	ld [$ffec], a
+	ld a, [wMapTextPtr + 1]
+	ld [$ffec + 1], a
+	ld a, l
+	ld [wMapTextPtr], a
+	ld a, h
+	ld [wMapTextPtr + 1], a
+	ret
+
+; overwrites sprite data with zeroes
+ResetPlayerSpriteData_ClearSpriteData::
+	ld bc, $10
+	xor a
+	call FillMemory
+	ret
+
+SerialFunction::
+	ld a, [wPrinterConnectionOpen]
+	bit 0, a
+	ret z
+	ld a, [wPrinterOpcode]
+	and a
+	ret nz
+	ld hl, wOverworldMap + 650
+	inc [hl]
+	ld a, [hl]
+	cp $6
+	ret c
+	xor a
+	ld [hl], a
+	ld a, $0c
+	ld [wPrinterOpcode], a
+	ld a, $88
+	ld [rSB], a
+	ld a, $1
+	ld [rSC], a
+	ld a, START_TRANSFER_INTERNAL_CLOCK
+	ld [rSC], a
+	ret
+
+StepCountCheck::
+	ld a, [wd730]
+	bit 7, a
+	jr nz, .doneStepCounting ; if button presses are being simulated, don't count steps
+; step counting
+	ld hl, wStepCounter
+	dec [hl]
+	ld a, [wd72c]
+	bit 0, a
+	jr z, .doneStepCounting
+	ld hl, wNumberOfNoRandomBattleStepsLeft
+	dec [hl]
+	jr nz, .doneStepCounting
+	ld hl, wd72c
+	res 0, [hl] ; indicate that the player has stepped thrice since the last battle
+.doneStepCounting
 	ret

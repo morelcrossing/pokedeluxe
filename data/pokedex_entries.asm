@@ -189,6 +189,7 @@ PokedexEntryPointers:
 	dw BellsproutDexEntry
 	dw WeepinbellDexEntry
 	dw VictreebelDexEntry
+	dw ChikoritaDexEntry
 
 ; string: species name
 ; height in feet, inches
@@ -1250,6 +1251,13 @@ MewDexEntry:
 	db 1,4
 	dw 90
 	TX_FAR _MewDexEntry
+	db "@"
+
+ChikoritaDexEntry:
+	db "LEAF@"
+	db 1,4
+	dw 90
+	TX_FAR _ChikoritaDexEntry
 	db "@"
 
 MissingNoDexEntry:

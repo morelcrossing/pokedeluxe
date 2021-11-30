@@ -1,3 +1,9 @@
+; Cerulean
+CeruleanCashierText::
+	TX_MART POKE_BALL,POTION,ESCAPE_ROPE,REPEL,ANTIDOTE,BURN_HEAL,AWAKENING,PARLYZ_HEAL
+	
+	TX_MART BICYCLE
+
 CeruleanMart_Script:
 	jp EnableAutoTextBoxDrawing
 

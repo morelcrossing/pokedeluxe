@@ -1,3 +1,7 @@
+; Pewter
+PewterCashierText::
+	TX_MART POKE_BALL,POTION,ESCAPE_ROPE,ANTIDOTE,BURN_HEAL,AWAKENING,PARLYZ_HEAL
+
 PewterMart_Script:
 	call EnableAutoTextBoxDrawing
 	ld a, $1

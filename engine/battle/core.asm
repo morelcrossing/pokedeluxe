@@ -2563,6 +2563,7 @@ PartyMenuOrRockOrRun:
 ; display the two status screens
 	predef StatusScreen
 	predef StatusScreen2
+	predef StatusScreen3
 ; now we need to reload the enemy mon pic
 	ld a, 1
 	ld [H_WHOSETURN], a
@@ -6566,6 +6567,7 @@ DoBattleTransitionAndInitBattleVariables:
 	ld [hli], a
 	ld [hl], a
 	ld [wPlayerDisabledMove], a
+	ld [wShowOverworld], a
 	ret
 
 ; swaps the level values of the BattleMon and EnemyMon structs

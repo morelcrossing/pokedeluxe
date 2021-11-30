@@ -189,3 +189,4 @@ MonsterNames:
 	db "Bellsprout"
 	db "Weepinbell"
 	db "Victreebel"
+	db "Chikorita@"

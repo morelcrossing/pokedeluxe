@@ -69,7 +69,7 @@ VBlank::
 	callbs Music_DoLowHealthAlarm
 	callbs Audio1_UpdateMusic
 
-	call SerialFunction
+	callba SerialFunction
 
 	ld a, [wVBlankSavedROMBank]
 	ld [H_LOADEDROMBANK], a

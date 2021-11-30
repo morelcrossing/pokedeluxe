@@ -1,3 +1,7 @@
+; Saffron
+SaffronCashierText::
+	TX_MART GREAT_BALL,HYPER_POTION,MAX_REPEL,ESCAPE_ROPE,FULL_HEAL,REVIVE
+
 SaffronMart_Script:
 	jp EnableAutoTextBoxDrawing
 

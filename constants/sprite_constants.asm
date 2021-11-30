@@ -254,6 +254,7 @@ const_value = 2
 	const SPRITE_F_DRAGONITE  ; 149
 	const SPRITE_F_MEWTWO     ; 150
 	const SPRITE_F_MEW        ; 151
+	const SPRITE_F_CHIKORITA  ; 151
 
 ; different kinds of people events
 ITEM    EQU $80

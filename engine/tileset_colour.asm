@@ -26,31 +26,30 @@ CopyMapViewToVRAM:
 	ld b, 18
 .vramCopyLoop
 	ld c, 20
-.vramCopyInnerLoop
+.vramCopyTileLoop
 	ld a, [rSTAT]
 	and %10 ; are we in HBlank or VBlank?
-	jr nz, .vramCopyInnerLoop
-	
-	push hl
-	ld a, $01
-	ld [rVBK], a
-	
-	ld a, [hl]
-	ld hl, TILESET_PALETTE_DATA
-	ld l, a
+	jr nz, .vramCopyTileLoop
 	ld a, [hl]
 	ld [de], a
-	
+	push hl
+	ld hl, TILESET_PALETTE_DATA
+	ld l, a
+	ld a, $01
+	ld [rVBK], a
+.vramCopyPaletteLoop
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vramCopyPaletteLoop
+	ld a, [hl]
+	ld [de], a
 	xor a
 	ld [rVBK], a
 	pop hl
-	
 	ld a, [hli]
-	ld [de], a
 	inc e
-	
 	dec c
-	jr nz, .vramCopyInnerLoop
+	jr nz, .vramCopyTileLoop
 	ld a, 32 - 20 ; total vram map width in tiles - screen width in tiles
 	add e
 	ld e, a
@@ -60,6 +59,47 @@ CopyMapViewToVRAM:
 	dec b
 	jr nz, .vramCopyLoop
 	ei
+	ret
+
+LoadScreenPalettesFromBuffer2::
+	ld a, $01
+	ld [rVBK], a
+	coord de, 0, 0
+	ld hl, wTileMapBackup2
+	ld b, 18
+.vramCopyLoop
+	ld c, 20
+.vramCopyTileLoop
+	;ld a, [rSTAT]
+	;and %10 ; are we in HBlank or VBlank?
+	;jr nz, .vramCopyTileLoop
+	ld a, [hl]
+	;ld [de], a
+	push hl
+	ld hl, TILESET_PALETTE_DATA
+	ld l, a
+.vramCopyPaletteLoop
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vramCopyPaletteLoop
+	ld a, [hl]
+	ld [de], a
+	pop hl
+	ld a, [hli]
+	inc e
+	
+	dec c
+	jr nz, .vramCopyTileLoop
+	ld a, 32 - 20 ; total vram map width in tiles - screen width in tiles
+	add e
+	ld e, a
+	jr nc, .noCarry
+	inc d
+.noCarry
+	dec b
+	jr nz, .vramCopyLoop
+	xor a
+	ld [rVBK], a
 	ret
 
 ; This function redraws a BG row of height 2 or a BG column of width 2.
@@ -210,170 +250,4 @@ RedrawOverworldRowOrColumn::
 	ld e, a
 	dec c
 	jr nz, .loop2Pal1
-	ret
-
-TransferBgRowsNew::
-	rept $0A
-	pop de
-	
-	call WaitUntilVblank
-	push de
-	pop de
-	ld a, e
-	ldi [hl], a
-	
-	call WaitUntilVblank
-	push de
-	pop de
-	ld a, d
-	ldi [hl], a
-	endr
-	
-	add sp, -20
-	ld a, l
-	sub 20
-	ld l, a
-	ld a, h
-	sbc 0
-	ld h, a
-	ld a, $01
-	ld [rVBK], a
-	
-	;rept $0A
-	;pop de
-	;call WaitUntilVblank de being changed is causing the stack value to be overwritten
-	;push de
-	;ld d, $d0
-	;ld a, [de]
-	;ldi [hl], a
-	;pop de
-	;call CheckPaletteID
-	;push de
-	
-	;pop de
-	;call WaitUntilVblank
-	;push de
-	;ld e, d
-	;ld d, $d0
-	;ld a, [de]
-	;ldi [hl], a
-	;pop de
-	;call CheckPaletteID
-	;push de
-	;add sp, 2
-	;endr
-	
-	
-	
-	
-	
-	rept $0A
-	pop de
-	call LoadTilePalette
-	push de
-	add sp, 2
-	endr
-	
-	
-	
-	
-	xor a
-	ld [rVBK], a
-	
-	dec hl
-	ld a, 32 - (20 - 1)
-	add l
-	ld l, a
-	jr nc, .ok
-	inc h
-.ok
-	dec b
-	jp nz, TransferBgRowsNew
-
-	ld a, [H_SPTEMP]
-	ld l, a
-	ld a, [H_SPTEMP + 1]
-	ld h, a
-	ld sp, hl
-	ret
-	
-WaitUntilVblank:
-	ld a, [rSTAT]
-	and %10 ; are we in HBlank or VBlank?
-	jr nz, WaitUntilVblank
-	ret
-
-CheckPaletteID:
-	ld a, e
-	cp $60
-	jr nc, .notMapTile
-	ld d, $d0
-	ld a, [de]
-	ldi [hl], a
-	ret
-.notMapTile
-	ld a, $06
-	ldi [hl], a
-	ret
-
-LoadTilePalette:
-	ld c, d
-	ld d, $d0
-.waitPalVBlank1
-	ld a, [rSTAT]
-	and %10 ; are we in HBlank or VBlank?
-	jr nz, .waitPalVBlank1
-
-	;pop de
-	;call WaitUntilVblank
-	;push de
-	;ld d, $d0
-	;ld a, [de]
-	;ldi [hl], a
-	;pop de
-	;call CheckPaletteID
-	;push de
-	
-	
-	ld a, e
-	cp $60
-	jr nc, .notMapTile1
-	ld a, [de]
-	ldi [hl], a
-	jr .waitPalVBlank2
-.notMapTile1
-	ld a, $06
-	ldi [hl], a
-.waitPalVBlank2
-	ld a, [rSTAT]
-	and %10 ; are we in HBlank or VBlank?
-	jr nz, .waitPalVBlank2
-	
-	;pop de
-	;call WaitUntilVblank
-	;push de
-	
-	
-	ld a, e
-	ld e, c
-	ld c, a
-	;ld d, $d0
-	;ld a, [de]
-	;ldi [hl], a
-	
-	;pop de
-	;call CheckPaletteID
-	;push de
-	
-	ld a, e
-	cp $60
-	jr nc, .notMapTile2
-	ld a, [de]
-	jr .finishTiles
-.notMapTile2
-	ld a, $06
-.finishTiles
-	ldi [hl], a
-	ld d, e
-	ld e, c
 	ret
