@@ -142,12 +142,12 @@ LoadOverworldOBP1Palette:
 	ret
 	
 UpdateOverworldBGPPalette:
-	ld b, SET_PAL_OVERWORLD1
+	ld b, SET_PAL_OVERWORLD_COLOUR1
 	predef_jump UpdateBGPPaletteCommand
 	ret
 
 UpdateOverworldBGP2Palette:
-	ld b, SET_PAL_OVERWORLD2
+	ld b, SET_PAL_OVERWORLD_COLOUR2
 	predef_jump UpdateBGP2PaletteCommand
 	ret
 
@@ -529,17 +529,6 @@ IsFightingJessieJames::
 	ld a, e
 	ld [hli], a
 	ld [hl], d
-	ret
-
-SetMapTextPointer::
-	ld a, [wMapTextPtr]
-	ld [$ffec], a
-	ld a, [wMapTextPtr + 1]
-	ld [$ffec + 1], a
-	ld a, l
-	ld [wMapTextPtr], a
-	ld a, h
-	ld [wMapTextPtr + 1], a
 	ret
 
 ; overwrites sprite data with zeroes

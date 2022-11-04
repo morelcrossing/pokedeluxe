@@ -109,12 +109,16 @@ FontGraphicsEnd:
 ABTiles:                        INCBIN "gfx/AB.2bpp"
 HpBarAndStatusGraphics:         INCBIN "gfx/hp_bar_and_status.2bpp"
 HpBarAndStatusGraphicsEnd:
-BattleHudTiles1:                INCBIN "gfx/battle_hud1.1bpp"
+BattleHudTiles1:                INCBIN "gfx/battle_hud1.2bpp"
 BattleHudTiles1End:
 BattleHudTiles2:                INCBIN "gfx/battle_hud2.2bpp"
 BattleHudTiles2End:
-BattleHudTiles3:                INCBIN "gfx/battle_hud3.1bpp"
+BattleHudTiles3:                INCBIN "gfx/battle_hud3.2bpp"
 BattleHudTiles3End:
+BattleHudTiles4:                INCBIN "gfx/battle_hud4.2bpp"
+BattleHudTiles4End:
+BattleExpTiles:                INCBIN "gfx/expbar.2bpp"
+BattleExpTilesEnd:
 NintendoCopyrightLogoGraphics:  INCBIN "gfx/copyright.2bpp"
 GamefreakLogoGraphics:          INCBIN "gfx/gamefreak.2bpp"
 GamefreakLogoGraphicsEnd:
@@ -1705,7 +1709,7 @@ Overworld_Block:   INCBIN "gfx/blocksets/overworld.bst"
 
 RedsHouse1_GFX:
 RedsHouse2_GFX:    INCBIN "gfx/tilesets/reds_house.2bpp"
-	ds 16
+;	ds 16
 RedsHouse1_Block:
 RedsHouse2_Block:  INCBIN "gfx/blocksets/reds_house.bst"
 
@@ -1717,9 +1721,6 @@ ShipPort_GFX:      INCBIN "gfx/tilesets/ship_port.2bpp"
 ShipPort_Block:    INCBIN "gfx/blocksets/ship_port.bst"
 Interior_GFX:      INCBIN "gfx/tilesets/interior.2bpp"
 Interior_Block:    INCBIN "gfx/blocksets/interior.bst"
-Plateau_GFX:       INCBIN "gfx/tilesets/plateau.2bpp"
-Plateau_Block:     INCBIN "gfx/blocksets/plateau.bst"
-
 
 SECTION "bank1A", ROMX
 
@@ -1779,6 +1780,9 @@ INCLUDE "engine/save.asm"
 
 
 SECTION "bank1D", ROMX
+
+Plateau_GFX:       INCBIN "gfx/tilesets/plateau.2bpp"
+Plateau_Block:     INCBIN "gfx/blocksets/plateau.bst"
 
 CopycatsHouse1F_Blocks: INCBIN "maps/CopycatsHouse1F.blk"
 
@@ -2376,3 +2380,7 @@ SECTION "bank4B", ROMX
 
 ChikoritaPicFront::   INCBIN "pic/ymon/chikorita.pic"
 ChikoritaPicBack::    INCBIN "pic/monback/chikoritab.pic"
+
+SECTION "bank4C", ROMX
+
+PlayerBlueSprite:            INCBIN "gfx/sprites/players/player_blue.2bpp"

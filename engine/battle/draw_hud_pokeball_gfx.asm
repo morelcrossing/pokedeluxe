@@ -121,50 +121,59 @@ WritePokeballOAMData:
 	ret
 
 PlacePlayerHUDTiles:
-	ld hl, PlayerBattleHUDGraphicsTiles
-	ld de, wHUDGraphicsTiles
-	ld bc, $3
-	call CopyData
-	coord hl, 18, 10
-	ld de, -1
-	jr PlaceHUDTiles
-
-PlayerBattleHUDGraphicsTiles:
-; The tile numbers for specific parts of the battle display for the player's pokemon
-	db $73 ; unused ($73 is hardcoded into the routine that uses these bytes)
-	db $77 ; lower-right corner tile of the HUD
-	db $6F ; lower-left triangle tile of the HUD
-
-PlaceEnemyHUDTiles:
-	ld hl, EnemyBattleHUDGraphicsTiles
-	ld de, wHUDGraphicsTiles
-	ld bc, $3
-	call CopyData
-	coord hl, 1, 2
+	coord hl, 9, 8
 	ld de, $1
-	jr PlaceHUDTiles
-
-EnemyBattleHUDGraphicsTiles:
-; The tile numbers for specific parts of the battle display for the enemy
-	db $73 ; unused ($73 is hardcoded in the routine that uses these bytes)
-	db $74 ; lower-left corner tile of the HUD
-	db $78 ; lower-right triangle tile of the HUD
-
-PlaceHUDTiles:
-	ld [hl], $73
+	ld [hl], $CA
 	ld bc, SCREEN_WIDTH
 	add hl, bc
-	ld a, [wHUDGraphicsTiles + 1] ; leftmost tile
+	ld [hl], $73
+	add hl, bc
+	ld [hl], $73
+	add hl, bc
+	ld [hl], $6F
+	add hl, de
+	ld [hl], $CD
+	add hl, de
+	ld [hl], $CE
+	ld a, 6
+.loop
+	add hl, de
+	ld [hl], $C0
+	dec a
+	jr nz, .loop
+	add hl, de
+	ld [hl], $77
+	coord hl, 18, 8
+	ld [hl], $C9
+	add hl, bc
+	add hl, bc
+	ld [hl], $CC
+	ret
+
+PlaceEnemyHUDTiles:
+	coord hl, 1, 1
+	ld de, $1
+	ld [hl], $CA
+	ld bc, SCREEN_WIDTH
+	add hl, bc
+	ld [hl], $73
+	add hl, bc
+	ld a, $74
 	ld [hl], a
-	ld a, 8
+	add hl, de
+	ld [hl], $CB
+	ld a, 7
 .loop
 	add hl, de
 	ld [hl], $76
 	dec a
 	jr nz, .loop
 	add hl, de
-	ld a, [wHUDGraphicsTiles + 2] ; rightmost tile
-	ld [hl], a
+	ld [hl], $78
+	coord hl, 10, 1
+	ld [hl], $C9
+	add hl, bc
+	ld [hl], $CF
 	ret
 
 SetupPlayerAndEnemyPokeballs:

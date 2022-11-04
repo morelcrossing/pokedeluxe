@@ -4378,13 +4378,15 @@ print_digit: macro
 
 if (\1) / $10000
 	ld a, \1 / $10000 % $100
-else	xor a
+else
+	xor a
 endc
 	ld [H_POWEROFTEN + 0], a
 
 if (\1) / $100
 	ld a, \1 / $100   % $100
-else	xor a
+else
+	xor a
 endc
 	ld [H_POWEROFTEN + 1], a
 
@@ -4625,7 +4627,6 @@ GBPalWhiteOut::
 	call UpdateGBCPal_OBP1
 	ret
 
-
 RunDefaultPaletteCommand::
 	ld b, $ff
 RunPaletteCommand::
@@ -4792,7 +4793,7 @@ CheckForHiddenObjectOrBookshelfOrCardKeyDoor::
 PrintPredefTextID::
 	ld [hSpriteIndexOrTextID], a
 	ld hl, TextPredefs
-	callba SetMapTextPointer
+	call SetMapTextPointer
 	ld hl, wTextPredefFlag
 	set 0, [hl]
 	call DisplayTextID
@@ -4803,6 +4804,17 @@ RestoreMapTextPointer::
 	ld [hli], a
 	ld a, [$ffec + 1]
 	ld [hl], a
+	ret
+
+SetMapTextPointer::
+	ld a, [wMapTextPtr]
+	ld [$ffec], a
+	ld a, [wMapTextPtr + 1]
+	ld [$ffec + 1], a
+	ld a, l
+	ld [wMapTextPtr], a
+	ld a, h
+	ld [wMapTextPtr + 1], a
 	ret
 
 TextPredefs::

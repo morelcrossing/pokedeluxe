@@ -44,7 +44,7 @@ Func_f1ea2:
 	ld l, a
 	ret
 
-PikachuHappinessThresholds_f1eb9
+PikachuHappinessThresholds_f1eb9:
 	dw  51,      CeladonMansion1Text_f1ed5
 	dw 101,      CeladonMansion1Text_f1eda
 	dw 131,      CeladonMansion1Text_f1edf

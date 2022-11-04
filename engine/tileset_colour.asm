@@ -1,11 +1,17 @@
-INCLUDE "data/tileset_palettes.asm"
-
-TilesetPalettePointers:
-	dw TilesetPalette_Overworld
-
 LoadCurrentTilesetPalette::
 	ld bc, $60
-	ld hl, TilesetPalette_Overworld
+	
+	ld a, [wCurMapTileset]
+	ld e, a
+	ld d, $0
+	ld hl, TilesetPalettePointers
+	add hl, de
+	add hl, de
+	
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	
 	ld de, TILESET_PALETTE_DATA
 	call CopyData
 	ret
@@ -251,3 +257,5 @@ RedrawOverworldRowOrColumn::
 	dec c
 	jr nz, .loop2Pal1
 	ret
+
+INCLUDE "data/tileset_palettes.asm"

@@ -1,4 +1,4 @@
-Func_f1e30
+Func_f1e30:
 	CheckEvent EVENT_GOT_TM18
 	jr nz, .asm_f1e54
 	ld hl, CeladonMart3Text_f1e5b

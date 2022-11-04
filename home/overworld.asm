@@ -1749,8 +1749,16 @@ LoadWalkingPlayerSpriteGraphics::
 ; new sprite copy stuff
 	xor a
 	ld [wd473], a
+	ld a, [wPlayerType]
+	cp $0
+	jr z, .playerLoadRed
+	ld b, BANK(PlayerBlueSprite)
+	ld de, PlayerBlueSprite
+	jr .finishPlayerSelect
+.playerLoadRed
 	ld b, BANK(RedSprite)
 	ld de, RedSprite
+.finishPlayerSelect
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics2::
@@ -1805,7 +1813,7 @@ LoadMapHeader::
 
 Func_0db5:: ; XXX
 	callba LoadUnusedBluesHouseMissableObjectData
-asm_0dbd
+asm_0dbd:
 	ld a, [wCurMapTileset]
 	ld a, [wCurMap]
 	call SwitchToMapRomBank

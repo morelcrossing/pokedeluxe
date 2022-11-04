@@ -416,7 +416,7 @@ wc5d5:: ; c5d5
 	ds 1
 wSurfingMinigamePikachuHP:: ; c5d6
 	ds 2 ; little-endian BCD
-wc5d8:: ; c5d8 unused?
+wCurrentTileRow:: ; c5d8 unused?
 	ds 1
 wSurfingMinigameRadnessMeter:: ; c5d9
 ; number of consecutive tricks
@@ -1259,7 +1259,7 @@ wTrainerEngageDistance:: ; cd3e
 wJigglypuffFacingDirections2:: ; cd3e
 	ds 1
 
-wHUDGraphicsTiles:: ; cd3f
+;wHUDGraphicsTiles:: ; cd3f
 ; 3 bytes
 
 wDayCareTotalCost:: ; cd3f
@@ -3364,7 +3364,7 @@ wSwitchPartyOAMIndex:: ; d71f
 wPartyBGPLoaded:: ; d725
 	ds 1
 
-wUnusedD71F:: ; d726
+wPlayerType:: ; d726
 	ds 1
 
 wd728:: ; d727

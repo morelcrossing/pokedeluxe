@@ -414,7 +414,7 @@ Audio2_StopAllAudio::
 	ret
 
 ; fills d bytes at hl with a
-Audio2_FillMem
+Audio2_FillMem:
 	ld b, d
 .loop
 	ld [hli], a

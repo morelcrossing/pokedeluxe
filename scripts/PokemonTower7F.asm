@@ -223,7 +223,7 @@ PokemonTower7Script_60eaf:
 	call Delay3
 	ret
 
-PokemonTower7Script_60ebe
+PokemonTower7Script_60ebe:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	ret

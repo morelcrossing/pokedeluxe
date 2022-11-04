@@ -256,6 +256,11 @@ const_value = 2
 	const SPRITE_F_MEW        ; 151
 	const SPRITE_F_CHIKORITA  ; 151
 
+; player types
+const_value = 3
+	const SPRITE_P_RED        ; 00
+	const SPRITE_P_BLUE       ; 01
+
 ; different kinds of people events
 ITEM    EQU $80
 TRAINER EQU $40

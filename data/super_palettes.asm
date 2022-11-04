@@ -1470,6 +1470,78 @@ GBCBasePalettes:
 	RGB  1, 18, 30
 	RGB  6,  7,  2
 	
+	; PAL_REDSHOUSE_1
+	RGB 27, 23, 10
+	RGB 22, 18,  4
+	RGB  14, 11,  2
+	RGB  7,  6,  5
+	
+	; PAL_REDSHOUSE_2
+	RGB 24, 22, 20
+	RGB 15, 16, 18
+	RGB 8, 9, 10
+	RGB  4,  4,  6
+	
+	; PAL_REDSHOUSE_3
+	RGB 27, 23, 10
+	RGB 15, 28,  9
+	RGB 11, 21,  4
+	RGB  2,  6,  0
+	
+	; PAL_REDSHOUSE_4
+	RGB 27, 23, 10
+	RGB 29, 15, 15
+	RGB 25, 6,  6
+	RGB  10,  3,  1
+	
+	; PAL_REDSHOUSE_5
+	RGB 31, 31, 31
+	RGB 24, 22, 20
+	RGB 8,  15,  23
+	RGB  6,  6,  7
+	
+	; PAL_REDSHOUSE_6
+	RGB 27, 23, 10
+	RGB 22, 18,  4
+	RGB 24, 24, 24
+	RGB  8,  4,  12
+	
+	; PAL_POKECENTER_1
+	RGB 29, 24, 21
+	RGB 28, 13, 11
+	RGB  24, 7, 7
+	RGB  5, 5, 8
+	
+	; PAL_POKECENTER_2
+	RGB 23, 23, 23
+	RGB 13, 13, 14
+	RGB 24, 7, 7
+	RGB 5, 5, 8
+	
+	; PAL_POKECENTER_3
+	RGB 29, 28, 21
+	RGB 26, 24, 15
+	RGB 19, 14, 6
+	RGB  6, 6, 4
+	
+	; PAL_POKECENTER_4
+	RGB 29, 26, 16
+	RGB 24, 25, 22
+	RGB 15, 15, 11
+	RGB  6, 6, 6
+	
+	; PAL_POKECENTER_5
+	RGB 29, 26, 16
+	RGB 29, 18, 11
+	RGB 27, 12, 7
+	RGB  7, 7, 9
+	
+	; PAL_POKECENTER_6
+	RGB 29, 28, 21
+	RGB 20, 28, 10
+	RGB 11, 25, 6
+	RGB  5, 9, 3
+	
 	; PAL_BATTLETEXT1
 	RGB 31, 31, 31
 	RGB 31, 31, 31

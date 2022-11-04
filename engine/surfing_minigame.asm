@@ -662,7 +662,7 @@ SurfingMinigame_UpdatePikachuDistance:
 	dec [hl]
 	ret
 
-SurfingMinigameAnimatedObjectFn_Pikachu
+SurfingMinigameAnimatedObjectFn_Pikachu:
 	ld a, [wc5d2]
 	ld e, a
 	ld d, $0

@@ -1006,7 +1006,7 @@ Cosine_e: ; cosine?
 
 Sine_e: ; sine?
 	ld a, e
-asm_fd908
+asm_fd908:
 	and $3f
 	cp $20
 	jr nc, .asm_fd913

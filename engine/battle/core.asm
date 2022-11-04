@@ -6902,30 +6902,48 @@ LoadHudTilePatterns:
 	ld de, vChars2 + $6d0
 	ld bc, BattleHudTiles1End - BattleHudTiles1
 	ld a, BANK(BattleHudTiles1)
-	call FarCopyDataDouble
+	call FarCopyData
 	ld hl, BattleHudTiles2
 	ld de, vChars2 + $730
 	ld bc, BattleHudTiles2End - BattleHudTiles2
 	ld a, BANK(BattleHudTiles2)
 	call FarCopyData
+	ld hl, BattleExpTiles
+	ld de, vChars1 + $400
+	ld bc, BattleExpTilesEnd - BattleExpTiles
+	ld a, BANK(BattleExpTiles)
+	call FarCopyData
+	ld hl, BattleHudTiles4
+	ld de, vChars1 + $490
+	ld bc, BattleHudTiles4End - BattleHudTiles4
+	ld a, BANK(BattleHudTiles4)
+	call FarCopyData
 	ld hl, BattleHudTiles3
 	ld de, vChars2 + $760
 	ld bc, BattleHudTiles3End - BattleHudTiles3
 	ld a, BANK(BattleHudTiles3)
-	jp FarCopyDataDouble
+	jp FarCopyData
 .lcdEnabled
 	ld de, BattleHudTiles1
 	ld hl, vChars2 + $6d0
 	lb bc, BANK(BattleHudTiles1), (BattleHudTiles1End - BattleHudTiles1) / $8
-	call CopyVideoDataDouble
+	call CopyVideoData
 	ld de, BattleHudTiles2
 	ld hl, vChars2 + $730
 	lb bc, BANK(BattleHudTiles2), (BattleHudTiles2End - BattleHudTiles2) / $8
 	call CopyVideoData
+	ld de, BattleExpTiles
+	ld hl, vChars1 + $400
+	lb bc, BANK(BattleExpTiles), (BattleExpTilesEnd - BattleExpTiles) / $8
+	call CopyVideoData
+	ld de, BattleHudTiles4
+	ld hl, vChars1 + $490
+	lb bc, BANK(BattleHudTiles4), (BattleHudTiles4End - BattleHudTiles4) / $8
+	call CopyVideoData
 	ld de, BattleHudTiles3
 	ld hl, vChars2 + $760
 	lb bc, BANK(BattleHudTiles3), (BattleHudTiles3End - BattleHudTiles3) / $8
-	jp CopyVideoDataDouble
+	jp CopyVideoData
 
 PrintEmptyString:
 	ld hl, .emptyString

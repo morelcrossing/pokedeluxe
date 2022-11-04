@@ -169,35 +169,175 @@ AutoBgMapTransfer::
 
 TransferBgRowsOverworld::
 ; unrolled loop and using pop for speed
-	rept 20 / 2 - 1
+	
+	;ld a, b
+	;ld a, b
+	;ld [wCurrentTileRow], a
+	ld c, l
+	ld a, $0A
+.nextTile
+	ld [wCurrentTileRow], a
 	pop de
-	call BgTileVblankWait
+.vblankTile1
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankTile1
+	ld [hl], e
+	inc hl
+.vblankTile2
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankTile2
+	ld [hl], d
+	inc hl
+	
+	ld a, [wCurrentTileRow]
+	dec a
+	jr nz, .nextTile
+	
+	ld l, c
+	add sp,-20
 	ld a, $01
 	ld [rVBK], a
-	call LoadTilePalette
-	xor a
-	ld [rVBK], a
-	push de
-	add sp, 2
-	endr
-
+	
+	ld a, $0A
+.nextPal
+	ld [wCurrentTileRow], a
 	pop de
-	call BgTileVblankWait
-	ld a, $01
+	ld c, d
+	ld d, $d9
+.vblankPal1
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankPal1
+	ld a, e
+	cp $60
+	jr nc, .notMapTile1
+	ld a, [de]
+	ld [hli], a
+	ld e, c
+	jr .vblankPal2
+.notMapTile1
+	ld a, e
+	cp $80
+	jr nc, .textTile1
+	ld a, $06
+	ld [hli], a
+	ld e, c
+	jr .vblankPal2
+.textTile1
+	ld a, $07
+	ld [hli], a
+	ld e, c
+.vblankPal2
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankPal2
+	ld a, e
+	cp $60
+	jr nc, .notMapTile2
+	ld a, [de]
+	jr .finishPal
+.notMapTile2
+	ld a, e
+	cp $80
+	jr nc, .textTile2
+	ld a, $06
+	jr .finishPal
+.textTile2
+	ld a, $07
+.finishPal
+	ld [hli], a
+	ld a, [wCurrentTileRow]
+	dec a
+	jr nz, .nextPal
+	
+	ld a, $00
 	ld [rVBK], a
-	call LoadTilePalette
-	xor a
-	ld [rVBK], a
-	push de
-	add sp, 2
-
+	
 	dec l
 	ld a, 32 - (20 - 1)
 	add l
 	ld l, a
+	
+	;ld b, h
+	;ld c, l
+	
+	;rept 20 / 2 - 1
+	;call BgTileVblankWait
+	;pop de
+	;ld [hl], e
+	;inc hl
+	;ld [hl], d
+	;inc hl
+	;endr
+	
+	;call BgTileVblankWait
+	;pop de
+	;ld [hl], e
+	;inc hl
+	;ld [hl], d
+	
+	;ld h, b
+	;ld l, c
+	;add sp,-20
+	;ld a, $01
+	;ld [rVBK], a
+	
+	;rept 20 / 2 - 1
+	;call BgTileVblankWait
+	;pop de
+	;ld c, d
+	;ld d, $d9
+	;ld a, [de]
+	;ld [hli], a
+	;inc l
+	;ld e, c
+	;ld a, [de]
+	;ld [hli], a
+	;inc l
+	;endr
+	
+	;pop de
+	;ld c, d
+	;ld d, $d9
+	;ld a, [de]
+	;ld [hli], a
+	;ld e, c
+	;ld a, [de]
+	;ld [hl], a
+	
+	;call LoadTilePalette
+	;ld a, $00
+	;ld [rVBK], a
+	;pop bc
+	;push de
+	;add sp, 2
+	;endr
+
+	;pop de
+	;push bc
+	;call BgTileVblankWait
+	;ld a, $01
+	;ld [rVBK], a
+	;call LoadTilePalette
+	;xor a
+	;ld [rVBK], a
+	;pop bc
+	;push de
+	;add sp, 2
+
+	
+	;dec l
+	;ld a, 32 - (20 - 1)
+	;add l
+	;ld l, a
 	jr nc, .ok
 	inc h
 .ok
+	;ld a, [wCurrentTileRow]
+	;ld b, a
+	
 	dec b
 	jp nz, TransferBgRowsOverworld
 	jp LoadStackPointer
@@ -236,40 +376,64 @@ LoadStackPointer:
 	ret
 
 BgTileVblankWait:
+	pop de
 .vblankTile1
 	ld a, [rSTAT]
 	and %10 ; are we in HBlank or VBlank?
 	jr nz, .vblankTile1
 	ld [hl], e
-	inc l
+	inc hl
 .vblankTile2
 	ld a, [rSTAT]
 	and %10 ; are we in HBlank or VBlank?
 	jr nz, .vblankTile2
 	ld [hl], d
-	dec l
+	inc hl
+	ret
+
+BgPalVblankWait:
+	pop de
+	ld c, d
+	ld d, $d9
+.vblankTile1
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankTile1
+	ld a, [de]
+	ld [hl], a
+	inc l
+	ld e, c
+.vblankTile2
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .vblankTile2
+	ld a, [de]
+	ld [hl], a
+	inc l
 	ret
 
 LoadTilePalette:
+	;push bc
 	ld c, d
 	ld d, $d9
-.waitPalVBlank1
-	ld a, [rSTAT]
-	and %10 ; are we in HBlank or VBlank?
-	jr nz, .waitPalVBlank1
+	
 	ld a, e
 	cp $60
 	jr nc, .notMapTile1
 	ld a, [de]
-	ldi [hl], a
-	jr .waitPalVBlank2
+	ld b, a
+	;ldi [hl], a
+	jr .waitPalVBlank1
 .notMapTile1
-	ld a, $06
-	ldi [hl], a
-.waitPalVBlank2
+	ld b, $06
+	;ldi [hl], a
+.waitPalVBlank1
 	ld a, [rSTAT]
 	and %10 ; are we in HBlank or VBlank?
-	jr nz, .waitPalVBlank2
+	jr nz, .waitPalVBlank1
+	ld [hl], b
+	inc hl
+
 	ld a, e
 	ld e, c
 	ld c, a
@@ -277,13 +441,21 @@ LoadTilePalette:
 	cp $60
 	jr nc, .notMapTile2
 	ld a, [de]
-	jr .finishTiles
+	ld b, a
+	jr .waitPalVBlank2
 .notMapTile2
-	ld a, $06
-.finishTiles
-	ldi [hl], a
+	ld b, $06
+	
+.waitPalVBlank2
+	ld a, [rSTAT]
+	and %10 ; are we in HBlank or VBlank?
+	jr nz, .waitPalVBlank2
+	ld [hl], b
+	inc hl
+	
 	ld d, e
 	ld e, c
+	;pop bc
 	ret
 
 ; Copies [H_VBCOPYBGNUMROWS] rows from H_VBCOPYBGSRC to H_VBCOPYBGDEST.

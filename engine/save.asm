@@ -67,6 +67,8 @@ LoadSAV0:
 	ld de, wSpriteDataStart
 	ld bc, wSpriteDataEnd - wSpriteDataStart
 	call CopyData
+	ld a, [sPlayerType]
+	ld [wPlayerType], a
 	ld a, [sTilesetType]
 	ld [hTilesetType], a
 	ld hl, sCurBoxData
@@ -211,6 +213,8 @@ SaveSAVtoSRAM0:
 	ld de, sCurBoxData
 	ld bc, wBoxDataEnd - wBoxDataStart
 	call CopyData
+	ld a, [wPlayerType]
+	ld [sPlayerType], a
 	ld a, [hTilesetType]
 	ld [sTilesetType], a
 	ld hl, sPlayerName

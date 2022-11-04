@@ -282,13 +282,58 @@ SetPal_OverworldSprites:
 	ld hl, wPalPacket
 	ret
 
-SetPal_Overworld1:
+SetPal_OverworldColour1:
+	ld a, [wCurMapTileset]
+	cp 0
+	jr z, .overworld
+	cp 1
+	jr z, .redshouse
+	cp 2
+	jr z, .redshouse
+	cp 3
+	jr z, .redshouse
+	cp 4
+	jr z, .redshouse
+	cp 5
+	jr z, .redshouse
+	cp 6
+	jr z, .pokecenter
+.overworld
 	ld hl, PalPacket_Overworld1
+	jr .finish
+.redshouse
+	ld hl, PalPacket_RedsHouse1
+	jr .finish
+.pokecenter
+	ld hl, PalPacket_Pokecenter1
+.finish
 	ld de, BlkPacket_Nothing
 	ret
 
-SetPal_Overworld2:
+SetPal_OverworldColour2:
+	ld a, [wCurMapTileset]
+	cp 0
+	jr z, .overworld
+	cp 1
+	jr z, .redshouse
+	cp 2
+	jr z, .redshouse
+	cp 3
+	jr z, .redshouse
+	cp 4
+	jr z, .redshouse
+	cp 5
+	jr z, .redshouse
+	cp 6
+	jr z, .pokecenter
+.overworld
 	ld hl, PalPacket_Overworld2
+	jr .finish
+.redshouse
+	ld hl, PalPacket_RedsHouse2
+.pokecenter
+	ld hl, PalPacket_Pokecenter2
+.finish
 	ld de, BlkPacket_Nothing
 	ret
 
@@ -437,8 +482,12 @@ SetPalFunctions:
 	dw SetPal_PartyPokemon2
 	dw SetPal_OverworldSprites
 	dw SetPal_PartyMenu2
-	dw SetPal_Overworld1
-	dw SetPal_Overworld2
+	dw SetPal_OverworldColour1
+	dw SetPal_OverworldColour2
+;	dw SetPal_Overworld1
+;	dw SetPal_Overworld2
+;	dw SetPal_RedsHouse1
+;	dw SetPal_Redshouse2
 
 ; The length of the blk data of each badge on the Trainer Card.
 ; The Rainbow Badge has 3 entries because of its many colors.
@@ -1522,7 +1571,7 @@ TranslatePalPacketToBGMapAttributes::
 
 PalPacketPointers::
 	db (palPacketPointersEnd - palPacketPointers) / 2
-palPacketPointers
+palPacketPointers:
 	dw BlkPacket_WholeScreen
 	dw BlkPacket_Battle
 	dw BlkPacket_StatusScreen
@@ -1535,7 +1584,7 @@ palPacketPointers
 	dw BlkPacket_GameFreakIntro
 	dw wPalPacket
 	dw UnknownPacket_72751
-palPacketPointersEnd
+palPacketPointersEnd:
 
 CopySGBBorderTiles:
 ; SGB tile data is stored in a 4BPP planar format.
