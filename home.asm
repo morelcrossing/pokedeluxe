@@ -249,7 +249,11 @@ DrawHPBar::
 	dec a
 	ld a, $6d ; status screen and battle
 	jr z, .ok
-	dec a ; pokemon menu
+	ld a, [wHPBarType]
+	cp $2  ;pokemon menu
+	ld a, $6c
+	jr z, .ok
+	ld a, $cf ; enemy HUD
 .ok
 	ld [hl], a
 

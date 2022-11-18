@@ -1731,9 +1731,7 @@ Gym_GFX:           INCBIN "gfx/tilesets/gym.2bpp"
 Dojo_Block:
 Gym_Block:         INCBIN "gfx/blocksets/gym.bst"
 
-Mart_GFX:
 Pokecenter_GFX:    INCBIN "gfx/tilesets/pokecenter.2bpp"
-Mart_Block:
 Pokecenter_Block:  INCBIN "gfx/blocksets/pokecenter.bst"
 
 ForestGate_GFX:
@@ -1780,6 +1778,9 @@ INCLUDE "engine/save.asm"
 
 
 SECTION "bank1D", ROMX
+
+Mart_GFX:          INCBIN "gfx/tilesets/pokemart.2bpp"
+Mart_Block:        INCBIN "gfx/blocksets/pokemart.bst"
 
 Plateau_GFX:       INCBIN "gfx/tilesets/plateau.2bpp"
 Plateau_Block:     INCBIN "gfx/blocksets/plateau.bst"

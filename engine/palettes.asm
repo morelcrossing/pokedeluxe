@@ -289,7 +289,7 @@ SetPal_OverworldColour1:
 	cp 1
 	jr z, .redshouse
 	cp 2
-	jr z, .redshouse
+	jr z, .pokemart
 	cp 3
 	jr z, .redshouse
 	cp 4
@@ -304,6 +304,9 @@ SetPal_OverworldColour1:
 .redshouse
 	ld hl, PalPacket_RedsHouse1
 	jr .finish
+.pokemart
+	ld hl, PalPacket_Pokemart1
+	jr .finish
 .pokecenter
 	ld hl, PalPacket_Pokecenter1
 .finish
@@ -317,7 +320,7 @@ SetPal_OverworldColour2:
 	cp 1
 	jr z, .redshouse
 	cp 2
-	jr z, .redshouse
+	jr z, .pokemart
 	cp 3
 	jr z, .redshouse
 	cp 4
@@ -331,6 +334,10 @@ SetPal_OverworldColour2:
 	jr .finish
 .redshouse
 	ld hl, PalPacket_RedsHouse2
+	jr .finish
+.pokemart
+	ld hl, PalPacket_Pokemart2
+	jr .finish
 .pokecenter
 	ld hl, PalPacket_Pokecenter2
 .finish

@@ -249,5 +249,11 @@ const_value = 0
 	const PAL_POKECENTER_4        ; $30
 	const PAL_POKECENTER_5        ; $30
 	const PAL_POKECENTER_6        ; $30
+	const PAL_POKEMART_1        ; $30
+	const PAL_POKEMART_2        ; $30
+	const PAL_POKEMART_3        ; $30
+	const PAL_POKEMART_4        ; $30
+	const PAL_POKEMART_5        ; $30
+	const PAL_POKEMART_6        ; $30
 	const PAL_BATTLETEXT1        ; $30
 	const PAL_BATTLETEXT2        ; $30
