@@ -480,6 +480,12 @@ GBCBasePalettes:
 	RGB 31, 21,  0
 	RGB  3,  3,  3
 	
+	; PAL_PARTY_HELD 
+	RGB 31, 26,  4
+	RGB 31, 18,  5
+	RGB  0, 14, 31
+	RGB  3,  3,  3
+	
 	; PAL_P_BULBASAUR  ; 1
 	RGB 31, 31, 31
 	RGB 10, 25, 21
@@ -1388,8 +1394,8 @@ GBCBasePalettes:
 	
 	; PAL_P_CHIKORITA  ; 152
 	RGB 31, 31, 31
-	RGB 29, 17, 21
-	RGB  5, 14, 21
+	RGB 21, 23, 12
+	RGB  3, 20,  0
 	RGB  3,  3,  3
 
 	; PAL_SPRITES
@@ -1411,28 +1417,34 @@ GBCBasePalettes:
 	RGB 12, 12, 12
 
 	; PAL_PARTY_GREENBAR
-	RGB 6,  19, 21
+	RGB  4,  7, 13
 	RGB 31, 31, 31
 	RGB  1, 31,  1
 	RGB  3,  3,  3
 
 	; PAL_PARTY_ORANGEBAR
-	RGB 6,  19, 21
+	RGB  4,  7, 13
 	RGB 31, 31, 31
 	RGB 31, 20,  4
 	RGB  3,  3,  3
 
 	; PAL_PARTY_REDBAR
-	RGB 6,  19, 21
+	RGB  4,  7, 13
 	RGB 31, 31, 31
 	RGB 31,  1,  1
 	RGB  3,  3,  3
 
 	; PAL_PARTY_TEXT
-	RGB 6,  19, 21
-	RGB 14, 14, 14
-	RGB 11, 24, 25
+	RGB  4,  7, 13
+	RGB 13, 13, 13
+	RGB  2, 20, 20
 	RGB 30, 30, 30
+	
+	; PAL_PARTY_GENDER
+	RGB  4,  7, 13
+	RGB  2, 20, 20
+	RGB 30,  8,  8
+	RGB  2, 19, 31
 	
 	; PAL_OVERWORLD_1
 	RGB 21, 30, 15

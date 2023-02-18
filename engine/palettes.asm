@@ -185,6 +185,11 @@ SetPal_PartyMenu2:
 	ld de, wPartyMenuBlkPacket
 	ret
 
+SetPal_BattleText:
+	ld hl, PalPacket_BattleText
+	ld de, wPartyMenuBlkPacket
+	ret
+
 ; uses PalPacket_Empty to build a packet using the palettes of the first 4 party pokemon
 SetPal_PartyPokemon1:
 	ld hl, PalPacket_Empty
@@ -225,6 +230,10 @@ index2 = 0
 index = index + 1
 index2 = index2 + 1
 	ENDR
+	
+	ld a, PAL_PARTY_HELD
+	ld hl, wPalPacket + index2 + index2 + 1
+	ld [hl], a
 	
 	ld hl, wPalPacket
 	ret
@@ -298,6 +307,42 @@ SetPal_OverworldColour1:
 	jr z, .redshouse
 	cp 6
 	jr z, .pokecenter
+	cp 7
+	jr z, .redshouse
+	cp 8
+	jr z, .redshouse
+	cp 9
+	jr z, .redshouse
+	cp 10
+	jr z, .redshouse
+	cp 11
+	jr z, .redshouse
+	cp 12
+	jr z, .redshouse
+	cp 13
+	jr z, .redshouse
+	cp 14
+	jr z, .redshouse
+	cp 15
+	jr z, .redshouse
+	cp 16
+	jr z, .redshouse
+	cp 17
+	jr z, .redshouse
+	cp 18
+	jr z, .redshouse
+	cp 19
+	jr z, .redshouse
+	cp 20
+	jr z, .lab
+	cp 21
+	jr z, .redshouse
+	cp 22
+	jr z, .redshouse
+	cp 23
+	jr z, .redshouse
+	cp 24
+	jr z, .redshouse
 .overworld
 	ld hl, PalPacket_Overworld1
 	jr .finish
@@ -309,6 +354,9 @@ SetPal_OverworldColour1:
 	jr .finish
 .pokecenter
 	ld hl, PalPacket_Pokecenter1
+	jr .finish
+.lab
+	ld hl, PalPacket_Pokecenter2
 .finish
 	ld de, BlkPacket_Nothing
 	ret
@@ -329,6 +377,42 @@ SetPal_OverworldColour2:
 	jr z, .redshouse
 	cp 6
 	jr z, .pokecenter
+	cp 7
+	jr z, .redshouse
+	cp 8
+	jr z, .redshouse
+	cp 9
+	jr z, .redshouse
+	cp 10
+	jr z, .redshouse
+	cp 11
+	jr z, .redshouse
+	cp 12
+	jr z, .redshouse
+	cp 13
+	jr z, .redshouse
+	cp 14
+	jr z, .redshouse
+	cp 15
+	jr z, .redshouse
+	cp 16
+	jr z, .redshouse
+	cp 17
+	jr z, .redshouse
+	cp 18
+	jr z, .redshouse
+	cp 19
+	jr z, .redshouse
+	cp 20
+	jr z, .lab
+	cp 21
+	jr z, .redshouse
+	cp 22
+	jr z, .redshouse
+	cp 23
+	jr z, .redshouse
+	cp 24
+	jr z, .redshouse
 .overworld
 	ld hl, PalPacket_Overworld2
 	jr .finish
@@ -339,6 +423,9 @@ SetPal_OverworldColour2:
 	ld hl, PalPacket_Pokemart2
 	jr .finish
 .pokecenter
+	ld hl, PalPacket_Pokecenter2
+	jr .finish
+.lab
 	ld hl, PalPacket_Pokecenter2
 .finish
 	ld de, BlkPacket_Nothing
@@ -491,6 +578,7 @@ SetPalFunctions:
 	dw SetPal_PartyMenu2
 	dw SetPal_OverworldColour1
 	dw SetPal_OverworldColour2
+	dw SetPal_BattleText
 ;	dw SetPal_Overworld1
 ;	dw SetPal_Overworld2
 ;	dw SetPal_RedsHouse1

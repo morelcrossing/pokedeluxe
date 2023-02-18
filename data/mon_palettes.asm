@@ -151,4 +151,4 @@ MonsterPalettes:
 	db PAL_P_DRAGONITE  ; 149
 	db PAL_P_MEWTWO     ; 150
 	db PAL_P_MEW        ; 151
-	db PAL_P_CHIKORITA  ; 151
+	db PAL_P_CHIKORITA  ; 152

@@ -239,6 +239,12 @@ GBCSpritePalettes:
 	RGB 31, 21,  0
 	RGB  3,  3,  3
 	
+	; PAL_PARTY_HELD 
+	RGB 31, 26,  4
+	RGB 31, 18,  5
+	RGB  0, 14, 31
+	RGB  3,  3,  3
+	
 	; PAL_P_BULBASAUR  ; 1
 	RGB 31, 31, 31
 	RGB 10, 22,  6
@@ -1147,8 +1153,8 @@ GBCSpritePalettes:
 	
 	; PAL_P_CHIKORITA  ; 151
 	RGB 31, 31, 31
-	RGB 29, 17, 21
-	RGB  5, 14, 21
+	RGB 21, 23, 12
+	RGB  3, 20,  0
 	RGB  3,  3,  3
 	
 	; PAL_SPRITES

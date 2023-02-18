@@ -1761,8 +1761,6 @@ Lab_GFX:           INCBIN "gfx/tilesets/lab.2bpp"
 Lab_Block:         INCBIN "gfx/blocksets/lab.bst"
 Club_GFX:          INCBIN "gfx/tilesets/club.2bpp"
 Club_Block:        INCBIN "gfx/blocksets/club.bst"
-Underground_GFX:   INCBIN "gfx/tilesets/underground.2bpp"
-Underground_Block: INCBIN "gfx/blocksets/underground.bst"
 
 
 SECTION "bank1C", ROMX
@@ -1778,6 +1776,9 @@ INCLUDE "engine/save.asm"
 
 
 SECTION "bank1D", ROMX
+
+Underground_GFX:   INCBIN "gfx/tilesets/underground.2bpp"
+Underground_Block: INCBIN "gfx/blocksets/underground.bst"
 
 Mart_GFX:          INCBIN "gfx/tilesets/pokemart.2bpp"
 Mart_Block:        INCBIN "gfx/blocksets/pokemart.bst"
@@ -2381,6 +2382,8 @@ SECTION "bank4B", ROMX
 
 ChikoritaPicFront::   INCBIN "pic/ymon/chikorita.pic"
 ChikoritaPicBack::    INCBIN "pic/monback/chikoritab.pic"
+TreeckoPicFront::   INCBIN "pic/ymon/treecko.pic"
+TreeckoPicBack::    INCBIN "pic/monback/treeckob.pic"
 
 SECTION "bank4C", ROMX
 

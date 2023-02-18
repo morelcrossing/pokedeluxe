@@ -25,6 +25,7 @@ SET_PAL_SPRITES              EQU $12
 SET_PAL_PARTY_MENU2          EQU $13
 SET_PAL_OVERWORLD_COLOUR1    EQU $14
 SET_PAL_OVERWORLD_COLOUR2    EQU $15
+SET_PAL_BATTLE_TEXT          EQU $16
 ;SET_PAL_OVERWORLD1           EQU $14
 ;SET_PAL_OVERWORLD2           EQU $15
 UPDATE_PARTY_MENU_BLK_PACKET EQU $FC
@@ -72,6 +73,7 @@ const_value = 0
 	const PAL_25          ; $25
 	const PAL_26          ; $26
 	const PAL_27          ; $27
+	const PAL_PARTY_HELD  ; $28
 	const PAL_P_BULBASAUR  ; 1
 	const PAL_P_IVYSAUR    ; 2
 	const PAL_P_VENUSAUR   ; 3
@@ -223,7 +225,7 @@ const_value = 0
 	const PAL_P_DRAGONITE  ; 149
 	const PAL_P_MEWTWO     ; 150
 	const PAL_P_MEW        ; 151
-	const PAL_P_CHIKORITA        ; 152
+	const PAL_P_CHIKORITA  ; 152
 	const PAL_SPRITES     ; $2F
 	const PAL_TEXTBOX        ; $30
 	const PAL_TEXT        ; $30
@@ -231,6 +233,7 @@ const_value = 0
 	const PAL_PARTY_ORANGEBAR   ; $20
 	const PAL_PARTY_REDBAR      ; $21
 	const PAL_PARTY_TEXT        ; $30
+	const PAL_PARTY_GENDER       ; $30
 	const PAL_OVERWORLD_1        ; $30
 	const PAL_OVERWORLD_2        ; $30
 	const PAL_OVERWORLD_3        ; $30

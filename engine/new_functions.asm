@@ -162,7 +162,7 @@ UpdateOverworldOBP1Palette:
 	ret
 
 UpdateBattleBGP2Palette:
-	ld b, SET_PAL_PARTY_MENU2
+	ld b, SET_PAL_BATTLE_TEXT
 	predef_jump UpdateBGP2PaletteCommand
 	ret
 

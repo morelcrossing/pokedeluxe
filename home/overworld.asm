@@ -26,7 +26,7 @@ EnterMap::
 	ld hl, wd72e
 	res 4, [hl]
 .didNotEnterUsingFlyWarpOrDungeonWarp
-	;call IsSurfingPikachuInParty
+	call IsSurfingPikachuInParty
 	callba CheckForceBikeOrSurf ; handle currents in SF islands and forced bike riding in cycling road
 	ld hl, wd732
 	bit 4, [hl]
@@ -44,7 +44,7 @@ OverworldLoop::
 	call DelayFrame
 OverworldLoopLessDelay::
 	call DelayFrame
-	;call IsSurfingPikachuInParty
+	call IsSurfingPikachuInParty
 	callba LoadOverworldPalettes
 	call HandleMidJump
 	ld a, [wWalkCounter]
