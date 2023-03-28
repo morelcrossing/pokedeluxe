@@ -111,6 +111,9 @@ SetPal_Battle:
 	ld bc, $10
 	call CopyData
 	;ld a, [wPlayerBattleStatus3]
+	
+	;ld b, $29
+	
 	ld hl, wBattleMonSpecies
 	ld a, [hl]
 	and a
@@ -136,6 +139,7 @@ SetPal_Battle:
 	ld [hli], a
 	inc hl
 	ld a, b
+	;ld a, $29
 	ld [hli], a
 	inc hl
 	ld a, c
@@ -280,10 +284,14 @@ SetPal_GameFreakIntro:
 	ret
 
 SetPal_OverworldSprites:
-	ld hl, PalPacket_OverworldSprites
+	ld hl, PalPacket_Empty
 	ld de, wPalPacket
 	ld bc, $40
 	call CopyData
+	ld a, [wPlayerType]
+	add a, $29
+	ld hl, wPalPacket + 1
+	ld [hl], a
 	ld a, [wPartySpecies]
 	call DeterminePaletteIDOutOfBattle
 	ld hl, wPalPacket + 3
@@ -601,15 +609,22 @@ DeterminePaletteID:
 DeterminePaletteIDOutOfBattle:
 	ld [wd11e], a
 	and a ; is the mon index 0?
-	jr z, .skipDexNumConversion
+	jr z, .loadTrainerPalette
 	push bc
 	predef IndexToPokedex
 	pop bc
 	ld a, [wd11e]
+	ld hl, MonsterPalettes
+	jr .skipDexNumConversion
+.loadTrainerPalette
+	ld a, [wPlayerType]
+	;add a, $29
+	ld hl, TrainerPalettes
 .skipDexNumConversion
+	;ld a, [wPlayerType]
+	;add a, $29
 	ld e, a
 	ld d, 0
-	ld hl, MonsterPalettes ; not just for Pokemon, Trainers use it too
 	add hl, de
 	ld a, [hl]
 	ret
@@ -1714,9 +1729,11 @@ CopySGBBorderTiles:
 INCLUDE "data/sgb_packets.asm"
 
 INCLUDE "data/mon_palettes.asm"
+INCLUDE "data/trainer_palettes.asm"
 
 INCLUDE "data/super_palettes.asm"
 
 INCLUDE "data/sprite_palettes.asm"
+INCLUDE "data/player_palettes.asm"
 
 INCLUDE "data/sgb_border.asm"

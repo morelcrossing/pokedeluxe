@@ -2513,7 +2513,8 @@ PartyMenuOrRockOrRun:
 .quitPartyMenu
 	call ClearSprites
 	call GBPalWhiteOut
-	call LoadHudTilePatterns
+	;call LoadHudTilePatterns
+	call LoadHudAndHpBarAndStatusTilePatterns
 	call LoadScreenTilesFromBuffer2
 	call RunDefaultPaletteCommand ; RUN ALL 4 PALETTE COMMANDS
 	call GBPalNormal
@@ -6926,23 +6927,23 @@ LoadHudTilePatterns:
 .lcdEnabled
 	ld de, BattleHudTiles1
 	ld hl, vChars2 + $6d0
-	lb bc, BANK(BattleHudTiles1), (BattleHudTiles1End - BattleHudTiles1) / $8
+	lb bc, BANK(BattleHudTiles1), $3
 	call CopyVideoData
 	ld de, BattleHudTiles2
 	ld hl, vChars2 + $730
-	lb bc, BANK(BattleHudTiles2), (BattleHudTiles2End - BattleHudTiles2) / $8
+	lb bc, BANK(BattleHudTiles2), $3
 	call CopyVideoData
 	ld de, BattleExpTiles
 	ld hl, vChars1 + $400
-	lb bc, BANK(BattleExpTiles), (BattleExpTilesEnd - BattleExpTiles) / $8
+	lb bc, BANK(BattleExpTiles), $9
 	call CopyVideoData
 	ld de, BattleHudTiles4
 	ld hl, vChars1 + $490
-	lb bc, BANK(BattleHudTiles4), (BattleHudTiles4End - BattleHudTiles4) / $8
+	lb bc, BANK(BattleHudTiles4), $7
 	call CopyVideoData
 	ld de, BattleHudTiles3
 	ld hl, vChars2 + $760
-	lb bc, BANK(BattleHudTiles3), (BattleHudTiles3End - BattleHudTiles3) / $8
+	lb bc, BANK(BattleHudTiles3), $3
 	jp CopyVideoData
 
 PrintEmptyString:

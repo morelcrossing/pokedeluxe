@@ -604,14 +604,3 @@ SpriteSheetPointerTable:
 	dw FollowSquirtle
 	db $c0
 	db BANK(FollowSquirtle)
-	
-PlayerSpriteSheetPointerTable:
-	; SPRITE_P_RED
-	dw RedSprite
-	db $c0 ; byte count
-	db BANK(RedSprite)
-
-	; SPRITE_P_BLUE
-	dw PlayerBlueSprite
-	db $c0 ; byte count
-	db BANK(PlayerBlueSprite)

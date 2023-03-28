@@ -74,6 +74,9 @@ const_value = 0
 	const PAL_26          ; $26
 	const PAL_27          ; $27
 	const PAL_PARTY_HELD  ; $28
+	const PAL_P_RED       ; $29
+	const PAL_P_BLUE      ; $2A
+	const PAL_P_ROCKET    ; $2B
 	const PAL_P_BULBASAUR  ; 1
 	const PAL_P_IVYSAUR    ; 2
 	const PAL_P_VENUSAUR   ; 3

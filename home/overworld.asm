@@ -1750,15 +1750,20 @@ LoadWalkingPlayerSpriteGraphics::
 	xor a
 	ld [wd473], a
 	ld a, [wPlayerType]
-	cp $0
-	jr z, .playerLoadRed
-	ld b, BANK(PlayerBlueSprite)
-	ld de, PlayerBlueSprite
-	jr .finishPlayerSelect
-.playerLoadRed
-	ld b, BANK(RedSprite)
-	ld de, RedSprite
-.finishPlayerSelect
+	push hl
+	ld l, a
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	ld de, PlayerSpriteSheetPointerTable
+	add hl, de
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	inc hl
+	inc hl
+	ld b, [hl]
+	pop hl
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics2::
@@ -2238,3 +2243,5 @@ LoadSprite::
 	ld [hl], a ; zero byte 1, since it is not used
 	pop hl
 	ret
+
+INCLUDE "data/player_sprite_sets.asm"

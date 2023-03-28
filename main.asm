@@ -2387,4 +2387,6 @@ TreeckoPicBack::    INCBIN "pic/monback/treeckob.pic"
 
 SECTION "bank4C", ROMX
 
-PlayerBlueSprite:            INCBIN "gfx/sprites/players/player_blue.2bpp"
+PlayerRedSprite:     INCBIN "gfx/sprites/players/player_red.2bpp"
+PlayerBlueSprite:     INCBIN "gfx/sprites/players/player_blue.2bpp"
+PlayerRocketSprite:   INCBIN "gfx/sprites/players/player_rocket.2bpp"

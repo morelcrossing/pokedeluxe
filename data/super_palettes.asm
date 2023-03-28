@@ -486,6 +486,24 @@ GBCBasePalettes:
 	RGB  0, 14, 31
 	RGB  3,  3,  3
 	
+	; PAL_P_RED
+	RGB 31, 31, 31
+	RGB 25,  6,  5
+	RGB 20, 14,  6
+	RGB  3,  3,  3
+	
+	; PAL_P_BLUE
+	RGB 31, 31, 31
+	RGB 29, 26, 21
+	RGB 25, 14,  3
+	RGB  3,  3,  3
+	
+	; PAL_P_ROCKET
+	RGB 31, 31, 31
+	RGB 26, 17, 14
+	RGB  7,  7,  7
+	RGB  3,  3,  3
+	
 	; PAL_P_BULBASAUR  ; 1
 	RGB 31, 31, 31
 	RGB 10, 25, 21
