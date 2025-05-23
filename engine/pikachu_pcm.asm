@@ -54,7 +54,7 @@ PlayPikachuSoundClip::
 	ld [rNR34], a
 	pop hl
 	pop bc
-	call PlayPikachuPCM
+	;call PlayPikachuPCM
 	xor a
 	ld [wc0f3], a
 	ld [wc0f4], a

@@ -1215,6 +1215,7 @@ index = 0
 		call DMGPalToGBCPal
 		ld a, index
 		call TransferCurBGPData
+		;call BufferBGPPal
 
 index = index + 1
 	ENDR
@@ -1253,6 +1254,7 @@ index = 0
 		call DMGPalToGBCPal
 		ld a, index + 4
 		call TransferCurBGPData
+		;call BufferBGPPal
 
 index = index + 1
 	ENDR
@@ -1572,6 +1574,64 @@ TransferPalColorLCDDisabled:
 	ld [de], a
 	ld a, [hli]
 	ld [de], a
+	ret
+
+_UpdateOverworldBGPPointers::
+	call SetPal_OverworldColour1
+	inc hl
+
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		IF index > 0
+			pop hl
+		ENDC
+
+		ld a, [hli]
+		inc hl
+
+		IF index < (NUM_ACTIVE_PALS + -1)
+			push hl
+		ENDC
+
+		call GetGBCBasePalAddress
+		ld a, e
+		ld [wGBCBasePalPointers + index * 2], a
+		ld a, d
+		ld [wGBCBasePalPointers + index * 2 + 1], a
+
+index = index + 1
+	ENDR
+	
+	ret
+
+_UpdateOverworldBGP2Pointers::
+	call SetPal_OverworldColour2
+	inc hl
+
+index = 0
+
+	REPT NUM_ACTIVE_PALS
+		IF index > 0
+			pop hl
+		ENDC
+
+		ld a, [hli]
+		inc hl
+
+		IF index < (NUM_ACTIVE_PALS + -1)
+			push hl
+		ENDC
+
+		call GetGBCBasePalAddress
+		ld a, e
+		ld [wGBCBasePalPointers + index * 2], a
+		ld a, d
+		ld [wGBCBasePalPointers + index * 2 + 1], a
+
+index = index + 1
+	ENDR
+	
 	ret
 
 _UpdateGBCPal_BGP_CheckDMG::

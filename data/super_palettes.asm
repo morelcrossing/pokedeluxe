@@ -1424,15 +1424,15 @@ GBCBasePalettes:
 
 	; PAL_TEXTBOX
 	RGB 30, 30, 30
-	RGB 17, 17, 24
-	RGB 14, 13, 16
-	RGB  5,  5,  5
+	RGB 19, 19, 29
+	RGB 15, 13, 19
+	RGB  5,  6,  6
 
 	; PAL_TEXT
 	RGB 30, 30, 30
-	RGB 25, 25, 24
-	RGB 14, 13, 16
-	RGB 12, 12, 12
+	RGB 23, 23, 23
+	RGB 15, 13, 19
+	RGB 11, 11, 11
 
 	; PAL_PARTY_GREENBAR
 	RGB  4,  7, 13

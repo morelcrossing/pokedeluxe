@@ -6594,7 +6594,28 @@ LoadPlayerBackPic:
 	ld de, ProfOakPicBack
 	cp BATTLE_TYPE_PIKACHU ; is it the pikachu battle at the beginning of the game?
 	jr z, .next
-	ld de, RedPicBack
+	
+	
+	;ld de, BluePicBack
+	
+	ld a, [wPlayerType]
+	push hl
+	ld l, a
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	ld de, PlayerBackSpritesPointerTable
+	add hl, de
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	;inc hl
+	;inc hl
+	
+	;ld b, [hl]
+	pop hl
+	
+	
 .next
 	ld a, BANK(RedPicBack)
 	call UncompressSpriteFromDE
@@ -8699,3 +8720,5 @@ PlayBattleAnimationGotID:
 	pop de
 	pop hl
 	ret
+
+INCLUDE "data/player_back_sprites.asm"

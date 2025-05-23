@@ -98,36 +98,36 @@ SECTION "Header", ROM0
 
 SECTION "Main", ROM0
 
-PlayPikachuPCM::
-	ld a, [H_LOADEDROMBANK]
-	push af
-	ld a, b
-	call BankswitchCommon
-	ld a, [hli]
-	ld c, a
-	ld a, [hli]
-	ld b, a
-.loop
-	ld a, [hli]
-	ld d, a
-	ld a, $3
-.playSingleSample
-	dec a
-	jr nz, .playSingleSample
-
-	rept 7
-	call LoadNextSoundClipSample
-	call PlaySoundClipSample
-	endr
-
-	call LoadNextSoundClipSample
-	dec bc
-	ld a, c
-	or b
-	jr nz, .loop
-	pop af
-	call BankswitchCommon
-	ret
+;PlayPikachuPCM::
+;	ld a, [H_LOADEDROMBANK]
+;	push af
+;	ld a, b
+;	call BankswitchCommon
+;	ld a, [hli]
+;	ld c, a
+;	ld a, [hli]
+;	ld b, a
+;.loop
+;	ld a, [hli]
+;	ld d, a
+;	ld a, $3
+;.playSingleSample
+;	dec a
+;	jr nz, .playSingleSample
+;
+;	rept 7
+;	call LoadNextSoundClipSample
+;	call PlaySoundClipSample
+;	endr
+;
+;	call LoadNextSoundClipSample
+;	dec bc
+;	ld a, c
+;	or b
+;	jr nz, .loop
+;	pop af
+;	call BankswitchCommon
+;	ret
 
 LoadNextSoundClipSample::
 	ld a, d
@@ -827,7 +827,11 @@ UncompressMonSprite::
 	cp VICTREEBEL + 1
 	ld a, BANK(VictreebelPicFront)
 	jr c, .GotBank
-	ld a, BANK(TreeckoPicFront)
+	ld a, b
+	cp MAREEP + 1
+	ld a, BANK(MareepPicFront)
+	jr c, .GotBank
+	ld a, BANK(AzumarillPicFront)
 .GotBank
 	jp UncompressSpriteData
 
@@ -2205,6 +2209,9 @@ UpdateGBCPal_BGP::
 	ld a, [wLastBGP]
 	cp b
 	jr z, .noChangeInBGP
+	ld a, [wShowOverworld]
+	cp $01
+	jr z, .overworldBGP
 	callba _UpdateGBCPal_BGP
 	callba _UpdateGBCPal_BGP2
 .noChangeInBGP
@@ -2214,6 +2221,15 @@ UpdateGBCPal_BGP::
 .notGBC
 	pop af
 	ret
+.overworldBGP
+	;callba UpdateOverworldBGPPalette
+	;callba UpdateOverworldBGP2Palette
+	callba _UpdateOverworldBGPPointers
+	callba _UpdateGBCPal_BGP
+	
+	callba _UpdateOverworldBGP2Pointers
+	callba _UpdateGBCPal_BGP2
+	jr .noChangeInBGP
 
 UpdateGBCPal_OBP0::
 	push af
@@ -2228,6 +2244,9 @@ UpdateGBCPal_OBP0::
 	ld a, [wLastOBP0]
 	cp b
 	jr z, .noChangeInOBP0
+	ld a, [wShowOverworld]
+	cp $01
+	jr z, .overworldOBP0
 	ld b, BANK(_UpdateGBCPal_OBP)
 	ld hl, _UpdateGBCPal_OBP
 	ld c, CONVERT_OBP0
@@ -2239,6 +2258,9 @@ UpdateGBCPal_OBP0::
 .notGBC
 	pop af
 	ret
+.overworldOBP0
+	callba UpdateOverworldOBP0Palette
+	jr .noChangeInOBP0
 
 UpdateGBCPal_OBP1::
 	push af
@@ -2253,6 +2275,9 @@ UpdateGBCPal_OBP1::
 	ld a, [wLastOBP1]
 	cp b
 	jr z, .noChangeInOBP1
+	ld a, [wShowOverworld]
+	cp $01
+	jr z, .overworldOBP1
 	ld b, BANK(_UpdateGBCPal_OBP)
 	ld hl, _UpdateGBCPal_OBP
 	ld c, CONVERT_OBP1
@@ -2264,6 +2289,9 @@ UpdateGBCPal_OBP1::
 .notGBC
 	pop af
 	ret
+.overworldOBP1
+	callba UpdateOverworldOBP1Palette
+	jr .noChangeInOBP1
 
 Func_3082::
 	ld a, [H_LOADEDROMBANK]

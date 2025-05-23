@@ -172,8 +172,10 @@ PikachuMoods:
 	db $6c           ; Unknown (d = 10)
 	db $00           ; Unknown (d = 11)
 
-RedPicBack:       INCBIN "pic/trainer/redb.pic"
-OldManPic:	       INCBIN "pic/trainer/oldman.pic"
+RedPicBack:       INCBIN "pic/player/redb.pic"
+BluePicBack:      INCBIN "pic/player/blueb.pic"
+RocketPicBack:    INCBIN "pic/player/rocketb.pic"
+OldManPic:	      INCBIN "pic/trainer/oldman.pic"
 ProfOakPicBack:   INCBIN "pic/ytrainer/prof.oakb.pic"
 
 LoadYellowTitleScreenGFX:
